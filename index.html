@@ -80,7 +80,7 @@
         pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
-<body class="text-slate-800 antialiased selection:bg-accent selection:text-white">
+<body class="text-slate-800 antialiased selection:bg-accent selection:text-white overflow-x-hidden">
 
     <!-- Navegación Sticky (Escritorio) -->
     <nav class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block">
@@ -97,47 +97,47 @@
     </nav>
 
     <!-- HERO SECTION -->
-    <header class="hero-pattern pt-20 pb-20 md:pt-40 md:pb-32 px-6 text-center relative overflow-hidden">
+    <header class="hero-pattern pt-16 pb-20 md:pt-40 md:pb-32 px-4 sm:px-6 text-center relative overflow-hidden">
         <div class="max-w-4xl mx-auto relative z-10 fade-in-up">
-            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold tracking-wide uppercase mt-8 md:mt-0">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs sm:text-sm font-semibold tracking-wide uppercase mt-8 md:mt-0">
                 Evento Educativo
             </div>
             
-            <div class="flex justify-center mb-6">
-                <img src="Diseño sin título (1).png" alt="LowCodeConference" class="h-32 md:h-48 w-auto object-contain transform hover:scale-105 transition-transform duration-300" onerror="this.outerHTML='<h1 class=\'text-5xl md:text-7xl font-display font-bold text-primary mb-6\'>LowCode<span class=\'text-accent\'>Conference</span></h1>'">
+            <div class="flex justify-center mb-6 px-2">
+                <img src="Diseño sin título (1).png" alt="LowCodeConference" class="w-full max-w-[16rem] sm:max-w-xs md:max-w-md h-auto max-h-32 md:max-h-48 object-contain transform hover:scale-105 transition-transform duration-300 mx-auto" onerror="this.outerHTML='<h1 class=\'text-4xl sm:text-5xl md:text-7xl font-display font-bold text-primary mb-6 break-words\'>LowCode<span class=\'text-accent\'>Conference</span></h1>'">
             </div>
             <h1 class="sr-only">LowCodeConference</h1>
 
-            <h2 class="text-xl md:text-2xl text-slate-600 mb-8 font-light max-w-2xl mx-auto">
+            <h2 class="text-xl md:text-2xl text-slate-600 mb-6 md:mb-8 font-light max-w-2xl mx-auto leading-snug">
                 De la idea al prototipo con <span class="text-primary font-bold">inteligencia artificial</span>
             </h2>
-            <p class="text-base md:text-lg text-slate-500 mb-10 max-w-3xl mx-auto px-4">
+            <p class="text-sm sm:text-base md:text-lg text-slate-500 mb-8 md:mb-10 max-w-3xl mx-auto px-2">
                 Un evento donde el alumnado presenta ideas convertidas en soluciones digitales con IA, mediante un enfoque de vibe coding.
             </p>
             
-            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
-                <div class="flex items-center gap-2 text-primary bg-white shadow-sm px-6 py-3 rounded-xl border border-slate-200">
-                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    <span class="font-medium text-sm md:text-base">IES El Rincón · Aula de videojuegos</span>
+            <div class="flex flex-col sm:flex-row items-stretch justify-center gap-3 md:gap-4 mb-10 md:mb-12 w-full max-w-2xl mx-auto">
+                <div class="flex items-center justify-center gap-3 text-primary bg-white shadow-sm px-4 md:px-6 py-3.5 md:py-3 rounded-xl border border-slate-200 w-full sm:w-auto">
+                    <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="font-medium text-sm md:text-base leading-tight">IES El Rincón · Aula de videojuegos</span>
                 </div>
-                <div class="flex items-center gap-2 text-primary bg-white shadow-sm px-6 py-3 rounded-xl border border-slate-200">
-                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span class="font-medium text-sm md:text-base">Lunes 23 de marzo de 2026</span>
+                <div class="flex items-center justify-center gap-3 text-primary bg-white shadow-sm px-4 md:px-6 py-3.5 md:py-3 rounded-xl border border-slate-200 w-full sm:w-auto">
+                    <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-medium text-sm md:text-base leading-tight">Lunes 23 de marzo de 2026</span>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-4 max-w-3xl mx-auto">
                 <a href="#programa" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-primary group">
-                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-                    <span class="font-semibold text-lg">Programa</span>
+                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-semibold text-base md:text-lg">Programa</span>
                 </a>
                 <a href="#bases" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-primary group">
-                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    <span class="font-semibold text-lg">Bases</span>
+                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="font-semibold text-base md:text-lg">Bases</span>
                 </a>
                 <a href="#sorteo" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-accent border border-accent hover:bg-[#029b66] transition-colors text-white shadow-[0_0_20px_rgba(3,174,115,0.3)] group">
-                    <svg class="w-8 h-8 text-white mb-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                    <span class="font-bold text-lg">Sorteo de Grupos</span>
+                    <svg class="w-8 h-8 text-white mb-2 group-hover:scale-110 transition-transform flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span class="font-bold text-base md:text-lg">Sorteo de Grupos</span>
                 </a>
             </div>
         </div>
@@ -558,44 +558,6 @@
         const sorteoSubtitle = document.getElementById('sorteoSubtitle');
         const syncStatusIndicator = document.getElementById('syncStatusIndicator');
 
-        // --- MANEJO DE ESTADO (NUBE O LOCAL) ---
-        const loadInitialState = () => {
-            if (isCloudEnabled) {
-                syncStatusIndicator.textContent = "☁️ Conectado a la nube (Tiempo real)";
-                onSnapshot(docRef, (snapshot) => {
-                    if (snapshot.exists()) {
-                        appState = snapshot.data();
-                    }
-                    renderUI();
-                }, (error) => {
-                    console.error("Error leyendo datos:", error);
-                    syncStatusIndicator.textContent = "❌ Error de conexión. Revisa las reglas de Firestore.";
-                });
-            } else {
-                syncStatusIndicator.textContent = "💻 Modo Local (Guarda datos en tu ordenador)";
-                const localData = localStorage.getItem('lowcodecon_state');
-                if (localData) appState = JSON.parse(localData);
-                renderUI();
-            }
-        };
-
-        const saveState = async () => {
-            if (isCloudEnabled) {
-                try {
-                    await setDoc(docRef, appState);
-                } catch (err) {
-                    console.error("Error guardando en la nube:", err);
-                    alert("Asegúrate de configurar las reglas de tu base de datos Firebase a modo prueba (Test Mode).");
-                }
-            } else {
-                localStorage.setItem('lowcodecon_state', JSON.stringify(appState));
-                renderUI(); // Obligar a renderizar porque localstorage no avisa a la misma pestaña
-            }
-        };
-
-        // Iniciar carga de datos
-        loadInitialState();
-
         // --- FUNCIONES INTERFAZ ---
         const showError = (msg) => {
             adminErrorMsg.textContent = msg;
@@ -675,6 +637,41 @@
                     saveState(); 
                 });
             });
+        };
+
+        // --- MANEJO DE ESTADO (NUBE O LOCAL) ---
+        const loadInitialState = () => {
+            if (isCloudEnabled) {
+                syncStatusIndicator.textContent = "☁️ Conectado a la nube (Tiempo real)";
+                onSnapshot(docRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        appState = snapshot.data();
+                    }
+                    renderUI();
+                }, (error) => {
+                    console.error("Error leyendo datos:", error);
+                    syncStatusIndicator.textContent = "❌ Error de conexión. Revisa las reglas de Firestore.";
+                });
+            } else {
+                syncStatusIndicator.textContent = "💻 Modo Local (Guarda datos en tu ordenador)";
+                const localData = localStorage.getItem('lowcodecon_state');
+                if (localData) appState = JSON.parse(localData);
+                renderUI();
+            }
+        };
+
+        const saveState = async () => {
+            if (isCloudEnabled) {
+                try {
+                    await setDoc(docRef, appState);
+                } catch (err) {
+                    console.error("Error guardando en la nube:", err);
+                    alert("Asegúrate de configurar las reglas de tu base de datos Firebase a modo prueba (Test Mode).");
+                }
+            } else {
+                localStorage.setItem('lowcodecon_state', JSON.stringify(appState));
+                renderUI(); // Obligar a renderizar porque localstorage no avisa a la misma pestaña
+            }
         };
 
         // Fisher-Yates Shuffle
@@ -826,6 +823,10 @@
                 }
             );
         });
+
+        // Iniciar la carga de datos al final de todo
+        loadInitialState();
+
     </script>
 </body>
 </html>
