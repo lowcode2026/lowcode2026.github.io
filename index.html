@@ -21,9 +21,9 @@
                         display: ['Space Grotesk', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#1800ad',    // Azul solicitado
+                        primary: '#1800ad',    
                         secondary: '#1800ad',  
-                        accent: '#03ae73',     // Verde solicitado
+                        accent: '#03ae73',     
                         light: '#ffffff'       
                     }
                 }
@@ -31,7 +31,6 @@
         }
     </script>
 
-    <!-- Estilos personalizados para animaciones sutiles -->
     <style>
         body { background-color: #ffffff; }
         
@@ -48,7 +47,6 @@
                               radial-gradient(circle at bottom left, rgba(24, 0, 173, 0.08), transparent 40%);
         }
 
-        /* Animaciones de aparición */
         .fade-in-up {
             animation: fadeInUp 0.8s ease-out forwards;
             opacity: 0;
@@ -71,7 +69,6 @@
         }
         .timeline-item:last-child .timeline-dot::after { display: none; }
         
-        /* Estilo para el orden de equipos */
         .team-rank-card {
             transition: all 0.3s ease;
         }
@@ -80,7 +77,6 @@
             box-shadow: 0 15px 30px rgba(3, 174, 115, 0.2);
         }
 
-        /* Ajustes para móviles */
         pb-safe { padding-bottom: env(safe-area-inset-bottom); }
     </style>
 </head>
@@ -90,7 +86,6 @@
     <nav class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block">
         <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="flex items-center hover:opacity-80 transition-opacity">
-                <!-- Se asume que la imagen está en el mismo directorio -->
                 <img src="Diseño sin título (1).png" alt="LowCodeCon Logo" class="h-10 w-auto object-contain" onerror="this.outerHTML='<div class=\'font-display font-bold text-xl text-primary\'>LowCode<span class=\'text-accent\'>Con</span></div>'">
             </a>
             <div class="flex gap-6 font-medium text-sm text-slate-600">
@@ -345,19 +340,18 @@
     <section id="sorteo" class="py-20 px-6 max-w-5xl mx-auto relative min-h-[600px]">
         
         <div class="text-center mb-12">
-            <!-- Se ha convertido este título en el "botón secreto" con el id secretTrigger -->
+            <!-- 🔑 TRUCO 3 CLICS AQUI 🔑 -->
             <h2 id="secretTrigger" class="text-3xl md:text-4xl font-display font-bold text-primary mb-4 select-none cursor-pointer" title="Área de sorteo">Orden de Presentación</h2>
             <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-4"></div>
-            <p id="sorteoSubtitle" class="text-slate-500">Sorteo oficial en vivo.</p>
+            <p id="sorteoSubtitle" class="text-slate-500" id="statusText">Sorteo oficial en vivo.</p>
         </div>
 
-        <!-- PANEL DE ADMINISTRACIÓN (Oculto por defecto para usuarios) -->
+        <!-- PANEL DE ADMINISTRACIÓN (Oculto por defecto) -->
         <div id="adminPanel" class="hidden mb-12 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-200 fade-in-up">
             <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
                 <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                <h3 class="text-xl font-bold text-primary">Panel Gestor (En la Nube)</h3>
+                <h3 class="text-xl font-bold text-primary">Panel Gestor</h3>
                 
-                <!-- Botón para volver a cerrar/ocultar el panel de admin -->
                 <button id="btnCloseAdmin" class="ml-auto bg-slate-100 p-2 rounded-full text-slate-500 hover:bg-slate-200 hover:text-rose-500 transition-colors" title="Cerrar Panel Gestor">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
@@ -386,29 +380,28 @@
             </div>
         </div>
 
-        <!-- LISTA DE EQUIPOS (Modo Edición / Antes del Sorteo) -->
+        <!-- LISTA DE EQUIPOS -->
         <div id="draftView" class="fade-in-up">
             <ul id="draftList" class="grid md:grid-cols-2 gap-4">
-                <!-- Los equipos se renderizan aquí por JS -->
+                <!-- Los equipos se renderizan aquí -->
             </ul>
             <div id="emptyState" class="text-center py-12 text-slate-400 hidden">
                 <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path></svg>
-                <p>No hay equipos registrados aún en la nube.</p>
+                <p>No hay equipos registrados aún.</p>
                 <p class="text-sm mt-1">El administrador debe añadirlos para el sorteo.</p>
             </div>
         </div>
 
-        <!-- RESULTADO DEL SORTEO (Modo Generado) -->
+        <!-- RESULTADO DEL SORTEO -->
         <div id="generatedView" class="hidden fade-in-up">
             <div class="bg-primary text-white rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
-                <!-- Fondo decorativo interior -->
                 <div class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-20 rounded-full blur-3xl -mr-20 -mt-20"></div>
                 <div class="absolute bottom-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -ml-20 -mb-20"></div>
                 
                 <h3 class="text-xl md:text-2xl font-display font-bold text-center mb-8 text-accent">Orden Definitivo de Presentaciones</h3>
                 
                 <div id="finalList" class="grid gap-3 md:gap-4 max-w-2xl mx-auto relative z-10">
-                    <!-- El orden final se renderiza aquí por JS -->
+                    <!-- El orden final se renderiza aquí -->
                 </div>
             </div>
         </div>
@@ -441,11 +434,11 @@
         </div>
         <div class="max-w-6xl mx-auto text-center border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p>&copy; 2026 LowCodeConference. Todos los derechos reservados.</p>
-            <p class="text-xs opacity-60">Sincronizado en tiempo real en la nube.</p>
+            <p class="text-xs opacity-60" id="syncStatusIndicator">Cargando estado...</p>
         </div>
     </footer>
 
-    <!-- Menú de navegación inferior para Móviles (App-style) -->
+    <!-- Menú de navegación inferior para Móviles -->
     <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
         <div class="flex justify-around items-center px-2 py-2">
             <a href="#programa" class="flex flex-col items-center p-2 w-1/3 text-slate-500 hover:text-primary transition-colors">
@@ -467,7 +460,7 @@
         </div>
     </nav>
 
-    <!-- MODALES PERSONALIZADOS (Protección por contraseña y Confirmaciones) -->
+    <!-- MODALES PERSONALIZADOS -->
     <div id="authModal" class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
         <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl">
             <h3 class="text-xl font-bold text-primary mb-2">Acceso Administrador</h3>
@@ -495,25 +488,37 @@
         </div>
     </div>
 
-    <!-- LÓGICA DE LA APLICACIÓN (Conexión Cloud Firestore) -->
+    <!-- LÓGICA DE LA APLICACIÓN -->
     <script type="module">
+        // -------------------------------------------------------------
+        // CONFIGURACIÓN DE FIREBASE (OBLIGATORIO PARA QUE FUNCIONE EN LA NUBE)
+        // -------------------------------------------------------------
+        // Si no rellenas esto, la app funcionará solo en modo local (útil para proyectar).
+        const firebaseConfig = {
+            // ⚠️ COPIA Y PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE ⚠️
+            // apiKey: "PON_TU_API_KEY_AQUI",
+            // authDomain: "tu-proyecto.firebaseapp.com",
+            // projectId: "tu-proyecto",
+            // storageBucket: "tu-proyecto.appspot.com",
+            // messagingSenderId: "123456789",
+            // appId: "1:123456789:web:abcdef"
+        };
+
+        const isCloudEnabled = !!firebaseConfig.apiKey; // Comprueba si has puesto configuración
+
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // Configuración de Firebase Cloud
-        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
-        const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
-
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+        let db, docRef;
+        if (isCloudEnabled) {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            docRef = doc(db, 'eventos', 'lowcodecon2026'); // Documento de la base de datos
+        }
 
         // --- ESTADO Y VARIABLES ---
         let appState = { teams: [], isGenerated: false };
         let isAdminMode = false;
-        let currentUser = null;
 
         // Variables para el Acceso Secreto
         const ADMIN_PASSWORD = "admin"; // <--- CAMBIA AQUÍ LA CONTRASEÑA
@@ -551,52 +556,45 @@
         const generatedView = document.getElementById('generatedView');
         const finalList = document.getElementById('finalList');
         const sorteoSubtitle = document.getElementById('sorteoSubtitle');
+        const syncStatusIndicator = document.getElementById('syncStatusIndicator');
 
-        // --- SISTEMA DE NUBE (FIREBASE) ---
-        const initAuth = async () => {
-            try {
-                if (initialToken) {
-                    await signInWithCustomToken(auth, initialToken);
-                } else {
-                    await signInAnonymously(auth);
-                }
-            } catch (err) {
-                console.error("Error autenticando:", err);
-            }
-        };
-
-        // Iniciar la autenticación primero (obligatorio)
-        initAuth();
-
-        // Escuchar cambios de autenticación
-        onAuthStateChanged(auth, (user) => {
-            currentUser = user;
-            if (user) {
-                // Suscribir en tiempo real al documento de la nube
-                const stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'sorteo', 'estado');
-                onSnapshot(stateDocRef, (snapshot) => {
+        // --- MANEJO DE ESTADO (NUBE O LOCAL) ---
+        const loadInitialState = () => {
+            if (isCloudEnabled) {
+                syncStatusIndicator.textContent = "☁️ Conectado a la nube (Tiempo real)";
+                onSnapshot(docRef, (snapshot) => {
                     if (snapshot.exists()) {
                         appState = snapshot.data();
-                    } else {
-                        appState = { teams: [], isGenerated: false }; // Estado vacío inicial
                     }
                     renderUI();
                 }, (error) => {
                     console.error("Error leyendo datos:", error);
+                    syncStatusIndicator.textContent = "❌ Error de conexión. Revisa las reglas de Firestore.";
                 });
-            }
-        });
-
-        // Guardar estado en la nube
-        const saveState = async () => {
-            if (!currentUser) return;
-            try {
-                const stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'sorteo', 'estado');
-                await setDoc(stateDocRef, appState);
-            } catch (err) {
-                console.error("Error guardando en la nube:", err);
+            } else {
+                syncStatusIndicator.textContent = "💻 Modo Local (Guarda datos en tu ordenador)";
+                const localData = localStorage.getItem('lowcodecon_state');
+                if (localData) appState = JSON.parse(localData);
+                renderUI();
             }
         };
+
+        const saveState = async () => {
+            if (isCloudEnabled) {
+                try {
+                    await setDoc(docRef, appState);
+                } catch (err) {
+                    console.error("Error guardando en la nube:", err);
+                    alert("Asegúrate de configurar las reglas de tu base de datos Firebase a modo prueba (Test Mode).");
+                }
+            } else {
+                localStorage.setItem('lowcodecon_state', JSON.stringify(appState));
+                renderUI(); // Obligar a renderizar porque localstorage no avisa a la misma pestaña
+            }
+        };
+
+        // Iniciar carga de datos
+        loadInitialState();
 
         // --- FUNCIONES INTERFAZ ---
         const showError = (msg) => {
@@ -622,7 +620,7 @@
                 // VISTA: SORTEO REALIZADO
                 draftView.classList.add('hidden');
                 generatedView.classList.remove('hidden');
-                sorteoSubtitle.textContent = "El orden ha sido generado oficialmente (En Vivo).";
+                sorteoSubtitle.textContent = isCloudEnabled ? "El orden ha sido generado oficialmente (En Vivo)." : "Sorteo generado oficialmente.";
                 
                 appState.teams.forEach((team, index) => {
                     const div = document.createElement('div');
@@ -646,7 +644,7 @@
                 // VISTA: AÑADIENDO EQUIPOS
                 draftView.classList.remove('hidden');
                 generatedView.classList.add('hidden');
-                sorteoSubtitle.textContent = "Sincronizando equipos registrados en vivo.";
+                sorteoSubtitle.textContent = "Equipos registrados a la espera del sorteo.";
                 
                 appState.teams.forEach((team, index) => {
                     const li = document.createElement('li');
@@ -671,10 +669,10 @@
             // Asignar eventos de borrado
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
-                    if (!isAdminMode) return; // Seguridad extra local
+                    if (!isAdminMode) return; 
                     const index = e.currentTarget.getAttribute('data-index');
                     appState.teams.splice(index, 1);
-                    saveState(); // Guarda y se sincroniza automáticamente
+                    saveState(); 
                 });
             });
         };
@@ -779,7 +777,7 @@
             appState.isGenerated = false; 
             teamInput.value = '';
             
-            saveState(); // Sincroniza a todos!
+            saveState(); 
         });
 
         btnGenerate.addEventListener('click', () => {
@@ -789,7 +787,6 @@
                 return;
             }
             
-            // Animación visual botón
             const originalBtnContent = btnGenerate.innerHTML;
             btnGenerate.innerHTML = `<svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Sorteando...`;
             
@@ -797,7 +794,7 @@
                 appState.teams = shuffleArray([...appState.teams]);
                 appState.isGenerated = true;
                 
-                saveState(); // ¡Sincroniza y le salta el sorteo a todo el mundo!
+                saveState();
                 
                 btnGenerate.innerHTML = originalBtnContent;
                 document.getElementById('sorteo').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -821,7 +818,7 @@
             if (!isAdminMode) return;
             showConfirm(
                 'Eliminar Todos',
-                'ATENCIÓN: ¿Seguro de que quieres eliminar TODOS los equipos de la base de datos?',
+                'ATENCIÓN: ¿Seguro de que quieres eliminar TODOS los equipos?',
                 () => {
                     appState.teams = [];
                     appState.isGenerated = false;
