@@ -104,7 +104,7 @@
             </div>
             
             <div class="flex justify-center mb-6 px-2">
-                <img src="Diseño sin título (1).png" alt="LowCodeConference" class="w-full max-w-[16rem] sm:max-w-xs md:max-w-md h-auto max-h-32 md:max-h-48 object-contain transform hover:scale-105 transition-transform duration-300 mx-auto" onerror="this.outerHTML='<h1 class=\'text-4xl sm:text-5xl md:text-7xl font-display font-bold text-primary mb-6 break-words\'>LowCode<span class=\'text-accent\'>Conference</span></h1>'">
+                <img src="logo.png" alt="LowCodeConference" class="w-full max-w-[16rem] sm:max-w-xs md:max-w-md h-auto max-h-32 md:max-h-48 object-contain transform hover:scale-105 transition-transform duration-300 mx-auto" onerror="this.outerHTML='<h1 class=\'text-4xl sm:text-5xl md:text-7xl font-display font-bold text-primary mb-6 break-words\'>LowCode<span class=\'text-accent\'>Conference</span></h1>'">
             </div>
             <h1 class="sr-only">LowCodeConference</h1>
 
@@ -151,7 +151,6 @@
         </div>
 
         <div class="relative max-w-3xl mx-auto pl-4 md:pl-0">
-            <!-- Timeline Item -->
             <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.1s;">
                 <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:border-accent transition-colors"></div>
                 <div class="hidden md:block md:w-1/2 pr-12 text-right">
@@ -413,7 +412,7 @@
         <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-12 text-center md:text-left">
             <div>
                 <div class="mb-6 inline-block">
-                    <img src="Diseño sin título (1).png" alt="LowCodeCon Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.outerHTML='<div class=\'font-display font-bold text-xl text-primary\'>LowCode<span class=\'text-accent\'>Con</span></div>'">
+                    <img src="logo.png" alt="LowCodeCon Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.outerHTML='<div class=\'font-display font-bold text-xl text-primary\'>LowCode<span class=\'text-accent\'>Con</span></div>'">
                 </div>
                 <p class="mb-2 font-medium text-primary">IES El Rincón</p>
                 <p>Las Palmas de Gran Canaria</p>
@@ -493,18 +492,11 @@
         // -------------------------------------------------------------
         // CONFIGURACIÓN DE FIREBASE (OBLIGATORIO PARA QUE FUNCIONE EN LA NUBE)
         // -------------------------------------------------------------
-        // Si no rellenas esto, la app funcionará solo en modo local (útil para proyectar).
         const firebaseConfig = {
             // ⚠️ COPIA Y PEGA AQUÍ TU CONFIGURACIÓN DE FIREBASE ⚠️
-            // apiKey: "PON_TU_API_KEY_AQUI",
-            // authDomain: "tu-proyecto.firebaseapp.com",
-            // projectId: "tu-proyecto",
-            // storageBucket: "tu-proyecto.appspot.com",
-            // messagingSenderId: "123456789",
-            // appId: "1:123456789:web:abcdef"
         };
 
-        const isCloudEnabled = !!firebaseConfig.apiKey; // Comprueba si has puesto configuración
+        const isCloudEnabled = !!firebaseConfig.apiKey;
 
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
@@ -513,19 +505,17 @@
         if (isCloudEnabled) {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
-            docRef = doc(db, 'eventos', 'lowcodecon2026'); // Documento de la base de datos
+            docRef = doc(db, 'eventos', 'lowcodecon2026');
         }
 
         // --- ESTADO Y VARIABLES ---
         let appState = { teams: [], isGenerated: false };
         let isAdminMode = false;
 
-        // Variables para el Acceso Secreto
-        const ADMIN_PASSWORD = "admin"; // <--- CAMBIA AQUÍ LA CONTRASEÑA
+        const ADMIN_PASSWORD = "admin";
         let clickCount = 0;
         let clickTimer;
 
-        // DOM Elements
         const secretTrigger = document.getElementById('secretTrigger');
         const authModal = document.getElementById('authModal');
         const adminPwdInput = document.getElementById('adminPwd');
@@ -558,18 +548,17 @@
         const sorteoSubtitle = document.getElementById('sorteoSubtitle');
         const syncStatusIndicator = document.getElementById('syncStatusIndicator');
 
-        // --- FUNCIONES INTERFAZ ---
-        const showError = (msg) => {
+        // --- FUNCIONES INTERFAZ DECLARADAS DE FORMA SEGURA ---
+        function showError(msg) {
             adminErrorMsg.textContent = msg;
             adminErrorMsg.classList.remove('hidden');
             setTimeout(() => adminErrorMsg.classList.add('hidden'), 3500);
-        };
+        }
 
-        const renderUI = () => {
+        function renderUI() {
             draftList.innerHTML = '';
             finalList.innerHTML = '';
 
-            // Habilitar/deshabilitar boton de sortear
             if (appState.teams.length === 0) {
                 emptyState.classList.remove('hidden');
                 btnGenerate.disabled = true;
@@ -579,7 +568,6 @@
             }
 
             if (appState.isGenerated && appState.teams.length > 0) {
-                // VISTA: SORTEO REALIZADO
                 draftView.classList.add('hidden');
                 generatedView.classList.remove('hidden');
                 sorteoSubtitle.textContent = isCloudEnabled ? "El orden ha sido generado oficialmente (En Vivo)." : "Sorteo generado oficialmente.";
@@ -603,7 +591,6 @@
                 btnReset.classList.remove('hidden');
 
             } else {
-                // VISTA: AÑADIENDO EQUIPOS
                 draftView.classList.remove('hidden');
                 generatedView.classList.add('hidden');
                 sorteoSubtitle.textContent = "Equipos registrados a la espera del sorteo.";
@@ -628,7 +615,6 @@
                 btnReset.classList.add('hidden');
             }
 
-            // Asignar eventos de borrado
             document.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     if (!isAdminMode) return; 
@@ -637,10 +623,9 @@
                     saveState(); 
                 });
             });
-        };
+        }
 
-        // --- MANEJO DE ESTADO (NUBE O LOCAL) ---
-        const loadInitialState = () => {
+        function loadInitialState() {
             if (isCloudEnabled) {
                 syncStatusIndicator.textContent = "☁️ Conectado a la nube (Tiempo real)";
                 onSnapshot(docRef, (snapshot) => {
@@ -658,9 +643,9 @@
                 if (localData) appState = JSON.parse(localData);
                 renderUI();
             }
-        };
+        }
 
-        const saveState = async () => {
+        async function saveState() {
             if (isCloudEnabled) {
                 try {
                     await setDoc(docRef, appState);
@@ -670,12 +655,11 @@
                 }
             } else {
                 localStorage.setItem('lowcodecon_state', JSON.stringify(appState));
-                renderUI(); // Obligar a renderizar porque localstorage no avisa a la misma pestaña
+                renderUI(); 
             }
-        };
+        }
 
-        // Fisher-Yates Shuffle
-        const shuffleArray = (array) => {
+        function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
                 randomIndex = Math.floor(Math.random() * currentIndex);
@@ -683,10 +667,9 @@
                 [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
             }
             return array;
-        };
+        }
 
-        // Custom Confirm Modal Logic
-        const showConfirm = (title, msg, onConfirm) => {
+        function showConfirm(title, msg, onConfirm) {
             confirmTitle.textContent = title;
             confirmMessage.textContent = msg;
             confirmModal.classList.remove('hidden');
@@ -702,19 +685,18 @@
 
             btnConfirmAction.addEventListener('click', okHandler);
             btnConfirmCancel.addEventListener('click', cancelHandler);
-        };
+        }
 
-        // Eventos de Acceso Secreto (Triple Clic)
+        // --- EVENTOS ---
         secretTrigger.addEventListener('click', () => {
-            if (isAdminMode) return; // Si ya está logueado, no hace nada
+            if (isAdminMode) return; 
 
             clickCount++;
             clearTimeout(clickTimer);
             
-            // Reiniciar contador si pasa más de 1.5 segundos entre clics
             clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
 
-            if (clickCount === 3) { // Al tercer clic...
+            if (clickCount === 3) {
                 clickCount = 0;
                 authModal.classList.remove('hidden');
                 adminPwdInput.value = '';
@@ -723,7 +705,6 @@
             }
         });
 
-        // Lógica del Modal de Contraseña
         const closeAuthModal = () => {
             authModal.classList.add('hidden');
             adminPwdInput.value = '';
@@ -748,14 +729,12 @@
             if (e.key === 'Enter') attemptLogin();
         });
 
-        // Cerrar el panel gestor (Logout)
         btnCloseAdmin.addEventListener('click', () => {
             isAdminMode = false;
             adminPanel.classList.add('hidden');
             renderUI();
         });
 
-        // Lógica de Sorteo y Formularios
         addTeamForm.addEventListener('submit', (e) => {
             e.preventDefault();
             if (!isAdminMode) return;
@@ -824,8 +803,10 @@
             );
         });
 
-        // Iniciar la carga de datos al final de todo
-        loadInitialState();
+        // ARRANCAR LA APLICACIÓN
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInitialState();
+        });
 
     </script>
 </body>
