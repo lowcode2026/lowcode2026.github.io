@@ -1,1 +1,834 @@
-<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Low Code Conference 2026</title>\n    <style>\n        body {\n            font-family: Arial, sans-serif;\n            background-color: #f0f4f8;\n            color: #333;\n            margin: 0;\n            padding: 0;\n        }\n        header {\n            background-color: #007bff;\n            color: white;\n            padding: 20px 0;\n            text-align: center;\n        }\n        .hero {\n            background-image: linear-gradient(to right, #007bff, #00bfff);\n            color: white;\n            padding: 50px 20px;\n            text-align: center;\n        }\n        .schedule, .team {\n            display: flex;\n            justify-content: space-around;\n            flex-wrap: wrap;\n            margin: 20px;\n        }\n        .card {\n            background: white;\n            border-radius: 8px;\n            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);\n            margin: 20px;\n            padding: 20px;\n            width: calc(30% - 40px);\n            transition: transform 0.2s;\n        }\n        .card:hover {\n            transform: scale(1.05);\n        }\n        footer {\n            text-align: center;\n            padding: 10px;\n            background-color: #007bff;\n            color: white;\n        }\n    </style>\n</head>\n<body>\n    <header>\n        <h1>Welcome to the Low Code Conference 2026</h1>\n    </header>\n    <section class="hero">\n        <h2>Your Future Awaits</h2>\n        <p>Join us for an immersive experience in the world of Low Code Development.</p>\n    </section>\n    <section class="schedule">\n        <h2>Event Schedule</h2>\n        <div class="card">\n            <h3>Opening Keynote</h3>\n            <p>March 21, 2026 - 10:00 AM</p>\n        </div>\n        <div class="card">\n            <h3>Workshops</h3>\n            <p>March 21, 2026 - 12:00 PM</p>\n        </div>\n        <div class="card">\n            <h3>Networking Session</h3>\n            <p>March 21, 2026 - 3:00 PM</p>\n        </div>\n    </section>\n    <section class="team">\n        <h2>Meet Our Team</h2>\n        <div class="card" id="team-member">\n            <h3>Team Member</h3>\n            <p>Description about the team member.</p>\n        </div>\n        <button onclick="randomizeTeamMember()">Randomize Team Member</button>\n    </section>\n    <section>\n        <h2>Final Section</h2>\n        <p>Join us for an exciting journey into Low Code! Stay tuned for updates.</p>\n    </section>\n    <footer>\n        <p>© 2026 Low Code Conference</p>\n    </footer>\n    <script>\n        const teamMembers = [\n            { name: 'Alice', description: 'Expert in Low Code Solutions' },\n            { name: 'Bob', description: 'Specialist in UI/UX Design' },\n            { name: 'Charlie', description: 'Backend Development Expert' }\n        ];\n        function randomizeTeamMember() {\n            const randomIndex = Math.floor(Math.random() * teamMembers.length);\n            const member = teamMembers[randomIndex];\n            const teamMemberDiv = document.getElementById('team-member');\n            teamMemberDiv.innerHTML = `<h3>${member.name}</h3><p>${member.description}</p>`;\n            localStorage.setItem('lastRandomMember', JSON.stringify(member));\n        }\n        window.onload = function() {\n            const lastMember = JSON.parse(localStorage.getItem('lastRandomMember'));\n            if (lastMember) {\n                const teamMemberDiv = document.getElementById('team-member');\n                teamMemberDiv.innerHTML = `<h3>${lastMember.name}</h3><p>${lastMember.description}</p>`;\n            }\n        };\n    </script>\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LowCodeCon 2026 | De la idea al prototipo</title>
+    
+    <!-- Tipografía de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1800ad',    // Azul solicitado
+                        secondary: '#1800ad',  
+                        accent: '#03ae73',     // Verde solicitado
+                        light: '#ffffff'       
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos personalizados para animaciones sutiles -->
+    <style>
+        body { background-color: #ffffff; }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 10px 30px rgba(24, 0, 173, 0.05);
+        }
+
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(circle at top right, rgba(3, 174, 115, 0.08), transparent 40%),
+                              radial-gradient(circle at bottom left, rgba(24, 0, 173, 0.08), transparent 40%);
+        }
+
+        /* Animaciones de aparición */
+        .fade-in-up {
+            animation: fadeInUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .timeline-dot::after {
+            content: '';
+            position: absolute;
+            width: 2px;
+            background-color: #e2e8f0;
+            top: 24px;
+            bottom: -32px;
+            left: 11px;
+            z-index: -1;
+        }
+        .timeline-item:last-child .timeline-dot::after { display: none; }
+        
+        /* Estilo para el orden de equipos */
+        .team-rank-card {
+            transition: all 0.3s ease;
+        }
+        .team-rank-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(3, 174, 115, 0.2);
+        }
+
+        /* Ajustes para móviles */
+        pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+    </style>
+</head>
+<body class="text-slate-800 antialiased selection:bg-accent selection:text-white">
+
+    <!-- Navegación Sticky (Escritorio) -->
+    <nav class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center hover:opacity-80 transition-opacity">
+                <!-- Se asume que la imagen está en el mismo directorio -->
+                <img src="Diseño sin título (1).png" alt="LowCodeCon Logo" class="h-10 w-auto object-contain" onerror="this.outerHTML='<div class=\'font-display font-bold text-xl text-primary\'>LowCode<span class=\'text-accent\'>Con</span></div>'">
+            </a>
+            <div class="flex gap-6 font-medium text-sm text-slate-600">
+                <a href="#programa" class="hover:text-primary transition-colors">Programa</a>
+                <a href="#bases" class="hover:text-primary transition-colors">Bases</a>
+                <a href="#sorteo" class="hover:text-primary transition-colors">Sorteo de Grupos</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-pattern pt-20 pb-20 md:pt-40 md:pb-32 px-6 text-center relative overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10 fade-in-up">
+            <div class="inline-block mb-4 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm font-semibold tracking-wide uppercase mt-8 md:mt-0">
+                Evento Educativo
+            </div>
+            
+            <div class="flex justify-center mb-6">
+                <img src="Diseño sin título (1).png" alt="LowCodeConference" class="h-32 md:h-48 w-auto object-contain transform hover:scale-105 transition-transform duration-300" onerror="this.outerHTML='<h1 class=\'text-5xl md:text-7xl font-display font-bold text-primary mb-6\'>LowCode<span class=\'text-accent\'>Conference</span></h1>'">
+            </div>
+            <h1 class="sr-only">LowCodeConference</h1>
+
+            <h2 class="text-xl md:text-2xl text-slate-600 mb-8 font-light max-w-2xl mx-auto">
+                De la idea al prototipo con <span class="text-primary font-bold">inteligencia artificial</span>
+            </h2>
+            <p class="text-base md:text-lg text-slate-500 mb-10 max-w-3xl mx-auto px-4">
+                Un evento donde el alumnado presenta ideas convertidas en soluciones digitales con IA, mediante un enfoque de vibe coding.
+            </p>
+            
+            <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-12">
+                <div class="flex items-center gap-2 text-primary bg-white shadow-sm px-6 py-3 rounded-xl border border-slate-200">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    <span class="font-medium text-sm md:text-base">IES El Rincón · Aula de videojuegos</span>
+                </div>
+                <div class="flex items-center gap-2 text-primary bg-white shadow-sm px-6 py-3 rounded-xl border border-slate-200">
+                    <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-medium text-sm md:text-base">Lunes 23 de marzo de 2026</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto">
+                <a href="#programa" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-primary group">
+                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                    <span class="font-semibold text-lg">Programa</span>
+                </a>
+                <a href="#bases" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-primary group">
+                    <svg class="w-8 h-8 text-primary mb-2 group-hover:scale-110 group-hover:text-accent transition-all" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                    <span class="font-semibold text-lg">Bases</span>
+                </a>
+                <a href="#sorteo" class="flex flex-col items-center justify-center p-4 rounded-2xl bg-accent border border-accent hover:bg-[#029b66] transition-colors text-white shadow-[0_0_20px_rgba(3,174,115,0.3)] group">
+                    <svg class="w-8 h-8 text-white mb-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    <span class="font-bold text-lg">Sorteo de Grupos</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PROGRAMA DEL EVENTO -->
+    <section id="programa" class="py-20 px-6 max-w-5xl mx-auto">
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-primary mb-4">Programa del Evento</h2>
+            <div class="h-1 w-20 bg-accent mx-auto rounded-full"></div>
+        </div>
+
+        <div class="relative max-w-3xl mx-auto pl-4 md:pl-0">
+            <!-- Timeline Item -->
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.1s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:border-accent transition-colors"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right">
+                    <span class="text-primary font-bold text-lg">09:00 - 09:30 h</span>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-primary font-bold mb-1">09:00 - 09:30 h</div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="font-bold text-lg text-primary">Bienvenida y recepción</h3>
+                        <p class="text-slate-500 text-sm mt-1">Presentación del evento y organización inicial.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.2s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:border-accent transition-colors"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right pt-6">
+                    <div class="glass-card p-6 rounded-2xl text-left md:text-right">
+                        <h3 class="font-bold text-lg text-primary">Ponencia inaugural</h3>
+                        <p class="text-slate-500 text-sm mt-1">Intervención de invitados especiales.</p>
+                    </div>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="text-primary font-bold mt-2 md:mt-0 mb-1 md:hidden">09:30 - 10:00 h</div>
+                    <span class="hidden md:block text-primary font-bold text-lg mt-8">09:30 - 10:00 h</span>
+                    <div class="md:hidden glass-card p-6 rounded-2xl">
+                        <h3 class="font-bold text-lg text-primary">Ponencia inaugural</h3>
+                        <p class="text-slate-500 text-sm mt-1">Intervención de invitados especiales.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.3s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.5)]"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right">
+                    <span class="text-accent font-bold text-lg">10:00 - 11:00 h</span>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-accent font-bold mb-1">10:00 - 11:00 h</div>
+                    <div class="glass-card p-6 rounded-2xl border-l-4 border-l-accent bg-accent/5">
+                        <h3 class="font-bold text-lg text-primary">Presentaciones - Bloque 1</h3>
+                        <p class="text-slate-600 text-sm mt-1">Exposición de los primeros 6 equipos en escenario.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.4s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-slate-300 z-10"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right pt-4">
+                    <div class="glass-card p-4 rounded-xl text-left md:text-right bg-slate-50">
+                        <h3 class="font-medium text-slate-600">Pausa - Desayuno ☕</h3>
+                    </div>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-slate-500 font-bold mb-1">11:00 - 11:30 h</div>
+                    <span class="hidden md:block text-slate-500 font-bold text-lg mt-6">11:00 - 11:30 h</span>
+                    <div class="md:hidden glass-card p-4 rounded-xl bg-slate-50">
+                        <h3 class="font-medium text-slate-600">Pausa - Desayuno ☕</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.5s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right">
+                    <span class="text-primary font-bold text-lg">11:30 - 12:00 h</span>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-primary font-bold mb-1">11:30 - 12:00 h</div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="font-bold text-lg text-primary">Ponencia Central</h3>
+                        <p class="text-slate-500 text-sm mt-1">Intervención de invitados y expertos de la industria.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.6s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.5)]"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right pt-6">
+                    <div class="glass-card p-6 rounded-2xl text-left md:text-right border-r-4 border-r-accent bg-accent/5">
+                        <h3 class="font-bold text-lg text-primary">Presentaciones - Bloque 2</h3>
+                        <p class="text-slate-600 text-sm mt-1">Exposición de los últimos 6 equipos.</p>
+                    </div>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-accent font-bold mb-1">12:00 - 13:00 h</div>
+                    <span class="hidden md:block text-accent font-bold text-lg mt-8">12:00 - 13:00 h</span>
+                    <div class="md:hidden glass-card p-6 rounded-2xl border-l-4 border-l-accent bg-accent/5">
+                        <h3 class="font-bold text-lg text-primary">Presentaciones - Bloque 2</h3>
+                        <p class="text-slate-600 text-sm mt-1">Exposición de los últimos 6 equipos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.7s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right">
+                    <span class="text-primary font-bold text-lg">13:00 - 13:30 h</span>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-primary font-bold mb-1">13:00 - 13:30 h</div>
+                    <div class="glass-card p-6 rounded-2xl">
+                        <h3 class="font-bold text-lg text-primary">Fase de experimentación</h3>
+                        <p class="text-slate-500 text-sm mt-1">Visita a los puestos. Demostración y prueba de prototipos con el jurado.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item relative flex items-start mb-8 group fade-in-up" style="animation-delay: 0.8s;">
+                <div class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10"></div>
+                <div class="hidden md:block md:w-1/2 pr-12 text-right pt-6">
+                    <div class="glass-card p-6 rounded-2xl text-left md:text-right border-2 border-primary/20 bg-primary/5 shadow-md">
+                        <h3 class="font-bold text-lg text-primary">Entrega de premios y Clausura</h3>
+                        <p class="text-slate-600 text-sm mt-1">Votaciones, anuncio del equipo ganador y cierre del evento.</p>
+                    </div>
+                </div>
+                <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+                    <div class="md:hidden text-primary font-bold mb-1">13:30 - 14:00 h</div>
+                    <span class="hidden md:block text-primary font-bold text-lg mt-8">13:30 - 14:00 h</span>
+                    <div class="md:hidden glass-card p-6 rounded-2xl border-2 border-primary/20 bg-primary/5 shadow-md">
+                        <h3 class="font-bold text-lg text-primary">Entrega de premios</h3>
+                        <p class="text-slate-600 text-sm mt-1">Votaciones, anuncio del equipo ganador y cierre.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- BASES DEL EVENTO -->
+    <section id="bases" class="py-20 px-6 bg-slate-50 border-y border-slate-100">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-3xl md:text-4xl font-display font-bold text-primary mb-4">Bases de la Competición</h2>
+                <div class="h-1 w-20 bg-primary mx-auto rounded-full mb-6"></div>
+                <p class="text-slate-500 max-w-2xl mx-auto">No se trata de un concurso de desarrollo, sino de ideas. Lo importante es cómo se presenta la propuesta.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Fase 1 -->
+                <div class="glass-card bg-white p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in-up border border-slate-100">
+                    <div class="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center mb-6 text-primary">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Fase 1: Presentación</h3>
+                    <ul class="text-slate-600 space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-primary font-bold">•</span> Máximo 10 minutos por equipo.</li>
+                        <li class="flex gap-2"><span class="text-primary font-bold">•</span> Orden decidido por sorteo.</li>
+                        <li class="flex gap-2"><span class="text-primary font-bold">•</span> Un solo ponente con mando.</li>
+                        <li class="flex gap-2"><span class="text-primary font-bold">•</span> Obligatorio enviar PDF el día antes.</li>
+                    </ul>
+                </div>
+
+                <!-- Fase 2 -->
+                <div class="glass-card bg-white p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in-up border border-slate-100" style="animation-delay: 0.1s;">
+                    <div class="w-14 h-14 bg-accent/10 rounded-2xl flex items-center justify-center mb-6 text-accent">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Fase 2: Experimentación</h3>
+                    <ul class="text-slate-600 space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-accent font-bold">•</span> Exposición en puestos por grupos.</li>
+                        <li class="flex gap-2"><span class="text-accent font-bold">•</span> El jurado interactúa libremente.</li>
+                        <li class="flex gap-2"><span class="text-accent font-bold">•</span> Demostración de prototipos.</li>
+                        <li class="flex gap-2"><span class="text-accent font-bold">•</span> Mantener un nivel de ruido adecuado.</li>
+                    </ul>
+                </div>
+
+                <!-- Normas -->
+                <div class="glass-card bg-white p-8 rounded-3xl hover:-translate-y-2 transition-transform duration-300 shadow-lg fade-in-up border border-slate-100" style="animation-delay: 0.2s;">
+                    <div class="w-14 h-14 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-6 text-rose-500">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">Normas Estrictas</h3>
+                    <ul class="text-slate-600 space-y-2 text-sm">
+                        <li class="flex gap-2"><span class="text-rose-500 font-bold">•</span> <b>NO</b> se permite leer en la presentación.</li>
+                        <li class="flex gap-2"><span class="text-rose-500 font-bold">•</span> El apuntador debe ser discreto y no ponente.</li>
+                        <li class="flex gap-2"><span class="text-rose-500 font-bold">•</span> Penalización si no se está preparado a tiempo.</li>
+                        <li class="flex gap-2"><span class="text-rose-500 font-bold">•</span> No interrumpir al jurado.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SORTEO / ORDEN DE GRUPOS -->
+    <section id="sorteo" class="py-20 px-6 max-w-5xl mx-auto relative min-h-[600px]">
+        
+        <div class="text-center mb-12">
+            <!-- Se ha convertido este título en el "botón secreto" con el id secretTrigger -->
+            <h2 id="secretTrigger" class="text-3xl md:text-4xl font-display font-bold text-primary mb-4 select-none cursor-pointer" title="Área de sorteo">Orden de Presentación</h2>
+            <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-4"></div>
+            <p id="sorteoSubtitle" class="text-slate-500">Sorteo oficial en vivo.</p>
+        </div>
+
+        <!-- PANEL DE ADMINISTRACIÓN (Oculto por defecto para usuarios) -->
+        <div id="adminPanel" class="hidden mb-12 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-200 fade-in-up">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-100 pb-4">
+                <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                <h3 class="text-xl font-bold text-primary">Panel Gestor (En la Nube)</h3>
+                
+                <!-- Botón para volver a cerrar/ocultar el panel de admin -->
+                <button id="btnCloseAdmin" class="ml-auto bg-slate-100 p-2 rounded-full text-slate-500 hover:bg-slate-200 hover:text-rose-500 transition-colors" title="Cerrar Panel Gestor">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+            
+            <form id="addTeamForm" class="flex flex-col md:flex-row gap-4 mb-6">
+                <input type="text" id="teamInput" placeholder="Nombre del equipo o proyecto..." class="flex-1 px-5 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" required autocomplete="off">
+                <button type="submit" class="bg-primary hover:bg-[#12008a] text-white font-semibold py-3 px-6 rounded-xl transition-colors whitespace-nowrap">
+                    + Añadir equipo
+                </button>
+            </form>
+            
+            <div id="adminErrorMsg" class="hidden text-rose-500 text-sm mb-4 font-medium px-2"></div>
+
+            <div class="flex flex-wrap gap-3 pt-4 border-t border-slate-100">
+                <button id="btnGenerate" class="bg-accent hover:bg-[#029b66] text-white font-bold py-2.5 px-6 rounded-xl transition-colors flex items-center gap-2 shadow-md disabled:opacity-50 disabled:cursor-not-allowed w-full md:w-auto justify-center">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    Generar orden aleatorio
+                </button>
+                <button id="btnReset" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2.5 px-6 rounded-xl transition-colors w-full md:w-auto">
+                    Reiniciar orden
+                </button>
+                <button id="btnClearAll" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2.5 px-6 rounded-xl transition-colors md:ml-auto w-full md:w-auto mt-2 md:mt-0">
+                    Eliminar todos
+                </button>
+            </div>
+        </div>
+
+        <!-- LISTA DE EQUIPOS (Modo Edición / Antes del Sorteo) -->
+        <div id="draftView" class="fade-in-up">
+            <ul id="draftList" class="grid md:grid-cols-2 gap-4">
+                <!-- Los equipos se renderizan aquí por JS -->
+            </ul>
+            <div id="emptyState" class="text-center py-12 text-slate-400 hidden">
+                <svg class="w-16 h-16 mx-auto mb-4 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z"></path></svg>
+                <p>No hay equipos registrados aún en la nube.</p>
+                <p class="text-sm mt-1">El administrador debe añadirlos para el sorteo.</p>
+            </div>
+        </div>
+
+        <!-- RESULTADO DEL SORTEO (Modo Generado) -->
+        <div id="generatedView" class="hidden fade-in-up">
+            <div class="bg-primary text-white rounded-3xl p-6 md:p-12 shadow-2xl relative overflow-hidden">
+                <!-- Fondo decorativo interior -->
+                <div class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-20 rounded-full blur-3xl -mr-20 -mt-20"></div>
+                <div class="absolute bottom-0 left-0 w-64 h-64 bg-white opacity-10 rounded-full blur-3xl -ml-20 -mb-20"></div>
+                
+                <h3 class="text-xl md:text-2xl font-display font-bold text-center mb-8 text-accent">Orden Definitivo de Presentaciones</h3>
+                
+                <div id="finalList" class="grid gap-3 md:gap-4 max-w-2xl mx-auto relative z-10">
+                    <!-- El orden final se renderiza aquí por JS -->
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- FOOTER / EXTRA -->
+    <footer class="bg-slate-50 pt-16 md:pb-8 pb-24 px-6 text-slate-600 text-sm border-t border-slate-200">
+        <div class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-12 text-center md:text-left">
+            <div>
+                <div class="mb-6 inline-block">
+                    <img src="Diseño sin título (1).png" alt="LowCodeCon Logo" class="h-10 md:h-12 w-auto object-contain" onerror="this.outerHTML='<div class=\'font-display font-bold text-xl text-primary\'>LowCode<span class=\'text-accent\'>Con</span></div>'">
+                </div>
+                <p class="mb-2 font-medium text-primary">IES El Rincón</p>
+                <p>Las Palmas de Gran Canaria</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-primary mb-4">Proyecto Institucional</h4>
+                <p class="mb-2 text-accent font-semibold text-base">«Soluciones innovadoras con Low Code»</p>
+                <p>Red Estatal de Centros de Excelencia en Formación Profesional.</p>
+            </div>
+            <div>
+                <h4 class="font-bold text-primary mb-4">Entidades</h4>
+                <div class="space-y-2 text-sm">
+                    <p>• Financiado por la Unión Europea (NextGenerationEU)</p>
+                    <p>• Plan de Recuperación, Transformación y Resiliencia</p>
+                    <p>• Gobierno de Canarias</p>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-6xl mx-auto text-center border-t border-slate-200 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <p>&copy; 2026 LowCodeConference. Todos los derechos reservados.</p>
+            <p class="text-xs opacity-60">Sincronizado en tiempo real en la nube.</p>
+        </div>
+    </footer>
+
+    <!-- Menú de navegación inferior para Móviles (App-style) -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
+        <div class="flex justify-around items-center px-2 py-2">
+            <a href="#programa" class="flex flex-col items-center p-2 w-1/3 text-slate-500 hover:text-primary transition-colors">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                <span class="text-[10px] font-semibold">Programa</span>
+            </a>
+            <a href="#bases" class="flex flex-col items-center p-2 w-1/3 text-slate-500 hover:text-primary transition-colors">
+                <svg class="w-6 h-6 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                <span class="text-[10px] font-semibold">Bases</span>
+            </a>
+            <a href="#sorteo" class="flex flex-col items-center p-2 w-1/3 text-slate-500 hover:text-accent transition-colors relative group">
+                <div class="absolute -top-6 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm group-hover:-translate-y-1 transition-transform">
+                    <div class="bg-accent p-2 rounded-full text-white shadow-md">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
+                    </div>
+                </div>
+                <span class="text-[10px] font-bold text-accent mt-6">Sorteo</span>
+            </a>
+        </div>
+    </nav>
+
+    <!-- MODALES PERSONALIZADOS (Protección por contraseña y Confirmaciones) -->
+    <div id="authModal" class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl">
+            <h3 class="text-xl font-bold text-primary mb-2">Acceso Administrador</h3>
+            <p class="text-sm text-slate-500 mb-6">Introduce la clave para gestionar el sorteo.</p>
+            <input type="password" id="adminPwd" class="w-full px-4 py-3 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-accent mb-2" placeholder="Contraseña">
+            <div class="text-rose-500 text-sm mb-4 h-5 font-medium" id="authError"></div>
+            <div class="flex justify-end gap-3">
+                <button id="btnCancelAuth" class="px-4 py-2 text-slate-500 hover:bg-slate-100 rounded-xl transition-colors font-medium">Cancelar</button>
+                <button id="btnLoginAuth" class="px-6 py-2 bg-primary text-white rounded-xl hover:bg-[#12008a] transition-colors font-medium shadow-md">Entrar</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="confirmModal" class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-sm w-full shadow-2xl text-center">
+            <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-slate-800 mb-2" id="confirmTitle">Confirmación</h3>
+            <p class="text-sm text-slate-500 mb-8" id="confirmMessage">¿Estás seguro?</p>
+            <div class="flex justify-center gap-3">
+                <button id="btnConfirmCancel" class="px-6 py-2 text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors font-medium w-1/2">Cancelar</button>
+                <button id="btnConfirmAction" class="px-6 py-2 bg-rose-500 text-white rounded-xl hover:bg-rose-600 transition-colors font-medium w-1/2 shadow-md">Confirmar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- LÓGICA DE LA APLICACIÓN (Conexión Cloud Firestore) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInWithCustomToken, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Configuración de Firebase Cloud
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const initialToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // --- ESTADO Y VARIABLES ---
+        let appState = { teams: [], isGenerated: false };
+        let isAdminMode = false;
+        let currentUser = null;
+
+        // Variables para el Acceso Secreto
+        const ADMIN_PASSWORD = "admin"; // <--- CAMBIA AQUÍ LA CONTRASEÑA
+        let clickCount = 0;
+        let clickTimer;
+
+        // DOM Elements
+        const secretTrigger = document.getElementById('secretTrigger');
+        const authModal = document.getElementById('authModal');
+        const adminPwdInput = document.getElementById('adminPwd');
+        const authError = document.getElementById('authError');
+        const btnCancelAuth = document.getElementById('btnCancelAuth');
+        const btnLoginAuth = document.getElementById('btnLoginAuth');
+
+        const confirmModal = document.getElementById('confirmModal');
+        const confirmTitle = document.getElementById('confirmTitle');
+        const confirmMessage = document.getElementById('confirmMessage');
+        const btnConfirmCancel = document.getElementById('btnConfirmCancel');
+        const btnConfirmAction = document.getElementById('btnConfirmAction');
+        const btnCloseAdmin = document.getElementById('btnCloseAdmin');
+
+        const adminPanel = document.getElementById('adminPanel');
+        const addTeamForm = document.getElementById('addTeamForm');
+        const teamInput = document.getElementById('teamInput');
+        const adminErrorMsg = document.getElementById('adminErrorMsg');
+        
+        const btnGenerate = document.getElementById('btnGenerate');
+        const btnReset = document.getElementById('btnReset');
+        const btnClearAll = document.getElementById('btnClearAll');
+        
+        const draftView = document.getElementById('draftView');
+        const draftList = document.getElementById('draftList');
+        const emptyState = document.getElementById('emptyState');
+        
+        const generatedView = document.getElementById('generatedView');
+        const finalList = document.getElementById('finalList');
+        const sorteoSubtitle = document.getElementById('sorteoSubtitle');
+
+        // --- SISTEMA DE NUBE (FIREBASE) ---
+        const initAuth = async () => {
+            try {
+                if (initialToken) {
+                    await signInWithCustomToken(auth, initialToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
+            } catch (err) {
+                console.error("Error autenticando:", err);
+            }
+        };
+
+        // Iniciar la autenticación primero (obligatorio)
+        initAuth();
+
+        // Escuchar cambios de autenticación
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            if (user) {
+                // Suscribir en tiempo real al documento de la nube
+                const stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'sorteo', 'estado');
+                onSnapshot(stateDocRef, (snapshot) => {
+                    if (snapshot.exists()) {
+                        appState = snapshot.data();
+                    } else {
+                        appState = { teams: [], isGenerated: false }; // Estado vacío inicial
+                    }
+                    renderUI();
+                }, (error) => {
+                    console.error("Error leyendo datos:", error);
+                });
+            }
+        });
+
+        // Guardar estado en la nube
+        const saveState = async () => {
+            if (!currentUser) return;
+            try {
+                const stateDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'sorteo', 'estado');
+                await setDoc(stateDocRef, appState);
+            } catch (err) {
+                console.error("Error guardando en la nube:", err);
+            }
+        };
+
+        // --- FUNCIONES INTERFAZ ---
+        const showError = (msg) => {
+            adminErrorMsg.textContent = msg;
+            adminErrorMsg.classList.remove('hidden');
+            setTimeout(() => adminErrorMsg.classList.add('hidden'), 3500);
+        };
+
+        const renderUI = () => {
+            draftList.innerHTML = '';
+            finalList.innerHTML = '';
+
+            // Habilitar/deshabilitar boton de sortear
+            if (appState.teams.length === 0) {
+                emptyState.classList.remove('hidden');
+                btnGenerate.disabled = true;
+            } else {
+                emptyState.classList.add('hidden');
+                btnGenerate.disabled = false;
+            }
+
+            if (appState.isGenerated && appState.teams.length > 0) {
+                // VISTA: SORTEO REALIZADO
+                draftView.classList.add('hidden');
+                generatedView.classList.remove('hidden');
+                sorteoSubtitle.textContent = "El orden ha sido generado oficialmente (En Vivo).";
+                
+                appState.teams.forEach((team, index) => {
+                    const div = document.createElement('div');
+                    div.className = 'team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-3 md:p-4 flex items-center gap-4 md:gap-6';
+                    div.innerHTML = `
+                        <div class="bg-accent text-white font-bold w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center text-lg md:text-xl flex-shrink-0 shadow-[0_0_15px_rgba(3,174,115,0.4)]">
+                            ${index + 1}
+                        </div>
+                        <div class="text-lg md:text-xl font-medium text-white truncate w-full">
+                            ${team}
+                        </div>
+                    `;
+                    finalList.appendChild(div);
+                });
+
+                teamInput.disabled = true;
+                btnGenerate.classList.add('hidden');
+                btnReset.classList.remove('hidden');
+
+            } else {
+                // VISTA: AÑADIENDO EQUIPOS
+                draftView.classList.remove('hidden');
+                generatedView.classList.add('hidden');
+                sorteoSubtitle.textContent = "Sincronizando equipos registrados en vivo.";
+                
+                appState.teams.forEach((team, index) => {
+                    const li = document.createElement('li');
+                    li.className = 'glass-card bg-white p-3 md:p-4 rounded-xl flex justify-between items-center group shadow-sm border border-slate-200';
+                    li.innerHTML = `
+                        <span class="font-medium text-primary flex items-center gap-3 truncate pr-2">
+                            <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                            <span class="truncate">${team}</span>
+                        </span>
+                        <button class="delete-btn text-slate-300 hover:text-rose-500 transition-colors p-2 flex-shrink-0 ${isAdminMode ? '' : 'hidden'}" data-index="${index}" title="Eliminar equipo">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    `;
+                    draftList.appendChild(li);
+                });
+
+                teamInput.disabled = false;
+                btnGenerate.classList.remove('hidden');
+                btnReset.classList.add('hidden');
+            }
+
+            // Asignar eventos de borrado
+            document.querySelectorAll('.delete-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    if (!isAdminMode) return; // Seguridad extra local
+                    const index = e.currentTarget.getAttribute('data-index');
+                    appState.teams.splice(index, 1);
+                    saveState(); // Guarda y se sincroniza automáticamente
+                });
+            });
+        };
+
+        // Fisher-Yates Shuffle
+        const shuffleArray = (array) => {
+            let currentIndex = array.length, randomIndex;
+            while (currentIndex != 0) {
+                randomIndex = Math.floor(Math.random() * currentIndex);
+                currentIndex--;
+                [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+            }
+            return array;
+        };
+
+        // Custom Confirm Modal Logic
+        const showConfirm = (title, msg, onConfirm) => {
+            confirmTitle.textContent = title;
+            confirmMessage.textContent = msg;
+            confirmModal.classList.remove('hidden');
+
+            const cleanup = () => {
+                confirmModal.classList.add('hidden');
+                btnConfirmAction.removeEventListener('click', okHandler);
+                btnConfirmCancel.removeEventListener('click', cancelHandler);
+            };
+
+            const okHandler = () => { cleanup(); onConfirm(); };
+            const cancelHandler = () => { cleanup(); };
+
+            btnConfirmAction.addEventListener('click', okHandler);
+            btnConfirmCancel.addEventListener('click', cancelHandler);
+        };
+
+        // Eventos de Acceso Secreto (Triple Clic)
+        secretTrigger.addEventListener('click', () => {
+            if (isAdminMode) return; // Si ya está logueado, no hace nada
+
+            clickCount++;
+            clearTimeout(clickTimer);
+            
+            // Reiniciar contador si pasa más de 1.5 segundos entre clics
+            clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
+
+            if (clickCount === 3) { // Al tercer clic...
+                clickCount = 0;
+                authModal.classList.remove('hidden');
+                adminPwdInput.value = '';
+                authError.textContent = '';
+                setTimeout(() => adminPwdInput.focus(), 100);
+            }
+        });
+
+        // Lógica del Modal de Contraseña
+        const closeAuthModal = () => {
+            authModal.classList.add('hidden');
+            adminPwdInput.value = '';
+        };
+
+        btnCancelAuth.addEventListener('click', closeAuthModal);
+
+        const attemptLogin = () => {
+            if (adminPwdInput.value === ADMIN_PASSWORD) {
+                isAdminMode = true;
+                closeAuthModal();
+                adminPanel.classList.remove('hidden');
+                renderUI();
+            } else {
+                authError.textContent = 'Contraseña incorrecta';
+                adminPwdInput.focus();
+            }
+        };
+
+        btnLoginAuth.addEventListener('click', attemptLogin);
+        adminPwdInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') attemptLogin();
+        });
+
+        // Cerrar el panel gestor (Logout)
+        btnCloseAdmin.addEventListener('click', () => {
+            isAdminMode = false;
+            adminPanel.classList.add('hidden');
+            renderUI();
+        });
+
+        // Lógica de Sorteo y Formularios
+        addTeamForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!isAdminMode) return;
+
+            const teamName = teamInput.value.trim();
+            
+            if (!teamName) return;
+            
+            const isDuplicate = appState.teams.some(t => t.toLowerCase() === teamName.toLowerCase());
+            if (isDuplicate) {
+                showError("El equipo ya existe en la lista.");
+                return;
+            }
+
+            appState.teams.push(teamName);
+            appState.isGenerated = false; 
+            teamInput.value = '';
+            
+            saveState(); // Sincroniza a todos!
+        });
+
+        btnGenerate.addEventListener('click', () => {
+            if (!isAdminMode) return;
+            if (appState.teams.length < 2) {
+                showError("Añade al menos 2 equipos para hacer el sorteo.");
+                return;
+            }
+            
+            // Animación visual botón
+            const originalBtnContent = btnGenerate.innerHTML;
+            btnGenerate.innerHTML = `<svg class="animate-spin w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Sorteando...`;
+            
+            setTimeout(() => {
+                appState.teams = shuffleArray([...appState.teams]);
+                appState.isGenerated = true;
+                
+                saveState(); // ¡Sincroniza y le salta el sorteo a todo el mundo!
+                
+                btnGenerate.innerHTML = originalBtnContent;
+                document.getElementById('sorteo').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 800); 
+        });
+
+        btnReset.addEventListener('click', () => {
+            if (!isAdminMode) return;
+            showConfirm(
+                'Reiniciar Sorteo',
+                '¿Seguro que quieres anular este orden? Los equipos se mantendrán para todos.',
+                () => {
+                    appState.isGenerated = false;
+                    appState.teams.sort((a, b) => a.localeCompare(b));
+                    saveState();
+                }
+            );
+        });
+
+        btnClearAll.addEventListener('click', () => {
+            if (!isAdminMode) return;
+            showConfirm(
+                'Eliminar Todos',
+                'ATENCIÓN: ¿Seguro de que quieres eliminar TODOS los equipos de la base de datos?',
+                () => {
+                    appState.teams = [];
+                    appState.isGenerated = false;
+                    saveState();
+                }
+            );
+        });
+    </script>
+</body>
+</html>
