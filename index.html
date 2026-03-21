@@ -1010,7 +1010,7 @@
           <h2
             class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
           >
-            Equipo Ganador
+            Equipo ganador
           </h2>
           <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
         </div>
@@ -1383,9 +1383,6 @@
       const emptyState = document.getElementById("emptyState");
       const generatedView = document.getElementById("generatedView");
       const finalList = document.getElementById("finalList");
-      const syncStatusIndicator = document.getElementById(
-        "syncStatusIndicator",
-      );
       const sorteoSubtitle = document.getElementById("sorteoSubtitle");
       const noWinnerState = document.getElementById("noWinnerState");
       const winnerView = document.getElementById("winnerView");
@@ -1398,21 +1395,14 @@
       function renderUI() {
         draftList.innerHTML = "";
         finalList.innerHTML = "";
-
-        winnerSelect.innerHTML =
-          '<option value="">-- Seleccionar equipo ganador --</option>';
+        
+        winnerSelect.innerHTML = '<option value="">-- Seleccionar equipo ganador --</option>';
 
         // Normalizar datos antiguos (por si había equipos guardados solo como texto)
-        if (
-          appState.teams.length > 0 &&
-          typeof appState.teams[0] === "string"
-        ) {
-          appState.teams = appState.teams.map((name) => ({
-            name,
-            members: "Sin integrantes",
-          }));
+        if (appState.teams.length > 0 && typeof appState.teams[0] === 'string') {
+          appState.teams = appState.teams.map(name => ({ name, members: "Sin integrantes" }));
         }
-
+        
         // Rellenar el selector de ganadores
         appState.teams.forEach((team, index) => {
           const option = document.createElement("option");
@@ -1464,8 +1454,7 @@
           btnGenerate.classList.add("hidden");
           btnReset.classList.remove("hidden");
         } else {
-          sorteoSubtitle.textContent =
-            "Aún no se ha realizado el orden de presentaciones de los equipos.";
+          sorteoSubtitle.textContent = "Aún no se ha realizado el orden de presentaciones de los equipos.";
           draftView.classList.remove("hidden");
           generatedView.classList.add("hidden");
 
@@ -1511,8 +1500,7 @@
               const team = appState.teams[index];
               editingIndex = index;
               teamInput.value = team.name;
-              membersInput.value =
-                team.members === "Sin integrantes" ? "" : team.members;
+              membersInput.value = team.members === "Sin integrantes" ? "" : team.members;
               btnSubmitTeam.textContent = "Guardar cambios";
               btnCancelEdit.classList.remove("hidden");
               teamInput.focus();
@@ -1526,7 +1514,6 @@
 
       function loadInitialState() {
         if (isCloudEnabled) {
-          syncStatusIndicator.textContent = "☁️ Tiempo real";
           onSnapshot(
             docRef,
             (snap) => {
@@ -1539,11 +1526,9 @@
             },
             (error) => {
               console.error("Error leyendo Firebase:", error);
-              syncStatusIndicator.textContent = "❌ Error leyendo datos";
             },
           );
         } else {
-          syncStatusIndicator.textContent = "💻 Modo local";
           const data = localStorage.getItem("lowcodecon_state");
           if (data) {
             try {
@@ -1562,7 +1547,6 @@
             await setDoc(docRef, appState);
           } catch (error) {
             console.error("Error guardando en Firebase:", error);
-            syncStatusIndicator.textContent = "❌ Error guardando datos";
           }
         } else {
           localStorage.setItem("lowcodecon_state", JSON.stringify(appState));
@@ -1618,24 +1602,18 @@
         const members = membersInput.value.trim();
 
         if (!name) return;
-
+        
         if (editingIndex >= 0) {
           // Si estamos editando y el nombre ya existe en otro equipo, ignorar
-          if (
-            appState.teams.some((t, i) => t.name === name && i !== editingIndex)
-          )
-            return;
-
-          appState.teams[editingIndex] = {
-            name,
-            members: members || "Sin integrantes",
-          };
+          if (appState.teams.some((t, i) => t.name === name && i !== editingIndex)) return;
+          
+          appState.teams[editingIndex] = { name, members: members || "Sin integrantes" };
           editingIndex = -1;
           btnSubmitTeam.textContent = "+ Añadir equipo";
           btnCancelEdit.classList.add("hidden");
         } else {
           // Si es nuevo y el nombre ya existe, ignorar
-          if (appState.teams.some((t) => t.name === name)) return;
+          if (appState.teams.some(t => t.name === name)) return;
           appState.teams.push({ name, members: members || "Sin integrantes" });
         }
 
