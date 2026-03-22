@@ -153,48 +153,53 @@
     <!-- 1. APLICACIÓN PÚBLICA (WEB PRINCIPAL LOWCODECON)                          -->
     <!-- ========================================================================= -->
     <div id="publicApp">
-      <!-- Navegación Sticky (Escritorio) -->
+      <!-- Navegación Sticky (Escritorio y Móvil) -->
       <nav
-        class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block"
+        class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 border-b border-slate-200/50 shadow-sm"
       >
         <div
-          class="max-w-6xl mx-auto px-6 py-2.5 flex justify-between items-center"
+          class="max-w-6xl mx-auto px-4 sm:px-6 py-3 md:py-4 flex justify-between items-center"
         >
           <a
             href="#"
             class="flex items-center hover:opacity-80 transition-opacity"
           >
             <div
-              class="font-display font-bold text-xl text-slate-900 flex items-center gap-1"
+              class="font-display font-bold text-xl md:text-2xl text-slate-900 flex items-center gap-1"
             >
               <span class="text-accent">&lt;/&gt;</span>LCC
             </div>
           </a>
-          <div class="flex gap-6 font-medium text-sm text-slate-600">
-            <a href="#programa" class="hover:text-primary transition-colors"
-              >Programa</a
-            >
-            <a href="#bases" class="hover:text-primary transition-colors"
-              >Bases</a
-            >
-            <a
-              href="#participantes"
-              class="hover:text-primary transition-colors"
-              >Participantes</a
-            >
-            <a href="#ganador" class="hover:text-primary transition-colors"
-              >Equipo ganador</a
-            >
-        <span class="text-slate-300">|</span>
-            <button class="btnOpenJuryAuth text-primary font-bold hover:text-[#12008a] transition-colors">Acceso Jurado</button>
-          </div>
+          <div class="flex items-center gap-4 md:gap-6">
+            <div class="hidden md:flex gap-6 font-medium text-sm text-slate-600 items-center">
+              <a href="#programa" class="hover:text-primary transition-colors"
+                >Programa</a
+              >
+              <a href="#bases" class="hover:text-primary transition-colors"
+                >Bases</a
+              >
+              <a
+                href="#participantes"
+                class="hover:text-primary transition-colors"
+                >Participantes</a
+              >
+              <a href="#ganador" class="hover:text-primary transition-colors"
+                >Equipo ganador</a
+              >
+              <span class="text-slate-300">|</span>
+            </div>
+            <button class="btnOpenJuryAuth flex items-center gap-1.5 text-primary font-bold hover:bg-primary/5 transition-colors text-xs sm:text-sm md:text-base border border-primary/20 shadow-sm bg-white px-3 py-1.5 rounded-lg md:border-transparent md:shadow-none md:bg-transparent md:px-0 md:py-0 md:hover:bg-transparent md:hover:text-[#12008a]">
+              <svg class="w-4 h-4 md:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+              <span class="md:hidden">Jurado</span>
+              <span class="hidden md:inline">Acceso Jurado</span>
+            </button>
           </div>
         </div>
       </nav>
 
       <!-- HERO SECTION -->
       <header
-        class="hero-pattern pt-4 pb-12 md:pt-28 md:pb-24 px-4 sm:px-6 text-center relative overflow-hidden"
+        class="hero-pattern pt-24 pb-12 md:pt-32 md:pb-24 px-4 sm:px-6 text-center relative overflow-hidden"
       >
         <div
           class="max-w-4xl mx-auto relative z-10 fade-in-up flex flex-col items-center"
@@ -857,9 +862,7 @@
       >
         <div class="text-center mb-10">
           <h2
-            id="secretTrigger"
-            class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3 select-none cursor-pointer"
-            title="Área de sorteo"
+            class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
           >
             Equipos participantes
           </h2>
@@ -972,6 +975,28 @@
             >
               Borrar Todos
             </button>
+          </div>
+
+          <!-- GESTIÓN DE JURADOS -->
+          <div class="mt-8 pt-6 border-t border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+              </svg>
+              Gestión de Jurado (Accesos)
+            </h4>
+            <form id="addJuryForm" class="flex flex-col gap-3 mb-4">
+              <div class="flex flex-col md:flex-row gap-3">
+                <input type="text" id="newJuryName" placeholder="Nombre completo..." class="flex-[2] px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:outline-none" required autocomplete="off" />
+                <input type="text" id="newJuryPwd" placeholder="Contraseña..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:outline-none" required autocomplete="off" />
+                <button type="submit" class="bg-primary hover:bg-[#12008a] text-white font-semibold py-2.5 px-5 rounded-xl transition-colors whitespace-nowrap">
+                  + Añadir Jurado
+                </button>
+              </div>
+            </form>
+            <ul id="adminJuryList" class="flex flex-col gap-2 max-h-[200px] overflow-y-auto bg-slate-50 p-3 rounded-2xl border border-slate-100">
+              <li class="text-slate-400 text-sm text-center py-2">Cargando jurados...</li>
+            </ul>
           </div>
 
           <!-- RESULTADOS DEL JURADO EN VIVO (Módulo integrado) -->
@@ -1245,105 +1270,42 @@
           </div>
         </div>
         <div
-          class="max-w-6xl mx-auto text-center border-t border-slate-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
+          class="max-w-6xl mx-auto border-t border-slate-200 pt-6 flex flex-col md:flex-row justify-center items-center relative gap-4 md:gap-0"
         >
-          <p>&copy; 2026 LowCodeConference. Todos los derechos reservados. |</p>
+          <p class="text-center text-xs sm:text-sm text-slate-500">&copy; 2026 LowCodeConference. Todos los derechos reservados.</p>
+          <button id="secretTrigger" class="md:absolute right-0 text-slate-300 hover:text-primary transition-colors focus:outline-none p-2" title="Panel de Administración">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.991l1.004.827c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.327.123.723.07 1.048-.125.075-.045.148-.088.22-.128.332-.183.582-.495.644-.869l.214-1.28Z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
+            </svg>
+          </button>
         </div>
       </footer>
+
       <!-- Menú inferior (Móvil) -->
-      <nav
-        class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]"
-      >
+      <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]">
         <div class="flex justify-around items-center px-2 py-2">
-          <a
-            href="#programa"
-            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-          >
-            <svg
-              class="w-5 h-5 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
-            </svg>
+          <a href="#programa" class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors">
+            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
             <span class="text-[10px] font-semibold">Programa</span>
           </a>
-          <a
-            href="#bases"
-            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-          >
-            <svg
-              class="w-5 h-5 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              ></path>
-            </svg>
+          <a href="#bases" class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors">
+            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
             <span class="text-[10px] font-semibold">Bases</span>
           </a>
-          <a
-            href="#participantes"
-            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-          >
-            <svg
-              class="w-5 h-5 mb-1"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-              ></path>
-            </svg>
+          <a href="#participantes" class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors">
+            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
             <span class="text-[10px] font-semibold">Sorteo</span>
           </a>
-          <a
-            href="#ganador"
-            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-accent transition-colors relative group"
-          >
-            <div
-              class="absolute -top-6 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm"
-            >
+          <a href="#ganador" class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-accent transition-colors relative group">
+            <div class="absolute -top-6 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm">
               <div class="bg-accent p-2 rounded-full text-white shadow-md">
-                <svg
-                  class="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
-                  ></path>
-                </svg>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
               </div>
             </div>
             <span class="text-[10px] font-bold text-accent mt-6">Ganador</span>
           </a>
         </div>
-        <button class="btnOpenJuryAuth flex flex-col items-center p-2 w-1/5 text-slate-500 hover:text-primary transition-colors">
-  <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-  </svg>
-  <span class="text-[10px] font-semibold">Jurado</span>
-</button>
       </nav>
     </div>
     <!-- FIN PUBLIC APP -->
@@ -1370,13 +1332,14 @@
               >| Jurado</span
             >
           </div>
-          <div class="flex items-center gap-3 text-sm font-medium">
-            <span id="juryNameDisplay" class="text-primary"></span>
+          <div class="flex items-center gap-1 sm:gap-3 text-sm font-medium">
+            <span id="juryNameDisplay" class="text-primary truncate max-w-[100px] sm:max-w-none"></span>
             <button
               id="btnExitJury"
-              class="text-slate-400 hover:text-rose-500 ml-2"
-              title="Salir"
+              class="flex items-center gap-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 px-3 py-1.5 rounded-xl border border-transparent hover:border-rose-100 transition-all ml-1"
+              title="Volver a la app principal"
             >
+              <span class="hidden sm:inline font-semibold">Volver al inicio</span>
               <svg
                 class="w-5 h-5"
                 fill="none"
@@ -1419,12 +1382,18 @@
             <p>Aún no hay equipos registrados para evaluar.</p>
           </div>
           <div id="teamsContainer" class="flex flex-col gap-4"></div>
-          <div class="mt-12 text-center">
+          <div class="mt-12 text-center flex flex-col items-center gap-4">
             <button
               id="btnFinish"
               class="hidden bg-slate-900 hover:bg-black text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-lg w-full sm:w-auto"
             >
               Finalizar Votaciones
+            </button>
+            <button
+              id="btnReturnToMain"
+              class="text-slate-500 hover:text-primary text-sm font-medium underline transition-colors"
+            >
+              Volver a la app principal
             </button>
           </div>
         </section>
@@ -1519,9 +1488,9 @@
           <div class="mt-8 text-center">
             <button
               id="btnExitResults"
-              class="text-slate-500 hover:text-slate-800 text-sm font-medium underline"
+              class="text-slate-500 hover:text-primary text-sm font-medium underline transition-colors"
             >
-              Salir al inicio
+              Volver a la app principal
             </button>
           </div>
         </section>
@@ -1546,18 +1515,18 @@
         <input
           type="password"
           id="adminPwd"
-          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4 focus:ring-2 focus:ring-primary focus:outline-none"
           placeholder="Contraseña"
           autocomplete="off"
         />
         <div class="text-rose-500 text-sm mb-4 h-5" id="authError"></div>
         <div class="flex justify-end gap-3">
-          <button id="btnCancelAuth" class="px-4 py-2 text-slate-500">
+          <button id="btnCancelAuth" class="px-4 py-2.5 text-slate-500 font-medium hover:bg-slate-50 rounded-xl transition-colors">
             Cancelar
           </button>
           <button
             id="btnLoginAuth"
-            class="px-6 py-2 bg-primary text-white rounded-xl"
+            class="px-6 py-2.5 bg-primary hover:bg-[#12008a] text-white font-semibold rounded-xl shadow-md transition-colors"
           >
             Entrar
           </button>
@@ -1565,7 +1534,7 @@
       </div>
     </div>
 
-    <!-- MODAL AUTH JURADO (ENLACE FOOTER) -->
+    <!-- MODAL AUTH JURADO (ENLACE NAV) -->
     <div
       id="juryAuthModal"
       class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4"
@@ -1592,30 +1561,30 @@
         </div>
         <h3 class="text-xl font-bold text-slate-900 mb-1">Acceso Jurado</h3>
         <p class="text-xs text-slate-500 mb-4">
-          Identifícate para valorar los proyectos.
+          Identifícate para valorar los proyectos. (Creado por el administrador)
         </p>
         <input
           type="text"
           id="juryNameInput"
-          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-3"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-3 focus:ring-2 focus:ring-primary focus:outline-none"
           placeholder="Tu Nombre Completo"
           autocomplete="off"
         />
         <input
           type="password"
           id="juryPwdInput"
-          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4"
-          placeholder="Contraseña (jurado)"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4 focus:ring-2 focus:ring-primary focus:outline-none"
+          placeholder="Contraseña (individual)"
           autocomplete="off"
         />
         <div class="text-rose-500 text-sm mb-4 h-5" id="juryAuthError"></div>
-        <div class="flex justify-end gap-3">
-          <button id="btnCancelJuryAuth" class="px-4 py-2 text-slate-500">
+        <div class="flex justify-center gap-3 mt-2 w-full">
+          <button id="btnCancelJuryAuth" class="flex-1 px-4 py-2.5 text-slate-600 bg-slate-100 hover:bg-slate-200 rounded-xl font-semibold transition-colors">
             Cancelar
           </button>
           <button
             id="btnLoginJuryAuth"
-            class="px-6 py-2 bg-primary text-white rounded-xl"
+            class="flex-1 px-4 py-2.5 bg-primary hover:bg-[#12008a] text-white font-semibold rounded-xl shadow-md transition-colors"
           >
             Comenzar
           </button>
@@ -1649,43 +1618,37 @@
     <!-- ========================================================================= -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+      import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
       import {
         getFirestore,
         doc,
         setDoc,
         onSnapshot,
         collection,
+        getDocs,
+        addDoc,
+        deleteDoc
       } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-      // 👇 PEGA TU API KEY DE FIREBASE AQUÍ 👇
+      // Configuración oficial de tu proyecto Firebase
       const firebaseConfig = {
         apiKey: "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w",
         authDomain: "lowcodecon2026.firebaseapp.com",
         projectId: "lowcodecon2026",
         storageBucket: "lowcodecon2026.firebasestorage.app",
         messagingSenderId: "1056508268087",
-        appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2",
+        appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2"
       };
-
-      const isCloudEnabled =
-        !!firebaseConfig.apiKey &&
-        firebaseConfig.apiKey !== "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w";
-
-      let db = null;
+      
+      let app, auth, db, user;
       let docRefEvent = null;
-
-      if (isCloudEnabled) {
-        const app = initializeApp(firebaseConfig);
-        db = getFirestore(app);
-        docRefEvent = doc(db, "eventos", "lowcodecon2026");
-      }
+      let unsubscribeJurados = null; // Para limpiar el snapshot del admin
 
       // --- ESTADOS GLOBALES ---
       let appState = { teams: [], isGenerated: false, winner: null };
       let juryState = { juryName: "", votes: {} };
 
       const ADMIN_PASSWORD = "admin";
-      const JURY_PASSWORD = "jurado";
 
       let isAdminMode = false;
       let isJuryMode = false;
@@ -1723,10 +1686,15 @@
       const btnSetWinner = document.getElementById("btnSetWinner");
       const btnRemoveWinner = document.getElementById("btnRemoveWinner");
       const publicAdminResults = document.getElementById("publicAdminResults");
+      
+      // NUEVAS REFERENCIAS DOM: ADMIN JURADO
+      const addJuryForm = document.getElementById("addJuryForm");
+      const newJuryName = document.getElementById("newJuryName");
+      const newJuryPwd = document.getElementById("newJuryPwd");
+      const adminJuryList = document.getElementById("adminJuryList");
 
       // --- REFERENCIAS DOM: JURADO ---
       const juryApp = document.getElementById("juryApp");
-      const btnOpenJuryAuth = document.getElementById("btnOpenJuryAuth");
       const juryAuthModal = document.getElementById("juryAuthModal");
       const juryNameInput = document.getElementById("juryNameInput");
       const juryPwdInput = document.getElementById("juryPwdInput");
@@ -1741,17 +1709,42 @@
       const juryAdminScreen = document.getElementById("juryAdminScreen");
       const juryEmptyState = document.getElementById("juryEmptyState");
       const teamsContainer = document.getElementById("teamsContainer");
-      const progressBarContainer = document.getElementById(
-        "progressBarContainer",
-      );
+      const progressBarContainer = document.getElementById("progressBarContainer");
       const progressBar = document.getElementById("progressBar");
       const btnFinish = document.getElementById("btnFinish");
       const btnReturn = document.getElementById("btnReturn");
+      const btnReturnToMain = document.getElementById("btnReturnToMain");
       const btnViewJuryResults = document.getElementById("btnViewJuryResults");
       const btnExitResults = document.getElementById("btnExitResults");
       const juryGlobalResults = document.getElementById("juryGlobalResults");
       const toast = document.getElementById("toast");
       const toastMsg = document.getElementById("toastMsg");
+
+      // Inicializar Firebase con tu proyecto real
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      db = getFirestore(app);
+
+      docRefEvent = doc(db, 'eventos', 'lowcodecon2026');
+
+      // Autenticación anónima obligatoria para leer/escribir de forma segura sin cuenta
+      signInAnonymously(auth).catch((error) => {
+        console.error("Error de Auth Anónima:", error);
+      });
+
+      onAuthStateChanged(auth, (u) => {
+        user = u;
+        if (user) {
+          onSnapshot(docRefEvent, (snap) => {
+            if (snap.exists()) {
+              appState = snap.data();
+            } else {
+              appState = { teams: [], isGenerated: false, winner: null };
+            }
+            renderPublicUI();
+          });
+        }
+      });
 
       // ==========================================
       // FUNCIONES: APLICACIÓN PÚBLICA Y ADMIN
@@ -1845,12 +1838,6 @@
               </div>`;
             draftList.appendChild(li);
           });
-          document.querySelectorAll(".btnOpenJuryAuth").forEach(btn => {
-  btn.addEventListener("click", () => {
-    juryAuthModal.classList.remove("hidden");
-    juryNameInput.focus();
-  });
-});
 
           document.querySelectorAll(".delete-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
@@ -1882,31 +1869,22 @@
       }
 
       async function saveAppState() {
-        if (isCloudEnabled) {
+        if (db && user) {
           try {
             await setDoc(docRefEvent, appState);
-          } catch (e) {}
+          } catch (e) {
+            console.error(e);
+          }
         } else {
-          localStorage.setItem("lowcodecon_state", JSON.stringify(appState));
           renderPublicUI();
         }
       }
 
-      // --- TRIPLE CLICK: LOGIN ADMIN ---
-      let clickCount = 0,
-        clickTimer = null;
+      // --- LOGIN ADMIN ---
       secretTrigger.addEventListener("click", () => {
         if (isAdminMode) return;
-        clickCount++;
-        clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-        }, 1500);
-        if (clickCount === 3) {
-          authModal.classList.remove("hidden");
-          adminPwdInput.focus();
-          clickCount = 0;
-        }
+        authModal.classList.remove("hidden");
+        adminPwdInput.focus();
       });
 
       btnLoginAuth.addEventListener("click", () => {
@@ -1918,18 +1896,54 @@
           adminPwdInput.value = "";
           renderPublicUI();
           startLiveResultsListening(publicAdminResults); // Cargar votos de jurado en panel admin
+          
+          // Cargar listado de jurados para administración
+          if (db && user) {
+             unsubscribeJurados = onSnapshot(collection(db, 'jurados'), (snap) => {
+                 adminJuryList.innerHTML = "";
+                 if (snap.empty) {
+                     adminJuryList.innerHTML = '<li class="text-slate-400 text-sm text-center py-2">No hay jurados registrados. Añade uno.</li>';
+                     return;
+                 }
+                 snap.forEach(docSnap => {
+                     const data = docSnap.data();
+                     const li = document.createElement("li");
+                     li.className = "flex justify-between items-center bg-white p-3 rounded-xl border border-slate-100 shadow-sm text-sm";
+                     li.innerHTML = `
+                         <div class="flex items-center gap-3">
+                             <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-xs uppercase">${data.nombre.charAt(0)}</div>
+                             <div>
+                                 <div class="font-bold text-slate-800">${data.nombre}</div>
+                                 <div class="text-slate-400 text-[10px] font-mono">pwd: ${data.password}</div>
+                             </div>
+                         </div>
+                         <button class="text-slate-300 hover:text-rose-500 p-2 transition-colors" data-id="${docSnap.id}" title="Eliminar Jurado">
+                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                         </button>
+                     `;
+                     li.querySelector('button').addEventListener('click', async () => {
+                         await deleteDoc(doc(db, 'jurados', docSnap.id));
+                     });
+                     adminJuryList.appendChild(li);
+                 });
+             });
+          }
+
         } else {
           authError.textContent = "Incorrecto";
         }
       });
+      
       btnCancelAuth.addEventListener("click", () => {
         authModal.classList.add("hidden");
         authError.textContent = "";
         adminPwdInput.value = "";
       });
+      
       btnCloseAdmin.addEventListener("click", () => {
         isAdminMode = false;
         adminPanel.classList.add("hidden");
+        if (unsubscribeJurados) unsubscribeJurados(); // Dejamos de escuchar la BBDD si cerramos el panel
         renderPublicUI();
       });
 
@@ -2010,13 +2024,34 @@
         saveAppState();
       });
 
+      // --- GESTIÓN DE JURADOS INDIVIDUALES (ADMIN) ---
+      addJuryForm.addEventListener("submit", async (e) => {
+         e.preventDefault();
+         const nombre = newJuryName.value.trim();
+         const password = newJuryPwd.value.trim();
+         if (!nombre || !password || !db || !user) return;
+         
+         try {
+             await addDoc(collection(db, 'jurados'), {
+                 nombre: nombre,
+                 password: password
+             });
+             newJuryName.value = "";
+             newJuryPwd.value = "";
+         } catch(error) {
+             console.error("Error al añadir jurado:", error);
+         }
+      });
+
       // ==========================================
       // FUNCIONES: APLICACIÓN DEL JURADO
       // ==========================================
 
-      btnOpenJuryAuth.addEventListener("click", () => {
-        juryAuthModal.classList.remove("hidden");
-        juryNameInput.focus();
+      document.querySelectorAll(".btnOpenJuryAuth").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          juryAuthModal.classList.remove("hidden");
+          juryNameInput.focus();
+        });
       });
 
       btnCancelJuryAuth.addEventListener("click", () => {
@@ -2026,35 +2061,64 @@
         juryPwdInput.value = "";
       });
 
-      btnLoginJuryAuth.addEventListener("click", () => {
+      btnLoginJuryAuth.addEventListener("click", async () => {
         const name = juryNameInput.value.trim();
         const pwd = juryPwdInput.value;
-        if (!name) {
-          juryAuthError.textContent = "Introduce tu nombre.";
-          return;
-        }
-        if (pwd !== JURY_PASSWORD) {
-          juryAuthError.textContent = "Contraseña incorrecta.";
+        if (!name || !pwd) {
+          juryAuthError.textContent = "Introduce nombre y contraseña.";
           return;
         }
 
-        // Entrar a la app del jurado
-        isJuryMode = true;
-        juryState.juryName = name;
-        juryNameDisplay.textContent = name;
+        if (!db || !user) {
+          juryAuthError.textContent = "Cargando base de datos, espera un momento...";
+          return;
+        }
 
-        juryAuthModal.classList.add("hidden");
-        publicApp.classList.add("hidden"); // Ocultar web normal
-        juryApp.classList.remove("hidden"); // Mostrar app jurado
-
+        btnLoginJuryAuth.disabled = true;
+        btnLoginJuryAuth.textContent = "Comprobando...";
         juryAuthError.textContent = "";
-        juryNameInput.value = "";
-        juryPwdInput.value = "";
-        renderJuryTeams();
+
+        try {
+            // Comprobación de credenciales reales en Firebase
+            const juradosCol = collection(db, 'jurados');
+            const juradosSnap = await getDocs(juradosCol);
+            let validJury = false;
+
+            juradosSnap.forEach(docSnap => {
+                const data = docSnap.data();
+                // Verificación ignorando mayúsculas/minúsculas en el nombre y exacta en la contraseña
+                if (data.nombre.toLowerCase() === name.toLowerCase() && data.password === pwd) {
+                    validJury = true;
+                }
+            });
+
+            if (validJury) {
+                isJuryMode = true;
+                juryState.juryName = name;
+                juryNameDisplay.textContent = name;
+
+                juryAuthModal.classList.add("hidden");
+                publicApp.classList.add("hidden"); // Ocultar web normal
+                juryApp.classList.remove("hidden"); // Mostrar app jurado
+
+                juryNameInput.value = "";
+                juryPwdInput.value = "";
+                renderJuryTeams();
+            } else {
+                juryAuthError.textContent = "Credenciales incorrectas o jurado no registrado.";
+            }
+        } catch (error) {
+            console.error("Error al iniciar sesión como jurado:", error);
+            juryAuthError.textContent = "Error al verificar credenciales.";
+        } finally {
+            btnLoginJuryAuth.disabled = false;
+            btnLoginJuryAuth.textContent = "Comenzar";
+        }
       });
 
       btnExitJury.addEventListener("click", exitJuryMode);
       btnExitResults.addEventListener("click", exitJuryMode);
+      btnReturnToMain.addEventListener("click", exitJuryMode);
 
       function exitJuryMode() {
         isJuryMode = false;
@@ -2207,12 +2271,12 @@
                 3000,
               );
 
-              if (isCloudEnabled) {
+              if (db && user) {
                 try {
                   await setDoc(
                     doc(
                       db,
-                      "votaciones_jurado",
+                      'votaciones_jurado',
                       `2026_${juryState.juryName.replace(/\s+/g, "_")}`,
                     ),
                     {
@@ -2222,7 +2286,9 @@
                     },
                     { merge: true },
                   );
-                } catch (error) {}
+                } catch (error) {
+                    console.error("Error al guardar voto:", error);
+                }
               }
             });
           teamsContainer.appendChild(card);
@@ -2230,7 +2296,7 @@
         updateJuryProgress();
       }
 
-      // BOTÓN DE FINALIZAR (Arreglado)
+      // BOTÓN DE FINALIZAR
       btnFinish.addEventListener("click", () => {
         votingScreen.classList.add("hidden");
         thanksScreen.classList.remove("hidden");
@@ -2255,13 +2321,14 @@
 
       // Carga todos los votos de la nube y pinta el desglose en el contenedor elegido
       function startLiveResultsListening(containerElement) {
-        if (!isCloudEnabled) {
+        if (!db || !user) {
           containerElement.innerHTML =
-            '<p class="text-center text-slate-500 py-6">El sumatorio del jurado solo funciona con conexión a Firebase (API Key).</p>';
+            '<p class="text-center text-slate-500 py-6">Conectando a base de datos...</p>';
           return;
         }
 
-        onSnapshot(collection(db, "votaciones_jurado"), (snapVotes) => {
+        const votesCol = collection(db, 'votaciones_jurado');
+        onSnapshot(votesCol, (snapVotes) => {
           let aggregated = {};
 
           appState.teams.forEach(
@@ -2269,8 +2336,8 @@
               (aggregated[team.name] = { total: 0, juries: 0, details: [] }),
           );
 
-          snapVotes.forEach((doc) => {
-            const data = doc.data();
+          snapVotes.forEach((docSnap) => {
+            const data = docSnap.data();
             for (let teamName in data.votos) {
               if (!aggregated[teamName])
                 aggregated[teamName] = { total: 0, juries: 0, details: [] };
@@ -2328,30 +2395,8 @@
           });
         });
       }
-
-      // ==========================================
-      // INICIO PRINCIPAL DE LA APP
-      // ==========================================
-
-      if (isCloudEnabled) {
-        onSnapshot(docRefEvent, (snap) => {
-          if (snap.exists()) appState = snap.data();
-          else appState = { teams: [], isGenerated: false, winner: null };
-          renderPublicUI();
-        });
-      } else {
-        // MODO LOCAL
-        const data = localStorage.getItem("lowcodecon_state");
-        if (data) {
-          try {
-            appState = JSON.parse(data);
-          } catch {}
-        }
-        renderPublicUI();
-      }
     </script>
   </body>
 </html>
-
 
 
