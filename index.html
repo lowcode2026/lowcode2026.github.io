@@ -185,12 +185,9 @@
             <a href="#ganador" class="hover:text-primary transition-colors"
               >Equipo ganador</a
             >
-            <button
-              id="btnOpenJuryAuth"
-              class="hover:text-primary transition-colors underline font-medium"
-            >
-              Acceso Jurado
-            </button>
+        <span class="text-slate-300">|</span>
+            <button class="btnOpenJuryAuth text-primary font-bold hover:text-[#12008a] transition-colors">Acceso Jurado</button>
+          </div>
           </div>
         </div>
       </nav>
@@ -1341,6 +1338,12 @@
             <span class="text-[10px] font-bold text-accent mt-6">Ganador</span>
           </a>
         </div>
+        <button class="btnOpenJuryAuth flex flex-col items-center p-2 w-1/5 text-slate-500 hover:text-primary transition-colors">
+  <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+  </svg>
+  <span class="text-[10px] font-semibold">Jurado</span>
+</button>
       </nav>
     </div>
     <!-- FIN PUBLIC APP -->
@@ -1842,6 +1845,12 @@
               </div>`;
             draftList.appendChild(li);
           });
+          document.querySelectorAll(".btnOpenJuryAuth").forEach(btn => {
+  btn.addEventListener("click", () => {
+    juryAuthModal.classList.remove("hidden");
+    juryNameInput.focus();
+  });
+});
 
           document.querySelectorAll(".delete-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
