@@ -70,7 +70,22 @@
         transform: translateY(20px);
       }
 
+      .fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+
       @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
         to {
           opacity: 1;
           transform: translateY(0);
@@ -99,6 +114,33 @@
         box-shadow: 0 15px 30px rgba(3, 174, 115, 0.2);
       }
 
+      /* Estilos para los Sliders del Jurado */
+      input[type="range"] {
+        -webkit-appearance: none;
+        width: 100%;
+        background: transparent;
+      }
+      input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 24px;
+        width: 24px;
+        border-radius: 50%;
+        background: #03ae73;
+        cursor: pointer;
+        margin-top: -10px;
+        box-shadow: 0 2px 6px rgba(3, 174, 115, 0.4);
+      }
+      input[type="range"]::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 6px;
+        cursor: pointer;
+        background: #e2e8f0;
+        border-radius: 3px;
+      }
+      input[type="range"]:focus {
+        outline: none;
+      }
+
       pb-safe {
         padding-bottom: env(safe-area-inset-bottom);
       }
@@ -107,746 +149,739 @@
   <body
     class="text-slate-800 antialiased selection:bg-accent selection:text-white overflow-x-hidden"
   >
-    <!-- Navegación Sticky (Escritorio) - Altura reducida -->
-    <nav
-      class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block"
-    >
-      <div
-        class="max-w-6xl mx-auto px-6 py-2.5 flex justify-between items-center"
-      >
-        <a
-          href="#"
-          class="flex items-center hover:opacity-80 transition-opacity"
-        >
-          <!-- Logo de texto </>lowcode -->
-          <div
-            class="font-display font-bold text-xl text-slate-900 flex items-center gap-1"
-          >
-            <span class="text-accent">&lt;/&gt;</span>LCC
-          </div>
-        </a>
-        <div class="flex gap-6 font-medium text-sm text-slate-600">
-          <a href="#programa" class="hover:text-primary transition-colors"
-            >Programa</a
-          >
-          <a href="#bases" class="hover:text-primary transition-colors"
-            >Bases</a
-          >
-          <a href="#participantes" class="hover:text-primary transition-colors"
-            >Participantes</a
-          >
-          <a href="#ganador" class="hover:text-primary transition-colors"
-            >Equipo ganador</a
-          >
-        </div>
-      </div>
-    </nav>
-
-    <!-- HERO SECTION - Márgenes ajustados -->
-    <header
-      class="hero-pattern pt-4 pb-12 md:pt-28 md:pb-24 px-4 sm:px-6 text-center relative overflow-hidden"
-    >
-      <div
-        class="max-w-4xl mx-auto relative z-10 fade-in-up flex flex-col items-center"
+    <!-- ========================================================================= -->
+    <!-- 1. APLICACIÓN PÚBLICA (WEB PRINCIPAL LOWCODECON)                          -->
+    <!-- ========================================================================= -->
+    <div id="publicApp">
+      <!-- Navegación Sticky (Escritorio) -->
+      <nav
+        class="fixed w-full z-50 transition-all duration-300 glass-card bg-white/90 hidden md:block"
       >
         <div
-          class="inline-block mb-6 md:mb-8 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs sm:text-sm font-semibold tracking-wide uppercase mt-10 md:mt-0"
-        >
-          Evento Educativo
-        </div>
-
-        <!-- Imagen del Logo Grande -->
-        <h1 class="sr-only">LowCode Conference</h1>
-        <img
-          src="logo2.png"
-          alt="LowCode Conference"
-          class="w-full max-w-[280px] sm:max-w-md md:max-w-xl mx-auto mb-1 md:mb-3 object-contain drop-shadow-sm transition-transform hover:scale-105 duration-500"
-          onerror="
-            this.outerHTML =
-              '<div class=\'text-5xl sm:text-6xl md:text-8xl font-display font-bold text-slate-900 mb-1 md:mb-3\'>LowCode<span class=\'text-accent\'> Conference</span></div>'
-          "
-        />
-
-        <!-- Subtítulo con margen reducido -->
-        <h2
-          class="text-xl md:text-2xl text-slate-700 mb-4 md:mb-6 font-light max-w-2xl mx-auto leading-snug px-4"
-        >
-          De la idea al prototipo con
-          <span class="text-primary font-bold">Inteligencia Artificial</span>
-        </h2>
-
-        <p
-          class="text-sm sm:text-base md:text-lg text-slate-500 mb-6 md:mb-8 max-w-3xl mx-auto px-4"
-        >
-          Un evento donde el alumnado presenta ideas convertidas en soluciones
-          digitales con IA, mediante un enfoque de vibe coding.
-        </p>
-
-        <!-- Bloque de info con margen reducido -->
-        <div
-          class="flex flex-col sm:flex-row items-stretch justify-center gap-3 md:gap-4 mb-8 md:mb-10 w-full max-w-2xl mx-auto"
-        >
-          <div
-            class="flex items-center justify-center gap-3 text-slate-700 bg-white shadow-sm px-4 md:px-6 py-3 rounded-xl border border-slate-200 w-full sm:w-auto"
-          >
-            <svg
-              class="w-5 h-5 text-accent flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-              ></path>
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-              ></path>
-            </svg>
-            <span class="font-medium text-sm md:text-base leading-tight"
-              >IES El Rincón · Aula de videojuegos</span
-            >
-          </div>
-          <div
-            class="flex items-center justify-center gap-3 text-slate-700 bg-white shadow-sm px-4 md:px-6 py-3 rounded-xl border border-slate-200 w-full sm:w-auto"
-          >
-            <svg
-              class="w-5 h-5 text-accent flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
-            </svg>
-            <span class="font-medium text-sm md:text-base leading-tight"
-              >Lunes 23 de marzo de 2026</span
-            >
-          </div>
-        </div>
-
-        <div
-          class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 w-full max-w-4xl mx-auto"
+          class="max-w-6xl mx-auto px-6 py-2.5 flex justify-between items-center"
         >
           <a
-            href="#programa"
-            class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-slate-800 group w-full"
+            href="#"
+            class="flex items-center hover:opacity-80 transition-opacity"
           >
-            <svg
-              class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <div
+              class="font-display font-bold text-xl text-slate-900 flex items-center gap-1"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-              ></path>
-            </svg>
-            <span class="font-semibold text-sm md:text-base">Programa</span>
+              <span class="text-accent">&lt;/&gt;</span>LCC
+            </div>
           </a>
-          <a
-            href="#bases"
-            class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-slate-800 group w-full"
+          <div class="flex gap-6 font-medium text-sm text-slate-600">
+            <a href="#programa" class="hover:text-primary transition-colors"
+              >Programa</a
+            >
+            <a href="#bases" class="hover:text-primary transition-colors"
+              >Bases</a
+            >
+            <a
+              href="#participantes"
+              class="hover:text-primary transition-colors"
+              >Participantes</a
+            >
+            <a href="#ganador" class="hover:text-primary transition-colors"
+              >Equipo ganador</a
+            >
+            <button
+              id="btnOpenJuryAuth"
+              class="hover:text-primary transition-colors underline font-medium"
+            >
+              Acceso Jurado
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <!-- HERO SECTION -->
+      <header
+        class="hero-pattern pt-4 pb-12 md:pt-28 md:pb-24 px-4 sm:px-6 text-center relative overflow-hidden"
+      >
+        <div
+          class="max-w-4xl mx-auto relative z-10 fade-in-up flex flex-col items-center"
+        >
+          <div
+            class="inline-block mb-6 md:mb-8 px-4 py-1.5 rounded-full bg-accent/10 border border-accent/20 text-accent text-xs sm:text-sm font-semibold tracking-wide uppercase mt-10 md:mt-0"
           >
-            <svg
-              class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              ></path>
-            </svg>
-            <span class="font-semibold text-sm md:text-base">Bases</span>
-          </a>
-         <a
-            href="#participantes"
-            class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-primary hover:shadow-md transition-all text-slate-800 group w-full"
+            Evento Educativo
+          </div>
+
+          <h1 class="sr-only">LowCode Conference</h1>
+          <img
+            src="logo.png"
+            alt="LowCode Conference"
+            class="w-full max-w-[280px] sm:max-w-md md:max-w-xl mx-auto mb-1 md:mb-3 object-contain drop-shadow-sm transition-transform hover:scale-105 duration-500"
+            onerror="
+              this.outerHTML =
+                '<div class=\'text-5xl sm:text-6xl md:text-8xl font-display font-bold text-slate-900 mb-1 md:mb-3\'>LowCode<span class=\'text-accent\'> Conference</span></div>'
+            "
+          />
+
+          <h2
+            class="text-xl md:text-2xl text-slate-700 mb-4 md:mb-6 font-light max-w-2xl mx-auto leading-snug px-4"
           >
-            <svg
-              class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-primary transition-all flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
-            </svg>
-            <span class="font-semibold text-sm md:text-base">Participantes</span>
-          </a>
-          <a
-            href="#ganador"
-            class="flex flex-col items-center justify-center p-5 rounded-2xl bg-accent border border-accent hover:bg-[#029b66] transition-colors text-white shadow-[0_0_20px_rgba(3,174,115,0.3)] group w-full"
+            De la idea al prototipo con
+            <span class="text-primary font-bold">Inteligencia Artificial</span>
+          </h2>
+
+          <p
+            class="text-sm sm:text-base md:text-lg text-slate-500 mb-6 md:mb-8 max-w-3xl mx-auto px-4"
           >
-            <svg
-              class="w-7 h-7 text-white mb-1.5 group-hover:scale-110 transition-transform flex-shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
-            </svg>
-            <span class="font-bold text-sm md:text-base">Ganador</span>
-          </a>
-        </div>
-      </div>
-    </header>
+            Un evento donde el alumnado presenta ideas convertidas en soluciones
+            digitales con IA, mediante un enfoque de vibe coding.
+          </p>
 
-    <!-- PROGRAMA DEL EVENTO -->
-    <section id="programa" class="py-16 px-6 max-w-5xl mx-auto">
-      <div class="text-center mb-10 fade-in-up">
-        <h2
-          class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
-        >
-          Programa del evento
-        </h2>
-        <div class="h-1 w-20 bg-accent mx-auto rounded-full"></div>
-      </div>
-
-      <div class="relative max-w-3xl mx-auto pl-4 md:pl-0">
-        <!-- 09:00 - Azul -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.1s"
-        >
           <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
-            <span class="text-primary font-bold text-lg">09:00 - 09:30 h</span>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-primary font-bold mb-1.5">
-              09:00 - 09:30 h
+            class="flex flex-col sm:flex-row items-stretch justify-center gap-3 md:gap-4 mb-8 md:mb-10 w-full max-w-2xl mx-auto"
+          >
+            <div
+              class="flex items-center justify-center gap-3 text-slate-700 bg-white shadow-sm px-4 md:px-6 py-3 rounded-xl border border-slate-200 w-full sm:w-auto"
+            >
+              <svg
+                class="w-5 h-5 text-accent flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                ></path>
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                ></path>
+              </svg>
+              <span class="font-medium text-sm md:text-base leading-tight"
+                >IES El Rincón · Aula de videojuegos</span
+              >
             </div>
             <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+              class="flex items-center justify-center gap-3 text-slate-700 bg-white shadow-sm px-4 md:px-6 py-3 rounded-xl border border-slate-200 w-full sm:w-auto"
             >
-              <h3 class="font-bold text-lg text-slate-900">
-                Bienvenida y recepción
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Presentación del evento y organización inicial.
-              </p>
+              <svg
+                class="w-5 h-5 text-accent flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span class="font-medium text-sm md:text-base leading-tight"
+                >Lunes 23 de marzo de 2026</span
+              >
             </div>
           </div>
-        </div>
 
-        <!-- 09:30 - Azul -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.2s"
-        >
           <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 pt-2">
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+            class="grid grid-cols-2 sm:grid-cols-4 gap-3 md:gap-4 w-full max-w-4xl mx-auto"
+          >
+            <a
+              href="#programa"
+              class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-slate-800 group w-full"
             >
-              <h3 class="font-bold text-lg text-slate-900">
-                Ponencia inaugural
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Intervención de invitados.
-              </p>
-            </div>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-primary font-bold mb-1.5">
-              09:30 - 10:00 h
-            </div>
-            <span class="hidden md:block text-primary font-bold text-lg pt-4"
-              >09:30 - 10:00 h</span
+              <svg
+                class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span class="font-semibold text-sm md:text-base">Programa</span>
+            </a>
+            <a
+              href="#bases"
+              class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-accent hover:shadow-md transition-all text-slate-800 group w-full"
             >
-            <div
-              class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+              <svg
+                class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-accent transition-all flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                ></path>
+              </svg>
+              <span class="font-semibold text-sm md:text-base">Bases</span>
+            </a>
+            <a
+              href="#participantes"
+              class="flex flex-col items-center justify-center p-5 rounded-2xl bg-white border border-slate-200 hover:border-primary hover:shadow-md transition-all text-slate-800 group w-full"
             >
-              <h3 class="font-bold text-lg text-slate-900">
-                Ponencia inaugural
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Intervención de invitados especiales.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 10:00 - Verde -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.3s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.4)] group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
-            <span class="text-accent font-bold text-lg">10:00 - 11:00 h</span>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-accent font-bold mb-1.5">
-              10:00 - 11:00 h
-            </div>
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
+              <svg
+                class="w-7 h-7 text-slate-700 mb-1.5 group-hover:scale-110 group-hover:text-primary transition-all flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                ></path>
+              </svg>
+              <span class="font-semibold text-sm md:text-base"
+                >Participantes</span
+              >
+            </a>
+            <a
+              href="#ganador"
+              class="flex flex-col items-center justify-center p-5 rounded-2xl bg-accent border border-accent hover:bg-[#029b66] transition-colors text-white shadow-[0_0_20px_rgba(3,174,115,0.3)] group w-full"
             >
-              <h3 class="font-bold text-lg text-slate-900">
-                Presentaciones - Bloque 1
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Exposición de los primeros 6 equipos en escenario.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 11:00 - Pausa -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.4s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary/40 z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 pt-2">
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-primary/30 bg-slate-50 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900 flex items-center">
-                Pausa - Desayuno
-                <svg
-                  class="w-5 h-5 ml-2 text-slate-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4Z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 2v2M10 2v2M14 2v2"
-                  ></path>
-                </svg>
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Tiempo para recargar energías
-              </p>
-            </div>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-primary/60 font-bold mb-1.5">
-              11:00 - 11:30 h
-            </div>
-            <span class="hidden md:block text-primary/60 font-bold text-lg pt-4"
-              >11:00 - 11:30 h</span
-            >
-            <div
-              class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-primary/30 bg-slate-50 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900 flex items-center">
-                Pausa - Desayuno
-                <svg
-                  class="w-5 h-5 ml-2 text-slate-500"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4Z"
-                  ></path>
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M6 2v2M10 2v2M14 2v2"
-                  ></path>
-                </svg>
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Tiempo para recargar energías.
-              </p>
-            </div>
+              <svg
+                class="w-7 h-7 text-white mb-1.5 group-hover:scale-110 transition-transform flex-shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                ></path>
+              </svg>
+              <span class="font-bold text-sm md:text-base">Ganador</span>
+            </a>
           </div>
         </div>
+      </header>
 
-        <!-- 11:30 - Azul -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.5s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
-            <span class="text-primary font-bold text-lg">11:30 - 12:00 h</span>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-primary font-bold mb-1.5">
-              11:30 - 12:00 h
-            </div>
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">Ponencia central</h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Intervención de invitados.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 12:00 - Verde -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.6s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.4)] group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 pt-2">
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Presentaciones - Bloque 2
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Exposición de los últimos 6 equipos.
-              </p>
-            </div>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-accent font-bold mb-1.5">
-              12:00 - 13:00 h
-            </div>
-            <span class="hidden md:block text-accent font-bold text-lg pt-4"
-              >12:00 - 13:00 h</span
-            >
-            <div
-              class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Presentaciones - Bloque 2
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Exposición de los últimos 6 equipos.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13:00 - Verde -->
-        <div
-          class="timeline-item relative flex items-start mb-6 group fade-in-up"
-          style="animation-delay: 0.7s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
-            <span class="text-accent font-bold text-lg">13:00 - 13:30 h</span>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-accent font-bold mb-1.5">
-              13:00 - 13:30 h
-            </div>
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Fase de experimentación
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Demostración y prueba de prototipos con el jurado.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13:30 - Gris -->
-        <div
-          class="timeline-item relative flex items-start mb-8 group fade-in-up"
-          style="animation-delay: 0.8s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-slate-400 z-10 group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 pt-2">
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-slate-400 bg-slate-50 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Votaciones del jurado
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Deliberación y evaluación de las propuestas.
-              </p>
-            </div>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-slate-500 font-bold mb-1.5">
-              13:30 - 13:45 h
-            </div>
-            <span class="hidden md:block text-slate-500 font-bold text-lg pt-4"
-              >13:30 - 13:45 h</span
-            >
-            <div
-              class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-slate-400 bg-slate-50 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Votaciones del jurado
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Deliberación y evaluación de las propuestas.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 13:45 - Azul -->
-        <div
-          class="timeline-item relative flex items-start mb-8 group fade-in-up"
-          style="animation-delay: 0.9s"
-        >
-          <div
-            class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 shadow-[0_0_10px_rgba(24,0,173,0.2)] group-hover:scale-110 transition-transform"
-          ></div>
-          <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
-            <span class="text-primary font-bold text-lg">13:45 - 14:00 h</span>
-          </div>
-          <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
-            <div class="md:hidden text-primary font-bold mb-1.5">
-              13:45 - 14:00 h
-            </div>
-            <div
-              class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
-            >
-              <h3 class="font-bold text-lg text-slate-900">
-                Entrega de premios y clausura
-              </h3>
-              <p class="text-slate-600 text-sm mt-0.5">
-                Anuncio de ganadores y cierre del evento.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BASES DEL EVENTO -->
-    <section
-      id="bases"
-      class="py-16 px-6 bg-slate-50 border-y border-slate-100"
-    >
-      <div class="max-w-6xl mx-auto">
+      <!-- PROGRAMA DEL EVENTO -->
+      <section id="programa" class="py-16 px-6 max-w-5xl mx-auto">
         <div class="text-center mb-10 fade-in-up">
           <h2
             class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
           >
-            Bases de la competición
+            Programa del evento
           </h2>
-          <div class="h-1 w-20 bg-primary mx-auto rounded-full mb-4"></div>
-          <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base">
-            No se trata de un concurso de desarrollo, sino de ideas.Lo
-            importante es cómo se presenta la propuesta.
-          </p>
+          <div class="h-1 w-20 bg-accent mx-auto rounded-full"></div>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- Fase 1 -->
+        <div class="relative max-w-3xl mx-auto pl-4 md:pl-0">
           <div
-            class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
           >
             <div
-              class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 text-primary"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
+              <span class="text-primary font-bold text-lg"
+                >09:00 - 09:30 h</span
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
-                ></path>
-              </svg>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">
-              Fase 1: Presentación
-            </h3>
-            <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
-              <li class="flex gap-2">
-                <span class="text-primary font-bold">•</span> Máximo 10 min por
-                equipo.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-primary font-bold">•</span> Orden por sorteo.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-primary font-bold">•</span> Un solo ponente
-                con mando.
-              </li>
-            </ul>
-          </div>
-
-          <!-- Fase 2 -->
-          <div
-            class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
-            style="animation-delay: 0.1s"
-          >
-            <div
-              class="w-12 h-12 bg-accent/10 rounded-2xl flex items-center justify-center mb-4 text-accent"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-primary font-bold mb-1.5">
+                09:00 - 09:30 h
+              </div>
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                ></path>
-              </svg>
+                <h3 class="font-bold text-lg text-slate-900">
+                  Bienvenida y recepción
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Presentación del evento y organización inicial.
+                </p>
+              </div>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">
-              Fase 2: Experimentación
-            </h3>
-            <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
-              <li class="flex gap-2">
-                <span class="text-accent font-bold">•</span> Exposición en
-                puestos.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-accent font-bold">•</span> Jurado interactúa
-                libremente.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-accent font-bold">•</span> Demostración real.
-              </li>
-            </ul>
           </div>
-
-          <!-- Normas -->
           <div
-            class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
             style="animation-delay: 0.2s"
           >
             <div
-              class="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-4 text-rose-500"
-            >
-              <svg
-                class="w-7 h-7"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 pt-2">
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
               >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                ></path>
-              </svg>
+                <h3 class="font-bold text-lg text-slate-900">
+                  Ponencia inaugural
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Intervención de invitados.
+                </p>
+              </div>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">
-              Normas Estrictas
-            </h3>
-            <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
-              <li class="flex gap-2">
-                <span class="text-rose-500 font-bold">•</span> <b>NO</b> se
-                permite leer.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-rose-500 font-bold">•</span> Apuntador
-                discreto.
-              </li>
-              <li class="flex gap-2">
-                <span class="text-rose-500 font-bold">•</span> No interrumpir al
-                jurado.
-              </li>
-            </ul>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-primary font-bold mb-1.5">
+                09:30 - 10:00 h
+              </div>
+              <span class="hidden md:block text-primary font-bold text-lg pt-4"
+                >09:30 - 10:00 h</span
+              >
+              <div
+                class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Ponencia inaugural
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Intervención de invitados especiales.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
+            style="animation-delay: 0.3s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.4)] group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
+              <span class="text-accent font-bold text-lg">10:00 - 11:00 h</span>
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-accent font-bold mb-1.5">
+                10:00 - 11:00 h
+              </div>
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Presentaciones - Bloque 1
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Exposición de los primeros equipos en escenario.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
+            style="animation-delay: 0.4s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary/40 z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 pt-2">
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-primary/30 bg-slate-50 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900 flex items-center">
+                  Pausa - Desayuno
+                  <svg
+                    class="w-5 h-5 ml-2 text-slate-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4Z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 2v2M10 2v2M14 2v2"
+                    ></path>
+                  </svg>
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Tiempo para recargar energías.
+                </p>
+              </div>
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-primary/60 font-bold mb-1.5">
+                11:00 - 11:30 h
+              </div>
+              <span
+                class="hidden md:block text-primary/60 font-bold text-lg pt-4"
+                >11:00 - 11:30 h</span
+              >
+              <div
+                class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-primary/30 bg-slate-50 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900 flex items-center">
+                  Pausa - Desayuno
+                  <svg
+                    class="w-5 h-5 ml-2 text-slate-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M17 8h1a4 4 0 110 8h-1M3 8h14v9a4 4 0 01-4 4H7a4 4 0 01-4-4Z"
+                    ></path>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M6 2v2M10 2v2M14 2v2"
+                    ></path>
+                  </svg>
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Tiempo para recargar energías.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
+            style="animation-delay: 0.5s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
+              <span class="text-primary font-bold text-lg"
+                >11:30 - 12:00 h</span
+              >
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-primary font-bold mb-1.5">
+                11:30 - 12:00 h
+              </div>
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Ponencia central
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Intervención de invitados.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
+            style="animation-delay: 0.6s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 shadow-[0_0_10px_rgba(3,174,115,0.4)] group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 pt-2">
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Presentaciones - Bloque 2
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Exposición de los últimos equipos.
+                </p>
+              </div>
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-accent font-bold mb-1.5">
+                12:00 - 13:00 h
+              </div>
+              <span class="hidden md:block text-accent font-bold text-lg pt-4"
+                >12:00 - 13:00 h</span
+              >
+              <div
+                class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Presentaciones - Bloque 2
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Exposición de los últimos equipos.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-6 group fade-in-up"
+            style="animation-delay: 0.7s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-accent z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
+              <span class="text-accent font-bold text-lg">13:00 - 13:30 h</span>
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-accent font-bold mb-1.5">
+                13:00 - 13:30 h
+              </div>
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-accent bg-accent/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Fase de experimentación
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Demostración y prueba de prototipos con el jurado.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-8 group fade-in-up"
+            style="animation-delay: 0.8s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-slate-400 z-10 group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 pt-2">
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-slate-400 bg-slate-50 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Votaciones del jurado
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Deliberación y evaluación de las propuestas.
+                </p>
+              </div>
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-slate-500 font-bold mb-1.5">
+                13:30 - 13:45 h
+              </div>
+              <span
+                class="hidden md:block text-slate-500 font-bold text-lg pt-4"
+                >13:30 - 13:45 h</span
+              >
+              <div
+                class="md:hidden glass-card p-5 rounded-2xl border-l-4 border-l-slate-400 bg-slate-50 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Votaciones del jurado
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Deliberación y evaluación de las propuestas.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div
+            class="timeline-item relative flex items-start mb-8 group fade-in-up"
+            style="animation-delay: 0.9s"
+          >
+            <div
+              class="timeline-dot absolute -left-4 md:left-1/2 md:-ml-3 mt-1.5 w-6 h-6 rounded-full bg-white border-4 border-primary z-10 shadow-[0_0_10px_rgba(24,0,173,0.2)] group-hover:scale-110 transition-transform"
+            ></div>
+            <div class="hidden md:block md:w-1/2 pr-12 text-right pt-2">
+              <span class="text-primary font-bold text-lg"
+                >13:45 - 14:00 h</span
+              >
+            </div>
+            <div class="ml-6 md:ml-0 md:w-1/2 md:pl-12">
+              <div class="md:hidden text-primary font-bold mb-1.5">
+                13:45 - 14:00 h
+              </div>
+              <div
+                class="glass-card p-5 rounded-2xl border-l-4 border-l-primary bg-primary/5 text-left"
+              >
+                <h3 class="font-bold text-lg text-slate-900">
+                  Entrega de premios y clausura
+                </h3>
+                <p class="text-slate-600 text-sm mt-0.5">
+                  Anuncio de ganadores y cierre del evento.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- SORTEO / ORDEN DE GRUPOS -->
-    <section
-      id="participantes"
-      class="py-16 px-6 max-w-5xl mx-auto relative min-h-[500px]"
-    >
-      <div class="text-center mb-10">
-        <h2
-          id="secretTrigger"
-          class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3 select-none cursor-pointer"
-          title="Área de sorteo"
-        >
-          Equipos participantes
-        </h2>
-        <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
-        <p id="sorteoSubtitle" class="text-slate-500 text-sm">
-          Sorteo oficial en vivo.
-        </p>
-      </div>
-
-      <!-- PANEL DE ADMINISTRACIÓN -->
-      <div
-        id="adminPanel"
-        class="hidden mb-10 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-200 fade-in-up"
+      <!-- BASES DEL EVENTO -->
+      <section
+        id="bases"
+        class="py-16 px-6 bg-slate-50 border-y border-slate-100"
       >
-        <div
-          class="flex items-center gap-3 mb-5 border-b border-slate-100 pb-3"
-        >
-          <svg
-            class="w-6 h-6 text-primary"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+        <div class="max-w-6xl mx-auto">
+          <div class="text-center mb-10 fade-in-up">
+            <h2
+              class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
+            >
+              Bases de la competición
+            </h2>
+            <div class="h-1 w-20 bg-primary mx-auto rounded-full mb-4"></div>
+            <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base">
+              No se trata de un concurso de desarrollo, sino de ideas.
+            </p>
+            <p class="text-slate-500 max-w-2xl mx-auto text-sm md:text-base">
+              Lo importante es cómo se presenta la propuesta.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-3 gap-6">
+            <div
+              class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
+            >
+              <div
+                class="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center mb-4 text-primary"
+              >
+                <svg
+                  class="w-7 h-7"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">
+                Fase 1: Presentación
+              </h3>
+              <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
+                <li class="flex gap-2">
+                  <span class="text-primary font-bold">•</span> Máximo 10 min
+                  por equipo.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-primary font-bold">•</span> Orden por
+                  sorteo.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-primary font-bold">•</span> Un solo ponente
+                  con mando.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
+              style="animation-delay: 0.1s"
+            >
+              <div
+                class="w-12 h-12 bg-accent/10 rounded-2xl flex items-center justify-center mb-4 text-accent"
+              >
+                <svg
+                  class="w-7 h-7"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">
+                Fase 2: Experimentación
+              </h3>
+              <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
+                <li class="flex gap-2">
+                  <span class="text-accent font-bold">•</span> Exposición en
+                  puestos.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-accent font-bold">•</span> Jurado interactúa
+                  libremente.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-accent font-bold">•</span> Demostración
+                  real.
+                </li>
+              </ul>
+            </div>
+            <div
+              class="glass-card bg-white p-6 rounded-3xl hover:-translate-y-1 transition-all duration-300 shadow-lg fade-in-up border border-slate-100"
+              style="animation-delay: 0.2s"
+            >
+              <div
+                class="w-12 h-12 bg-rose-500/10 rounded-2xl flex items-center justify-center mb-4 text-rose-500"
+              >
+                <svg
+                  class="w-7 h-7"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                  ></path>
+                </svg>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 mb-2">
+                Normas Estrictas
+              </h3>
+              <ul class="text-slate-600 space-y-1.5 text-xs md:text-sm">
+                <li class="flex gap-2">
+                  <span class="text-rose-500 font-bold">•</span> <b>NO</b> se
+                  permite leer.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-rose-500 font-bold">•</span> Apuntador
+                  discreto.
+                </li>
+                <li class="flex gap-2">
+                  <span class="text-rose-500 font-bold">•</span> No interrumpir
+                  al jurado.
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SORTEO / ORDEN DE GRUPOS -->
+      <section
+        id="participantes"
+        class="py-16 px-6 max-w-5xl mx-auto relative min-h-[500px]"
+      >
+        <div class="text-center mb-10">
+          <h2
+            id="secretTrigger"
+            class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3 select-none cursor-pointer"
+            title="Área de sorteo"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-            ></path>
-          </svg>
-          <h3 class="text-xl font-bold text-slate-900">Panel Gestor</h3>
-          <button
-            id="btnCloseAdmin"
-            class="ml-auto p-2 text-slate-400 hover:text-rose-500 transition-colors"
+            Orden de Presentación
+          </h2>
+          <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
+          <p id="sorteoSubtitle" class="text-slate-500 text-sm">
+            Sorteo oficial en vivo.
+          </p>
+        </div>
+
+        <!-- PANEL DE ADMINISTRACIÓN -->
+        <div
+          id="adminPanel"
+          class="hidden mb-10 bg-white p-6 md:p-8 rounded-3xl shadow-lg border border-slate-200 fade-in-up"
+        >
+          <div
+            class="flex items-center gap-3 mb-5 border-b border-slate-100 pb-3"
           >
             <svg
-              class="w-5 h-5"
+              class="w-6 h-6 text-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -855,217 +890,130 @@
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 stroke-width="2"
-                d="M6 18L18 6M6 6l12 12"
+                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
               ></path>
             </svg>
-          </button>
-        </div>
-
-        <form id="addTeamForm" class="flex flex-col gap-3 mb-5">
-          <div class="flex flex-col md:flex-row gap-3">
-            <input
-              type="text"
-              id="teamInput"
-              placeholder="Nombre del equipo..."
-              class="flex-1 px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-              required
-              autocomplete="off"
-            />
-            <input
-              type="text"
-              id="membersInput"
-              placeholder="Integrantes (ej. Ana, Juan, Pedro)..."
-              class="flex-[2] px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
-              autocomplete="off"
-            />
-          </div>
-          <div class="flex gap-2 self-end w-full md:w-auto">
+            <h3 class="text-xl font-bold text-slate-900">Panel Gestor</h3>
             <button
-              type="button"
-              id="btnCancelEdit"
-              class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2.5 px-6 rounded-xl transition-colors whitespace-nowrap flex-1 md:flex-none"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              id="btnSubmitTeam"
-              class="bg-primary hover:bg-[#12008a] text-white font-semibold py-2.5 px-6 rounded-xl transition-colors whitespace-nowrap flex-1 md:flex-none"
-            >
-              + Añadir equipo
-            </button>
-          </div>
-        </form>
-
-        <div
-          id="adminErrorMsg"
-          class="hidden text-rose-500 text-sm mb-4 font-medium px-2"
-        ></div>
-
-        <div class="flex flex-wrap gap-3 pt-3 border-t border-slate-100">
-          <button
-            id="btnGenerate"
-            class="bg-accent hover:bg-[#029b66] text-white font-bold py-2 px-5 rounded-xl transition-colors flex items-center gap-2 shadow-md disabled:opacity-50"
-          >
-            Sorteo Aleatorio
-          </button>
-          <button
-            id="btnReset"
-            class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2 px-5 rounded-xl transition-colors"
-          >
-            Reiniciar
-          </button>
-          <button
-            id="btnClearAll"
-            class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2 px-5 rounded-xl transition-colors md:ml-auto"
-          >
-            Borrar Todos
-          </button>
-        </div>
-
-        <!-- SECCIÓN DE PREMIACIÓN -->
-        <div class="mt-8 pt-6 border-t border-slate-200">
-          <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-            <svg
-              class="w-6 h-6 text-yellow-500"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-              <path d="M4 22h16" />
-              <path
-                d="M10 14.66V17c0 .55-.47 .98-.97 1.21C7.85 18.75 7 20.24 7 22"
-              />
-              <path
-                d="M14 14.66V17c0 .55.47 .98.97 1.21C16.15 18.75 17 20.24 17 22"
-              />
-              <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
-            </svg>
-            Premiación
-          </h4>
-          <div class="flex flex-col md:flex-row gap-3 items-stretch">
-            <select
-              id="winnerSelect"
-              class="flex-1 px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 font-medium text-slate-700"
-            >
-              <option value="">-- Seleccionar equipo ganador --</option>
-            </select>
-            <button
-              id="btnSetWinner"
-              class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md"
-            >
-              Anunciar Ganador
-            </button>
-            <button
-              id="btnRemoveWinner"
-              class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2.5 px-6 rounded-xl transition-colors"
-            >
-              Ocultar
-            </button>
-          </div>
-        </div>
-      </div>
-
-      <!-- LISTA DE EQUIPOS -->
-      <div id="draftView" class="fade-in-up">
-        <ul id="draftList" class="grid md:grid-cols-2 gap-3"></ul>
-        <div id="emptyState" class="text-center py-10 text-slate-400 hidden">
-          <p>No hay equipos registrados aún.</p>
-        </div>
-      </div>
-
-      <!-- RESULTADO DEL SORTEO -->
-      <div id="generatedView" class="hidden fade-in-up">
-        <div
-          class="bg-primary text-white rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden"
-        >
-          <div
-            class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-20 rounded-full blur-3xl -mr-20 -mt-20"
-          ></div>
-          <h3
-            class="text-xl md:text-2xl font-display font-bold text-center mb-6 text-accent"
-          >
-            Orden definitivo
-          </h3>
-          <div
-            id="finalList"
-            class="grid gap-3 max-w-2xl mx-auto relative z-10"
-          ></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- EQUIPO GANADOR -->
-    <section
-      id="ganador"
-      class="py-16 px-6 bg-slate-50 border-t border-slate-100"
-    >
-      <div class="max-w-4xl mx-auto">
-        <div class="text-center mb-10 fade-in-up">
-          <h2
-            class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
-          >
-            Equipo ganador
-          </h2>
-          <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
-        </div>
-
-        <!-- ESTADO VACÍO -->
-        <div
-          id="noWinnerState"
-          class="text-center py-16 text-slate-500 bg-white rounded-3xl border border-slate-200 shadow-sm fade-in-up"
-        >
-          <svg
-            class="w-16 h-16 mx-auto mb-4 text-slate-300"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          >
-            <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
-            <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
-            <path d="M4 22h16" />
-            <path
-              d="M10 14.66V17c0 .55-.47 .98-.97 1.21C7.85 18.75 7 20.24 7 22"
-            />
-            <path
-              d="M14 14.66V17c0 .55.47 .98.97 1.21C16.15 18.75 17 20.24 17 22"
-            />
-            <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
-          </svg>
-          <p class="text-xl font-medium text-slate-700">
-            Aún no se ha anunciado el equipo ganador
-          </p>
-          <p class="text-sm mt-2 opacity-80">
-            El resultado se revelará tras la deliberación del jurado.
-          </p>
-        </div>
-
-        <!-- VISTA DEL GANADOR -->
-        <div id="winnerView" class="hidden mb-12 fade-in-up">
-          <div class="relative max-w-2xl mx-auto">
-            <!-- Decoración trasera animada -->
-            <div
-              class="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-2xl opacity-60 rounded-full animate-pulse"
-            ></div>
-
-            <!-- Tarjeta principal -->
-            <div
-              class="relative glass-card bg-white p-8 md:p-12 text-center rounded-3xl overflow-hidden border border-slate-100 shadow-xl"
+              id="btnCloseAdmin"
+              class="ml-auto p-2 text-slate-400 hover:text-rose-500 transition-colors"
             >
               <svg
-                class="absolute -top-10 -left-10 w-48 h-48 text-accent opacity-5 transform -rotate-12 select-none"
+                class="w-5 h-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
-                stroke-width="1.5"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- GESTIÓN DE EQUIPOS -->
+          <form id="addTeamForm" class="flex flex-col gap-3 mb-5">
+            <div class="flex flex-col md:flex-row gap-3">
+              <input
+                type="text"
+                id="teamInput"
+                placeholder="Nombre del equipo..."
+                class="flex-1 px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                required
+                autocomplete="off"
+              />
+              <input
+                type="text"
+                id="membersInput"
+                placeholder="Integrantes (ej. Ana, Juan)..."
+                class="flex-[2] px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                autocomplete="off"
+              />
+            </div>
+            <div class="flex gap-2 self-end w-full md:w-auto">
+              <button
+                type="button"
+                id="btnCancelEdit"
+                class="hidden bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2.5 px-6 rounded-xl transition-colors whitespace-nowrap flex-1 md:flex-none"
+              >
+                Cancelar
+              </button>
+              <button
+                type="submit"
+                id="btnSubmitTeam"
+                class="bg-primary hover:bg-[#12008a] text-white font-semibold py-2.5 px-6 rounded-xl transition-colors whitespace-nowrap flex-1 md:flex-none"
+              >
+                + Añadir equipo
+              </button>
+            </div>
+          </form>
+
+          <div
+            id="adminErrorMsg"
+            class="hidden text-rose-500 text-sm mb-4 font-medium px-2"
+          ></div>
+
+          <div class="flex flex-wrap gap-3 pt-3 border-t border-slate-100">
+            <button
+              id="btnGenerate"
+              class="bg-accent hover:bg-[#029b66] text-white font-bold py-2 px-5 rounded-xl transition-colors flex items-center gap-2 shadow-md disabled:opacity-50"
+            >
+              Sorteo Aleatorio
+            </button>
+            <button
+              id="btnReset"
+              class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2 px-5 rounded-xl transition-colors"
+            >
+              Reiniciar Sorteo
+            </button>
+            <button
+              id="btnClearAll"
+              class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2 px-5 rounded-xl transition-colors md:ml-auto"
+            >
+              Borrar Todos
+            </button>
+          </div>
+
+          <!-- RESULTADOS DEL JURADO EN VIVO (Módulo integrado) -->
+          <div class="mt-8 pt-6 border-t border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <svg
+                class="w-6 h-6 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
+                ></path>
+              </svg>
+              Resultados del Jurado (En vivo)
+            </h4>
+            <div
+              id="publicAdminResults"
+              class="flex flex-col gap-3 max-h-[400px] overflow-y-auto bg-slate-50 p-4 rounded-2xl border border-slate-100"
+            >
+              <div class="text-center py-6 text-slate-400">
+                Esperando conexión para calcular resultados...
+              </div>
+            </div>
+          </div>
+
+          <!-- SECCIÓN DE PREMIACIÓN -->
+          <div class="mt-8 pt-6 border-t border-slate-200">
+            <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+              <svg
+                class="w-6 h-6 text-yellow-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
               >
@@ -1080,171 +1028,352 @@
                 />
                 <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
               </svg>
-              <svg
-                class="absolute -bottom-10 -right-10 w-48 h-48 text-primary opacity-5 transform rotate-12 select-none"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
+              Selección de Ganador
+            </h4>
+            <div class="flex flex-col md:flex-row gap-3 items-stretch">
+              <select
+                id="winnerSelect"
+                class="flex-1 px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 font-medium text-slate-700"
               >
-                <polygon
-                  points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-                />
-              </svg>
+                <option value="">-- Seleccionar equipo ganador --</option>
+              </select>
+              <button
+                id="btnSetWinner"
+                class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md"
+              >
+                Anunciar Ganador
+              </button>
+              <button
+                id="btnRemoveWinner"
+                class="bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold py-2.5 px-6 rounded-xl transition-colors"
+              >
+                Ocultar
+              </button>
+            </div>
+          </div>
+        </div>
 
-              <h3
-                class="text-xl md:text-2xl font-bold text-accent mb-2 uppercase tracking-[0.3em] relative z-10"
-              >
-                ¡Enhorabuena!
-              </h3>
-              <h4
-                class="text-5xl md:text-7xl font-display font-black text-slate-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent relative z-10"
-                id="winnerName"
-              >
-                Equipo
-              </h4>
-              <p
-                class="text-lg md:text-xl text-slate-600 font-medium mb-6 relative z-10"
-                id="winnerMembers"
-              >
-                Integrantes
-              </p>
+        <!-- LISTA DE EQUIPOS PÚBLICA -->
+        <div id="draftView" class="fade-in-up">
+          <ul id="draftList" class="grid md:grid-cols-2 gap-3"></ul>
+          <div id="emptyState" class="text-center py-10 text-slate-400 hidden">
+            <p>No hay equipos registrados aún.</p>
+          </div>
+        </div>
 
+        <!-- RESULTADO DEL SORTEO -->
+        <div id="generatedView" class="hidden fade-in-up">
+          <div
+            class="bg-primary text-white rounded-3xl p-6 md:p-10 shadow-2xl relative overflow-hidden"
+          >
+            <div
+              class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-20 rounded-full blur-3xl -mr-20 -mt-20"
+            ></div>
+            <h3
+              class="text-xl md:text-2xl font-display font-bold text-center mb-6 text-accent"
+            >
+              Orden Definitivo
+            </h3>
+            <div
+              id="finalList"
+              class="grid gap-3 max-w-2xl mx-auto relative z-10"
+            ></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- EQUIPO GANADOR -->
+      <section
+        id="ganador"
+        class="py-16 px-6 bg-slate-50 border-t border-slate-100"
+      >
+        <div class="max-w-4xl mx-auto">
+          <div class="text-center mb-10 fade-in-up">
+            <h2
+              class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
+            >
+              Equipo Ganador
+            </h2>
+            <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
+          </div>
+
+          <!-- ESTADO VACÍO -->
+          <div
+            id="noWinnerState"
+            class="text-center py-16 text-slate-500 bg-white rounded-3xl border border-slate-200 shadow-sm fade-in-up"
+          >
+            <svg
+              class="w-16 h-16 mx-auto mb-4 text-slate-300"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+              <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+              <path d="M4 22h16" />
+              <path
+                d="M10 14.66V17c0 .55-.47 .98-.97 1.21C7.85 18.75 7 20.24 7 22"
+              />
+              <path
+                d="M14 14.66V17c0 .55.47 .98.97 1.21C16.15 18.75 17 20.24 17 22"
+              />
+              <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
+            </svg>
+            <p class="text-xl font-medium text-slate-700">
+              Aún no se ha anunciado el equipo ganador
+            </p>
+            <p class="text-sm mt-2 opacity-80">
+              El resultado se revelará tras la deliberación del jurado.
+            </p>
+          </div>
+
+          <!-- VISTA DEL GANADOR -->
+          <div id="winnerView" class="hidden mb-12 fade-in-up">
+            <div class="relative max-w-2xl mx-auto">
               <div
-                class="inline-block bg-accent/10 text-accent font-bold px-6 py-2 rounded-full text-sm uppercase tracking-wide border border-accent/20 shadow-sm relative z-10"
+                class="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-2xl opacity-60 rounded-full animate-pulse"
+              ></div>
+              <div
+                class="relative glass-card bg-white p-8 md:p-12 text-center rounded-3xl overflow-hidden border border-slate-100 shadow-xl"
               >
-                Ganadores LowCodeCon 2026
+                <svg
+                  class="absolute -top-10 -left-10 w-48 h-48 text-accent opacity-5 transform -rotate-12 select-none"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+                  <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+                  <path d="M4 22h16" />
+                  <path
+                    d="M10 14.66V17c0 .55-.47 .98-.97 1.21C7.85 18.75 7 20.24 7 22"
+                  />
+                  <path
+                    d="M14 14.66V17c0 .55.47 .98.97 1.21C16.15 18.75 17 20.24 17 22"
+                  />
+                  <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
+                </svg>
+                <svg
+                  class="absolute -bottom-10 -right-10 w-48 h-48 text-primary opacity-5 transform rotate-12 select-none"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polygon
+                    points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
+                  />
+                </svg>
+
+                <h3
+                  class="text-xl md:text-2xl font-bold text-accent mb-2 uppercase tracking-[0.3em] relative z-10"
+                >
+                  ¡Enhorabuena!
+                </h3>
+                <h4
+                  class="text-5xl md:text-7xl font-display font-black text-slate-900 mb-4 bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent relative z-10"
+                  id="winnerName"
+                >
+                  Equipo
+                </h4>
+                <p
+                  class="text-lg md:text-xl text-slate-600 font-medium mb-6 relative z-10"
+                  id="winnerMembers"
+                >
+                  Integrantes
+                </p>
+
+                <div
+                  class="inline-block bg-accent/10 text-accent font-bold px-6 py-2 rounded-full text-sm uppercase tracking-wide border border-accent/20 shadow-sm relative z-10"
+                >
+                  Ganadores LowCodeCon 2026
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-  <!-- FOOTER -->
-    <footer
-      class="bg-slate-50 pt-12 pb-24 md:pb-8 px-6 text-slate-600 text-sm border-t border-slate-200"
-    >
-      <div
-        class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left"
+      <!-- FOOTER -->
+      <footer
+        class="bg-slate-50 pt-12 pb-24 md:pb-8 px-6 text-slate-600 text-sm border-t border-slate-200"
       >
-        <div>
-          <div class="mb-4 flex flex-col items-center md:items-start gap-4">
-            <a
-              href="https://ieselrincon.es/"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:opacity-80 transition-opacity"
+        <div
+          class="max-w-6xl mx-auto grid md:grid-cols-3 gap-8 mb-8 text-center md:text-left"
+        >
+          <div>
+            <div class="mb-4 flex flex-col items-center md:items-start gap-4">
+              <a
+                href="https://ieselrincon.es/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="hover:opacity-80 transition-opacity"
+              >
+                <img
+                  src="logo-rincon.png"
+                  alt="Logo IES El Rincón"
+                  class="h-24 w-auto object-contain"
+                  onerror="
+                    this.outerHTML =
+                      '<span class=\'text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded\'>[Logo IES El Rincón]</span>'
+                  "
+                />
+              </a>
+            </div>
+            <p>Las Palmas de Gran Canaria</p>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 mb-3">
+              Proyecto «Soluciones innovadoras con Low Code»
+            </h4>
+            <p class="space-y-1 text-xs opacity-80">
+              Red Estatal de Centros de Excelencia en Formación Profesional.
+            </p>
+          </div>
+          <div>
+            <h4 class="font-bold text-slate-900 mb-3">Entidades</h4>
+            <div class="space-y-1 text-xs opacity-80">
+              <p>• Unión Europea (NextGenerationEU)</p>
+              <p>• Plan de Recuperación y Resiliencia</p>
+              <p>• Gobierno de Canarias</p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="max-w-6xl mx-auto text-center border-t border-slate-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
+        >
+          <p>&copy; 2026 LowCodeConference. Todos los derechos reservados. |</p>
+        </div>
+      </footer>
+      <!-- Menú inferior (Móvil) -->
+      <nav
+        class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]"
+      >
+        <div class="flex justify-around items-center px-2 py-2">
+          <a
+            href="#programa"
+            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
+          >
+            <svg
+              class="w-5 h-5 mb-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
             >
-              <img
-                src="logo-rincon.png"
-                alt="Logo IES El Rincón"
-                class="h-24 w-auto object-contain"
-                onerror="
-                  this.outerHTML =
-                    '<span class=\'text-xs bg-slate-200 text-slate-500 px-2 py-1 rounded\'>[Logo IES El Rincón]</span>'
-                "
-              />
-            </a>
-          </div>
-          <p>Las Palmas de Gran Canaria</p>
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+              ></path>
+            </svg>
+            <span class="text-[10px] font-semibold">Programa</span>
+          </a>
+          <a
+            href="#bases"
+            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
+          >
+            <svg
+              class="w-5 h-5 mb-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              ></path>
+            </svg>
+            <span class="text-[10px] font-semibold">Bases</span>
+          </a>
+          <a
+            href="#participantes"
+            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
+          >
+            <svg
+              class="w-5 h-5 mb-1"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+            <span class="text-[10px] font-semibold">Sorteo</span>
+          </a>
+          <a
+            href="#ganador"
+            class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-accent transition-colors relative group"
+          >
+            <div
+              class="absolute -top-6 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm"
+            >
+              <div class="bg-accent p-2 rounded-full text-white shadow-md">
+                <svg
+                  class="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold text-accent mt-6">Ganador</span>
+          </a>
         </div>
-        <div>
-          <h4 class="font-bold text-slate-900 mb-3">
-            Proyecto «Soluciones innovadoras con Low Code»
-          </h4>
-          <p class="space-y-1 text-xs opacity-80">
-            Red Estatal de Centros de Excelencia en Formación Profesional.
-          </p>
-        </div>
-        <div>
-          <h4 class="font-bold text-slate-900 mb-3">Entidades</h4>
-          <div class="space-y-1 text-xs opacity-80">
-            <p>• Unión Europea (NextGenerationEU)</p>
-            <p>• Plan de Recuperación y Resiliencia</p>
-            <p>• Gobierno de Canarias</p>
-          </div>
-        </div>
-      </div>
-      <div
-        class="max-w-6xl mx-auto text-center border-t border-slate-200 pt-6 flex flex-col md:flex-row justify-between items-center gap-4"
-      >
-        <p>&copy; 2026 LowCodeConference. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+      </nav>
+    </div>
+    <!-- FIN PUBLIC APP -->
 
-    <!-- Menú inferior (Móvil) -->
-    <nav
-      class="md:hidden fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-md border-t border-slate-200 z-50 pb-safe shadow-[0_-10px_20px_rgba(0,0,0,0.05)]"
+    <!-- ========================================================================= -->
+    <!-- 2. APLICACIÓN JURADO (Oculta por defecto)                                 -->
+    <!-- ========================================================================= -->
+    <div
+      id="juryApp"
+      class="hidden fixed inset-0 z-[60] bg-slate-50 overflow-y-auto pb-24"
     >
-      <div class="flex justify-around items-center px-2 py-2">
-        <a
-          href="#programa"
-          class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-        >
-          <svg
-            class="w-5 h-5 mb-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-            ></path>
-          </svg>
-          <span class="text-[10px] font-semibold">Programa</span>
-        </a>
-        <a
-          href="#bases"
-          class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-        >
-          <svg
-            class="w-5 h-5 mb-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-            ></path>
-          </svg>
-          <span class="text-[10px] font-semibold">Bases</span>
-        </a>
-        <a
-          href="#participantes"
-          class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-primary transition-colors"
-        >
-          <svg
-            class="w-5 h-5 mb-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"
-            ></path>
-          </svg>
-          <span class="text-[10px] font-semibold">Sorteo</span>
-        </a>
-        <a
-          href="#ganador"
-          class="flex flex-col items-center p-2 w-1/4 text-slate-500 hover:text-accent transition-colors relative group"
+      <nav
+        class="sticky top-0 w-full z-50 glass-card bg-white/95 border-b border-slate-200"
+      >
+        <div
+          class="max-w-3xl mx-auto px-4 py-3 flex justify-between items-center"
         >
           <div
-            class="absolute -top-6 bg-white p-1.5 rounded-full border border-slate-100 shadow-sm"
+            class="font-display font-bold text-lg text-slate-900 flex items-center gap-1"
           >
-            <div class="bg-accent p-2 rounded-full text-white shadow-md">
+            <span class="text-accent">&lt;/&gt;</span>LCC
+            <span
+              class="font-normal text-slate-400 text-sm ml-1 hidden sm:inline"
+              >| Jurado</span
+            >
+          </div>
+          <div class="flex items-center gap-3 text-sm font-medium">
+            <span id="juryNameDisplay" class="text-primary"></span>
+            <button
+              id="btnExitJury"
+              class="text-slate-400 hover:text-rose-500 ml-2"
+              title="Salir"
+            >
               <svg
                 class="w-5 h-5"
                 fill="none"
@@ -1255,28 +1384,168 @@
                   stroke-linecap="round"
                   stroke-linejoin="round"
                   stroke-width="2"
-                  d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
                 ></path>
               </svg>
+            </button>
+          </div>
+        </div>
+        <div id="progressBarContainer" class="w-full h-1 bg-slate-100">
+          <div
+            id="progressBar"
+            class="h-full bg-accent w-0 transition-all duration-500"
+          ></div>
+        </div>
+      </nav>
+
+      <main class="max-w-3xl mx-auto px-4 pt-6">
+        <!-- PANTALLA VOTACIÓN -->
+        <section id="votingScreen" class="fade-in">
+          <div class="mb-8">
+            <h2 class="text-2xl font-display font-bold text-slate-900">
+              Equipos Participantes
+            </h2>
+            <p class="text-slate-500 text-sm mt-1">
+              Selecciona un equipo para evaluar su propuesta.
+            </p>
+          </div>
+          <div
+            id="juryEmptyState"
+            class="text-center py-12 text-slate-400 hidden bg-white rounded-2xl border border-slate-200 border-dashed"
+          >
+            <p>Aún no hay equipos registrados para evaluar.</p>
+          </div>
+          <div id="teamsContainer" class="flex flex-col gap-4"></div>
+          <div class="mt-12 text-center">
+            <button
+              id="btnFinish"
+              class="hidden bg-slate-900 hover:bg-black text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-lg w-full sm:w-auto"
+            >
+              Finalizar Votaciones
+            </button>
+          </div>
+        </section>
+
+        <!-- PANTALLA AGRADECIMIENTO -->
+        <section
+          id="thanksScreen"
+          class="py-12 hidden fade-in flex flex-col items-center justify-center min-h-[60vh]"
+        >
+          <div
+            class="bg-accent/10 w-24 h-24 rounded-full flex items-center justify-center mb-6"
+          >
+            <span class="text-5xl">🎉</span>
+          </div>
+          <h2
+            class="text-3xl font-display font-bold text-slate-900 mb-3 text-center"
+          >
+            ¡Gracias por tu valoración!
+          </h2>
+          <p class="text-slate-600 text-center max-w-md mb-8">
+            Tus puntuaciones han sido registradas correctamente y se sumarán a
+            las del resto del jurado.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4 w-full max-w-sm mx-auto">
+            <button
+              id="btnReturn"
+              class="flex-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-3 px-6 rounded-xl transition-colors"
+            >
+              Modificar votos
+            </button>
+            <button
+              id="btnViewJuryResults"
+              class="flex-1 bg-primary hover:bg-[#12008a] text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md"
+            >
+              Ver Resultados
+            </button>
+          </div>
+        </section>
+
+        <!-- PANTALLA RESULTADOS JURADO (Global) -->
+        <section id="juryAdminScreen" class="py-6 hidden fade-in">
+          <div class="mb-8">
+            <h2
+              class="text-2xl font-display font-bold text-slate-900 flex items-center gap-2"
+            >
+              <svg
+                class="w-7 h-7 text-primary"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
+                ></path>
+              </svg>
+              Resultados Globales
+            </h2>
+            <p class="text-slate-500 text-sm mt-1">
+              Clasificación con la suma de todos los miembros del jurado.
+            </p>
+          </div>
+
+          <div id="juryGlobalResults" class="flex flex-col gap-3">
+            <div class="text-center py-12 text-slate-400">
+              <svg
+                class="animate-spin w-8 h-8 mx-auto mb-4 text-primary"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  class="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  stroke-width="4"
+                ></circle>
+                <path
+                  class="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                ></path>
+              </svg>
+              <p>Calculando resultados...</p>
             </div>
           </div>
-          <span class="text-[10px] font-bold text-accent mt-6">Ganador</span>
-        </a>
-      </div>
-    </nav>
 
-    <!-- MODAL AUTH -->
+          <div class="mt-8 text-center">
+            <button
+              id="btnExitResults"
+              class="text-slate-500 hover:text-slate-800 text-sm font-medium underline"
+            >
+              Salir al inicio
+            </button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODALES Y NOTIFICACIONES                                                  -->
+    <!-- ========================================================================= -->
+
+    <!-- MODAL AUTH ADMIN (TRIPLE CLICK) -->
     <div
       id="authModal"
       class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4"
     >
-      <div class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl">
-        <h3 class="text-xl font-bold text-slate-900 mb-2">Acceso Admin</h3>
+      <div
+        class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl fade-in-up"
+      >
+        <h3 class="text-xl font-bold text-slate-900 mb-2">
+          Acceso Gestor General
+        </h3>
         <input
           type="password"
           id="adminPwd"
           class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4"
           placeholder="Contraseña"
+          autocomplete="off"
         />
         <div class="text-rose-500 text-sm mb-4 h-5" id="authError"></div>
         <div class="flex justify-end gap-3">
@@ -1293,55 +1562,111 @@
       </div>
     </div>
 
-    <!-- MODAL CONFIRM -->
+    <!-- MODAL AUTH JURADO (ENLACE FOOTER) -->
     <div
-      id="confirmModal"
+      id="juryAuthModal"
       class="hidden fixed inset-0 z-[100] bg-primary/20 backdrop-blur-sm flex items-center justify-center p-4"
     >
       <div
-        class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl text-center"
+        class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl fade-in-up"
       >
-        <h3 class="text-xl font-bold text-slate-800 mb-2" id="confirmTitle">
-          Confirmación
-        </h3>
-        <p class="text-sm text-slate-500 mb-8" id="confirmMessage">
-          ¿Estás seguro?
-        </p>
-        <div class="flex justify-center gap-3">
-          <button
-            id="btnConfirmCancel"
-            class="px-6 py-2 bg-slate-100 rounded-xl w-1/2"
+        <div
+          class="w-12 h-12 bg-primary/10 text-primary rounded-2xl flex items-center justify-center mb-4"
+        >
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
           >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
+            />
+          </svg>
+        </div>
+        <h3 class="text-xl font-bold text-slate-900 mb-1">Acceso Jurado</h3>
+        <p class="text-xs text-slate-500 mb-4">
+          Identifícate para valorar los proyectos.
+        </p>
+        <input
+          type="text"
+          id="juryNameInput"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-3"
+          placeholder="Tu Nombre Completo"
+          autocomplete="off"
+        />
+        <input
+          type="password"
+          id="juryPwdInput"
+          class="w-full px-4 py-3 rounded-xl border border-slate-300 mb-4"
+          placeholder="Contraseña (jurado)"
+          autocomplete="off"
+        />
+        <div class="text-rose-500 text-sm mb-4 h-5" id="juryAuthError"></div>
+        <div class="flex justify-end gap-3">
+          <button id="btnCancelJuryAuth" class="px-4 py-2 text-slate-500">
             Cancelar
           </button>
           <button
-            id="btnConfirmAction"
-            class="px-6 py-2 bg-rose-500 text-white rounded-xl w-1/2"
+            id="btnLoginJuryAuth"
+            class="px-6 py-2 bg-primary text-white rounded-xl"
           >
-            Confirmar
+            Comenzar
           </button>
         </div>
       </div>
     </div>
-   <!-- ========================================================================= -->
+
+    <!-- TOAST CONFIRMACIÓN VOTO -->
+    <div
+      id="toast"
+      class="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl transition-all duration-300 translate-y-20 opacity-0 z-[100] flex items-center gap-2"
+    >
+      <svg
+        class="w-5 h-5 text-accent"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M5 13l4 4L19 7"
+        ></path>
+      </svg>
+      <span id="toastMsg" class="font-medium text-sm">Guardado</span>
+    </div>
+
+    <!-- ========================================================================= -->
     <!-- JAVASCRIPT: LÓGICA DE APLICACIÓN COMBINADA                                -->
     <!-- ========================================================================= -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
       import {
-        getFirestore, doc, setDoc, onSnapshot, collection
+        getFirestore,
+        doc,
+        setDoc,
+        onSnapshot,
+        collection,
       } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
       // 👇 PEGA TU API KEY DE FIREBASE AQUÍ 👇
-      apiKey: "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w",
-  authDomain: "lowcodecon2026.firebaseapp.com",
-  projectId: "lowcodecon2026",
-  storageBucket: "lowcodecon2026.firebasestorage.app",
-  messagingSenderId: "1056508268087",
-  appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2"
-};
+      const firebaseConfig = {
+        apiKey: "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w",
+        authDomain: "lowcodecon2026.firebaseapp.com",
+        projectId: "lowcodecon2026",
+        storageBucket: "lowcodecon2026.firebasestorage.app",
+        messagingSenderId: "1056508268087",
+        appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2",
+      };
 
-      const isCloudEnabled = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "TU_API_KEY_AQUI";
+      const isCloudEnabled =
+        !!firebaseConfig.apiKey &&
+        firebaseConfig.apiKey !== "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w";
 
       let db = null;
       let docRefEvent = null;
@@ -1353,12 +1678,12 @@
       }
 
       // --- ESTADOS GLOBALES ---
-      let appState = { teams: [], isGenerated: false, winner: null }; 
+      let appState = { teams: [], isGenerated: false, winner: null };
       let juryState = { juryName: "", votes: {} };
-      
+
       const ADMIN_PASSWORD = "admin";
       const JURY_PASSWORD = "jurado";
-      
+
       let isAdminMode = false;
       let isJuryMode = false;
       let editingIndex = -1;
@@ -1405,7 +1730,7 @@
       const juryAuthError = document.getElementById("juryAuthError");
       const btnCancelJuryAuth = document.getElementById("btnCancelJuryAuth");
       const btnLoginJuryAuth = document.getElementById("btnLoginJuryAuth");
-      
+
       const juryNameDisplay = document.getElementById("juryNameDisplay");
       const btnExitJury = document.getElementById("btnExitJury");
       const votingScreen = document.getElementById("votingScreen");
@@ -1413,7 +1738,9 @@
       const juryAdminScreen = document.getElementById("juryAdminScreen");
       const juryEmptyState = document.getElementById("juryEmptyState");
       const teamsContainer = document.getElementById("teamsContainer");
-      const progressBarContainer = document.getElementById("progressBarContainer");
+      const progressBarContainer = document.getElementById(
+        "progressBarContainer",
+      );
       const progressBar = document.getElementById("progressBar");
       const btnFinish = document.getElementById("btnFinish");
       const btnReturn = document.getElementById("btnReturn");
@@ -1430,16 +1757,22 @@
       function renderPublicUI() {
         draftList.innerHTML = "";
         finalList.innerHTML = "";
-        winnerSelect.innerHTML = '<option value="">-- Seleccionar equipo ganador --</option>';
+        winnerSelect.innerHTML =
+          '<option value="">-- Seleccionar equipo ganador --</option>';
 
-        if (!appState) appState = { teams: [], isGenerated: false, winner: null };
+        if (!appState)
+          appState = { teams: [], isGenerated: false, winner: null };
         if (!appState.teams) appState.teams = [];
-        
+
         appState.teams = appState.teams.map((team) => {
-          if (typeof team === "string") return { name: team, members: "Sin integrantes" };
-          return { name: team.name || "Equipo", members: team.members || "Sin integrantes" };
+          if (typeof team === "string")
+            return { name: team, members: "Sin integrantes" };
+          return {
+            name: team.name || "Equipo",
+            members: team.members || "Sin integrantes",
+          };
         });
-        
+
         appState.teams.forEach((team, index) => {
           const option = document.createElement("option");
           option.value = index;
@@ -1474,7 +1807,8 @@
 
           appState.teams.forEach((team, index) => {
             const div = document.createElement("div");
-            div.className = "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-6";
+            div.className =
+              "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-6";
             div.innerHTML = `
               <div class="bg-accent text-white font-bold w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-lg">${index + 1}</div>
               <div class="flex-1 overflow-hidden">
@@ -1486,13 +1820,15 @@
           btnGenerate.classList.add("hidden");
           btnReset.classList.remove("hidden");
         } else {
-          sorteoSubtitle.textContent = "Aún no se ha realizado el orden de presentaciones de los equipos.";
+          sorteoSubtitle.textContent =
+            "Aún no se ha realizado el orden de presentaciones de los equipos.";
           draftView.classList.remove("hidden");
           generatedView.classList.add("hidden");
 
           appState.teams.forEach((team, index) => {
             const li = document.createElement("li");
-            li.className = "glass-card bg-white p-3.5 rounded-xl flex justify-between items-center group shadow-sm gap-3";
+            li.className =
+              "glass-card bg-white p-3.5 rounded-xl flex justify-between items-center group shadow-sm gap-3";
             li.innerHTML = `
               <div class="flex-1 overflow-hidden">
                 <span class="font-medium text-primary flex items-center gap-3">
@@ -1519,7 +1855,10 @@
               const index = Number(e.currentTarget.dataset.index);
               editingIndex = index;
               teamInput.value = appState.teams[index].name;
-              membersInput.value = appState.teams[index].members === "Sin integrantes" ? "" : appState.teams[index].members;
+              membersInput.value =
+                appState.teams[index].members === "Sin integrantes"
+                  ? ""
+                  : appState.teams[index].members;
               btnSubmitTeam.textContent = "Guardar cambios";
               btnCancelEdit.classList.remove("hidden");
               teamInput.focus();
@@ -1535,7 +1874,9 @@
 
       async function saveAppState() {
         if (isCloudEnabled) {
-          try { await setDoc(docRefEvent, appState); } catch (e) {}
+          try {
+            await setDoc(docRefEvent, appState);
+          } catch (e) {}
         } else {
           localStorage.setItem("lowcodecon_state", JSON.stringify(appState));
           renderPublicUI();
@@ -1543,11 +1884,15 @@
       }
 
       // --- TRIPLE CLICK: LOGIN ADMIN ---
-      let clickCount = 0, clickTimer = null;
+      let clickCount = 0,
+        clickTimer = null;
       secretTrigger.addEventListener("click", () => {
         if (isAdminMode) return;
-        clickCount++; clearTimeout(clickTimer);
-        clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
+        clickCount++;
+        clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => {
+          clickCount = 0;
+        }, 1500);
         if (clickCount === 3) {
           authModal.classList.remove("hidden");
           adminPwdInput.focus();
@@ -1560,15 +1905,24 @@
           isAdminMode = true;
           authModal.classList.add("hidden");
           adminPanel.classList.remove("hidden");
-          authError.textContent = ""; adminPwdInput.value = "";
+          authError.textContent = "";
+          adminPwdInput.value = "";
           renderPublicUI();
           startLiveResultsListening(publicAdminResults); // Cargar votos de jurado en panel admin
         } else {
           authError.textContent = "Incorrecto";
         }
       });
-      btnCancelAuth.addEventListener("click", () => { authModal.classList.add("hidden"); authError.textContent = ""; adminPwdInput.value = ""; });
-      btnCloseAdmin.addEventListener("click", () => { isAdminMode = false; adminPanel.classList.add("hidden"); renderPublicUI(); });
+      btnCancelAuth.addEventListener("click", () => {
+        authModal.classList.add("hidden");
+        authError.textContent = "";
+        adminPwdInput.value = "";
+      });
+      btnCloseAdmin.addEventListener("click", () => {
+        isAdminMode = false;
+        adminPanel.classList.add("hidden");
+        renderPublicUI();
+      });
 
       // --- GESTIÓN DE EQUIPOS (ADMIN) ---
       addTeamForm.addEventListener("submit", (e) => {
@@ -1577,30 +1931,75 @@
         const members = membersInput.value.trim();
         const adminErrorMsg = document.getElementById("adminErrorMsg");
         if (!name) return;
-        
+
         if (editingIndex >= 0) {
-          if (appState.teams.some((t, i) => t.name.toLowerCase() === name.toLowerCase() && i !== editingIndex)) {
+          if (
+            appState.teams.some(
+              (t, i) =>
+                t.name.toLowerCase() === name.toLowerCase() &&
+                i !== editingIndex,
+            )
+          ) {
             adminErrorMsg.textContent = "Ya existe otro equipo con ese nombre.";
-            adminErrorMsg.classList.remove("hidden"); setTimeout(() => adminErrorMsg.classList.add("hidden"), 3000); return;
+            adminErrorMsg.classList.remove("hidden");
+            setTimeout(() => adminErrorMsg.classList.add("hidden"), 3000);
+            return;
           }
-          appState.teams[editingIndex] = { name, members: members || "Sin integrantes" };
-          editingIndex = -1; btnSubmitTeam.textContent = "+ Añadir equipo"; btnCancelEdit.classList.add("hidden");
+          appState.teams[editingIndex] = {
+            name,
+            members: members || "Sin integrantes",
+          };
+          editingIndex = -1;
+          btnSubmitTeam.textContent = "+ Añadir equipo";
+          btnCancelEdit.classList.add("hidden");
         } else {
-          const exIdx = appState.teams.findIndex(t => t.name.toLowerCase() === name.toLowerCase());
-          if (exIdx >= 0) appState.teams[exIdx].members = members || "Sin integrantes";
-          else appState.teams.push({ name, members: members || "Sin integrantes" });
+          const exIdx = appState.teams.findIndex(
+            (t) => t.name.toLowerCase() === name.toLowerCase(),
+          );
+          if (exIdx >= 0)
+            appState.teams[exIdx].members = members || "Sin integrantes";
+          else
+            appState.teams.push({
+              name,
+              members: members || "Sin integrantes",
+            });
         }
-        appState.isGenerated = false; teamInput.value = ""; membersInput.value = "";
+        appState.isGenerated = false;
+        teamInput.value = "";
+        membersInput.value = "";
         saveAppState();
       });
 
-      btnCancelEdit.addEventListener("click", () => { editingIndex = -1; teamInput.value = ""; membersInput.value = ""; btnSubmitTeam.textContent = "+ Añadir equipo"; btnCancelEdit.classList.add("hidden"); });
-      btnGenerate.addEventListener("click", () => { if (appState.teams.length < 2) return; appState.teams = [...appState.teams].sort(() => Math.random() - 0.5); appState.isGenerated = true; saveAppState(); });
-      btnSetWinner.addEventListener("click", () => { if (winnerSelect.value === "") return; appState.winner = appState.teams[winnerSelect.value]; saveAppState(); });
-      btnRemoveWinner.addEventListener("click", () => { appState.winner = null; saveAppState(); });
-      btnReset.addEventListener("click", () => { appState.isGenerated = false; saveAppState(); });
-      btnClearAll.addEventListener("click", () => { appState = { teams: [], isGenerated: false, winner: null }; saveAppState(); });
-
+      btnCancelEdit.addEventListener("click", () => {
+        editingIndex = -1;
+        teamInput.value = "";
+        membersInput.value = "";
+        btnSubmitTeam.textContent = "+ Añadir equipo";
+        btnCancelEdit.classList.add("hidden");
+      });
+      btnGenerate.addEventListener("click", () => {
+        if (appState.teams.length < 2) return;
+        appState.teams = [...appState.teams].sort(() => Math.random() - 0.5);
+        appState.isGenerated = true;
+        saveAppState();
+      });
+      btnSetWinner.addEventListener("click", () => {
+        if (winnerSelect.value === "") return;
+        appState.winner = appState.teams[winnerSelect.value];
+        saveAppState();
+      });
+      btnRemoveWinner.addEventListener("click", () => {
+        appState.winner = null;
+        saveAppState();
+      });
+      btnReset.addEventListener("click", () => {
+        appState.isGenerated = false;
+        saveAppState();
+      });
+      btnClearAll.addEventListener("click", () => {
+        appState = { teams: [], isGenerated: false, winner: null };
+        saveAppState();
+      });
 
       // ==========================================
       // FUNCIONES: APLICACIÓN DEL JURADO
@@ -1613,25 +2012,35 @@
 
       btnCancelJuryAuth.addEventListener("click", () => {
         juryAuthModal.classList.add("hidden");
-        juryAuthError.textContent = ""; juryNameInput.value = ""; juryPwdInput.value = "";
+        juryAuthError.textContent = "";
+        juryNameInput.value = "";
+        juryPwdInput.value = "";
       });
 
       btnLoginJuryAuth.addEventListener("click", () => {
         const name = juryNameInput.value.trim();
         const pwd = juryPwdInput.value;
-        if (!name) { juryAuthError.textContent = "Introduce tu nombre."; return; }
-        if (pwd !== JURY_PASSWORD) { juryAuthError.textContent = "Contraseña incorrecta."; return; }
+        if (!name) {
+          juryAuthError.textContent = "Introduce tu nombre.";
+          return;
+        }
+        if (pwd !== JURY_PASSWORD) {
+          juryAuthError.textContent = "Contraseña incorrecta.";
+          return;
+        }
 
         // Entrar a la app del jurado
         isJuryMode = true;
         juryState.juryName = name;
         juryNameDisplay.textContent = name;
-        
+
         juryAuthModal.classList.add("hidden");
-        publicApp.classList.add("hidden");   // Ocultar web normal
-        juryApp.classList.remove("hidden");  // Mostrar app jurado
-        
-        juryAuthError.textContent = ""; juryNameInput.value = ""; juryPwdInput.value = "";
+        publicApp.classList.add("hidden"); // Ocultar web normal
+        juryApp.classList.remove("hidden"); // Mostrar app jurado
+
+        juryAuthError.textContent = "";
+        juryNameInput.value = "";
+        juryPwdInput.value = "";
         renderJuryTeams();
       });
 
@@ -1643,7 +2052,7 @@
         juryState.juryName = "";
         juryApp.classList.add("hidden");
         publicApp.classList.remove("hidden");
-        
+
         // Reset a la primera pantalla del jurado
         votingScreen.classList.remove("hidden");
         thanksScreen.classList.add("hidden");
@@ -1653,33 +2062,35 @@
 
       function updateJuryProgress() {
         if (!appState.isGenerated || appState.teams.length === 0) {
-            btnFinish.classList.add("hidden");
-            progressBar.style.width = "0%";
-            return;
+          btnFinish.classList.add("hidden");
+          progressBar.style.width = "0%";
+          return;
         }
         const votedCount = Object.keys(juryState.votes).length;
         const percentage = (votedCount / appState.teams.length) * 100;
         progressBar.style.width = `${percentage}%`;
-        
+
         if (votedCount === appState.teams.length && appState.teams.length > 0) {
-            btnFinish.classList.remove("hidden");
+          btnFinish.classList.remove("hidden");
         } else {
-            btnFinish.classList.add("hidden");
+          btnFinish.classList.add("hidden");
         }
       }
 
       function renderJuryTeams() {
         teamsContainer.innerHTML = "";
-        
-        if (appState.teams.length === 0) { 
-          juryEmptyState.innerHTML = "<p>Aún no hay equipos registrados para evaluar.</p>";
-          juryEmptyState.classList.remove("hidden"); 
-          return; 
+
+        if (appState.teams.length === 0) {
+          juryEmptyState.innerHTML =
+            "<p>Aún no hay equipos registrados para evaluar.</p>";
+          juryEmptyState.classList.remove("hidden");
+          return;
         }
 
         // BLOQUEO: El jurado no puede votar si el admin no ha hecho el sorteo.
         if (!appState.isGenerated) {
-          juryEmptyState.innerHTML = "<div class='flex flex-col items-center gap-3 py-6'><svg class='w-8 h-8 text-slate-300 animate-pulse' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg><p>Esperando a que se realice el sorteo oficial de presentación...</p></div>";
+          juryEmptyState.innerHTML =
+            "<div class='flex flex-col items-center gap-3 py-6'><svg class='w-8 h-8 text-slate-300 animate-pulse' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg><p>Esperando a que se realice el sorteo oficial de presentación...</p></div>";
           juryEmptyState.classList.remove("hidden");
           updateJuryProgress(); // Actualizamos barra y ocultamos botón
           return;
@@ -1690,11 +2101,16 @@
         appState.teams.forEach((team, index) => {
           const teamName = team.name;
           const hasVoted = !!juryState.votes[teamName];
-          const currentVote = juryState.votes[teamName] || { idea: 5, dev: 5, pres: 5, total: 15 };
+          const currentVote = juryState.votes[teamName] || {
+            idea: 5,
+            dev: 5,
+            pres: 5,
+            total: 15,
+          };
 
           const card = document.createElement("div");
-          card.className = `bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${hasVoted ? 'border-accent shadow-[0_0_15px_rgba(3,174,115,0.15)]' : 'border-slate-200 shadow-sm'}`;
-          
+          card.className = `bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${hasVoted ? "border-accent shadow-[0_0_15px_rgba(3,174,115,0.15)]" : "border-slate-200 shadow-sm"}`;
+
           card.innerHTML = `
             <div class="p-5 flex justify-between items-center cursor-pointer team-header select-none">
               <div class="flex-1 pr-4">
@@ -1704,12 +2120,12 @@
                     ${index + 1}
                   </div>
                   <h3 class="font-bold text-lg text-slate-900 leading-tight">${teamName}</h3>
-                  ${hasVoted ? '<svg class="w-5 h-5 text-accent flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : ''}
+                  ${hasVoted ? '<svg class="w-5 h-5 text-accent flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : ""}
                 </div>
                 <p class="text-xs text-slate-500 pl-8 line-clamp-1">${team.members}</p>
               </div>
               <div class="flex items-center gap-3">
-                ${hasVoted ? `<span class="bg-accent/10 text-accent font-bold px-3 py-1 rounded-lg text-sm">${currentVote.total} pts</span>` : ''}
+                ${hasVoted ? `<span class="bg-accent/10 text-accent font-bold px-3 py-1 rounded-lg text-sm">${currentVote.total} pts</span>` : ""}
                 <svg class="w-5 h-5 text-slate-400 transform transition-transform chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
               </div>
             </div>
@@ -1732,38 +2148,74 @@
             </div>
           `;
 
-          const header = card.querySelector('.team-header'), body = card.querySelector('.voting-body'), chevron = card.querySelector('.chevron');
-          header.addEventListener('click', () => {
-            const isHidden = body.classList.contains('hidden');
-            document.querySelectorAll('.voting-body').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.chevron').forEach(el => el.style.transform = 'rotate(0deg)');
-            if (isHidden) { body.classList.remove('hidden'); chevron.style.transform = 'rotate(180deg)'; }
-          });
-
-          ['idea', 'dev', 'pres'].forEach(crit => {
-            card.querySelector(`.slider-${crit}`).addEventListener('input', (e) => card.querySelector(`.val-${crit}`).textContent = e.target.value);
-          });
-
-          card.querySelector('.btn-save-vote').addEventListener('click', async () => {
-            juryState.votes[teamName] = {
-              idea: parseInt(card.querySelector('.slider-idea').value),
-              dev: parseInt(card.querySelector('.slider-dev').value),
-              pres: parseInt(card.querySelector('.slider-pres').value),
-              total: parseInt(card.querySelector('.slider-idea').value) + parseInt(card.querySelector('.slider-dev').value) + parseInt(card.querySelector('.slider-pres').value)
-            };
-            renderJuryTeams(); // Re-renderiza para actualizar el header con la nota
-            updateJuryProgress();
-            
-            toastMsg.textContent = `Voto a ${teamName} guardado`;
-            toast.classList.remove("translate-y-20", "opacity-0");
-            setTimeout(() => toast.classList.add("translate-y-20", "opacity-0"), 3000);
-            
-            if (isCloudEnabled) {
-              try {
-                await setDoc(doc(db, "votaciones_jurado", `2026_${juryState.juryName.replace(/\s+/g, '_')}`), { nombre: juryState.juryName, ultima_act: new Date().toISOString(), votos: juryState.votes }, { merge: true });
-              } catch (error) {}
+          const header = card.querySelector(".team-header"),
+            body = card.querySelector(".voting-body"),
+            chevron = card.querySelector(".chevron");
+          header.addEventListener("click", () => {
+            const isHidden = body.classList.contains("hidden");
+            document
+              .querySelectorAll(".voting-body")
+              .forEach((el) => el.classList.add("hidden"));
+            document
+              .querySelectorAll(".chevron")
+              .forEach((el) => (el.style.transform = "rotate(0deg)"));
+            if (isHidden) {
+              body.classList.remove("hidden");
+              chevron.style.transform = "rotate(180deg)";
             }
           });
+
+          ["idea", "dev", "pres"].forEach((crit) => {
+            card
+              .querySelector(`.slider-${crit}`)
+              .addEventListener(
+                "input",
+                (e) =>
+                  (card.querySelector(`.val-${crit}`).textContent =
+                    e.target.value),
+              );
+          });
+
+          card
+            .querySelector(".btn-save-vote")
+            .addEventListener("click", async () => {
+              juryState.votes[teamName] = {
+                idea: parseInt(card.querySelector(".slider-idea").value),
+                dev: parseInt(card.querySelector(".slider-dev").value),
+                pres: parseInt(card.querySelector(".slider-pres").value),
+                total:
+                  parseInt(card.querySelector(".slider-idea").value) +
+                  parseInt(card.querySelector(".slider-dev").value) +
+                  parseInt(card.querySelector(".slider-pres").value),
+              };
+              renderJuryTeams(); // Re-renderiza para actualizar el header con la nota
+              updateJuryProgress();
+
+              toastMsg.textContent = `Voto a ${teamName} guardado`;
+              toast.classList.remove("translate-y-20", "opacity-0");
+              setTimeout(
+                () => toast.classList.add("translate-y-20", "opacity-0"),
+                3000,
+              );
+
+              if (isCloudEnabled) {
+                try {
+                  await setDoc(
+                    doc(
+                      db,
+                      "votaciones_jurado",
+                      `2026_${juryState.juryName.replace(/\s+/g, "_")}`,
+                    ),
+                    {
+                      nombre: juryState.juryName,
+                      ultima_act: new Date().toISOString(),
+                      votos: juryState.votes,
+                    },
+                    { merge: true },
+                  );
+                } catch (error) {}
+              }
+            });
           teamsContainer.appendChild(card);
         });
         updateJuryProgress();
@@ -1788,54 +2240,69 @@
         startLiveResultsListening(juryGlobalResults); // Cargar votos en el panel de resultados del jurado
       });
 
-
       // ==========================================
       // FUNCIONES COMPARTIDAS (AGREGACIÓN VOTOS)
       // ==========================================
-      
+
       // Carga todos los votos de la nube y pinta el desglose en el contenedor elegido
       function startLiveResultsListening(containerElement) {
         if (!isCloudEnabled) {
-             containerElement.innerHTML = '<p class="text-center text-slate-500 py-6">El sumatorio del jurado solo funciona con conexión a Firebase (API Key).</p>';
-             return;
+          containerElement.innerHTML =
+            '<p class="text-center text-slate-500 py-6">El sumatorio del jurado solo funciona con conexión a Firebase (API Key).</p>';
+          return;
         }
 
         onSnapshot(collection(db, "votaciones_jurado"), (snapVotes) => {
-            let aggregated = {};
-            
-            appState.teams.forEach(team => aggregated[team.name] = { total: 0, juries: 0, details: [] });
+          let aggregated = {};
 
-            snapVotes.forEach(doc => {
-                const data = doc.data();
-                for (let teamName in data.votos) {
-                    if (!aggregated[teamName]) aggregated[teamName] = { total: 0, juries: 0, details: [] };
-                    aggregated[teamName].total += data.votos[teamName].total;
-                    aggregated[teamName].juries += 1;
-                    aggregated[teamName].details.push({ name: data.nombre, vote: data.votos[teamName] });
-                }
-            });
+          appState.teams.forEach(
+            (team) =>
+              (aggregated[team.name] = { total: 0, juries: 0, details: [] }),
+          );
 
-            containerElement.innerHTML = "";
-            const sortedTeams = Object.keys(aggregated).map(name => ({ name, ...aggregated[name] })).sort((a, b) => b.total - a.total);
-
-            if (sortedTeams.length === 0) {
-                containerElement.innerHTML = '<p class="text-center text-slate-400 py-6">Aún no hay votos registrados.</p>'; return;
+          snapVotes.forEach((doc) => {
+            const data = doc.data();
+            for (let teamName in data.votos) {
+              if (!aggregated[teamName])
+                aggregated[teamName] = { total: 0, juries: 0, details: [] };
+              aggregated[teamName].total += data.votos[teamName].total;
+              aggregated[teamName].juries += 1;
+              aggregated[teamName].details.push({
+                name: data.nombre,
+                vote: data.votos[teamName],
+              });
             }
+          });
 
-            sortedTeams.forEach((team, index) => {
-                const card = document.createElement("div");
-                card.className = "bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2";
-                
-                let medal = `<div class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center">${index + 1}</div>`;
-                if (index === 0) medal = `🥇`; if (index === 1) medal = `🥈`; if (index === 2) medal = `🥉`;
+          containerElement.innerHTML = "";
+          const sortedTeams = Object.keys(aggregated)
+            .map((name) => ({ name, ...aggregated[name] }))
+            .sort((a, b) => b.total - a.total);
 
-                let detailsHTML = team.details.length > 0 
-                  ? `<div class="mt-2 pt-2 border-t border-slate-50 flex flex-wrap gap-2">
-                      ${team.details.map(d => `<span class="bg-slate-50 border border-slate-100 text-xs px-2 py-1 rounded" title="I:${d.vote.idea} D:${d.vote.dev} P:${d.vote.pres}">${d.name}: <b class="text-primary">${d.vote.total}</b></span>`).join('')}
+          if (sortedTeams.length === 0) {
+            containerElement.innerHTML =
+              '<p class="text-center text-slate-400 py-6">Aún no hay votos registrados.</p>';
+            return;
+          }
+
+          sortedTeams.forEach((team, index) => {
+            const card = document.createElement("div");
+            card.className =
+              "bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2";
+
+            let medal = `<div class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center">${index + 1}</div>`;
+            if (index === 0) medal = `🥇`;
+            if (index === 1) medal = `🥈`;
+            if (index === 2) medal = `🥉`;
+
+            let detailsHTML =
+              team.details.length > 0
+                ? `<div class="mt-2 pt-2 border-t border-slate-50 flex flex-wrap gap-2">
+                      ${team.details.map((d) => `<span class="bg-slate-50 border border-slate-100 text-xs px-2 py-1 rounded" title="I:${d.vote.idea} D:${d.vote.dev} P:${d.vote.pres}">${d.name}: <b class="text-primary">${d.vote.total}</b></span>`).join("")}
                      </div>`
-                  : `<div class="mt-2 pt-2 border-t border-slate-50 text-xs text-slate-400 italic">Sin votos aún.</div>`;
+                : `<div class="mt-2 pt-2 border-t border-slate-50 text-xs text-slate-400 italic">Sin votos aún.</div>`;
 
-                card.innerHTML = `
+            card.innerHTML = `
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
                             <div class="text-lg">${medal}</div>
@@ -1848,15 +2315,15 @@
                     </div>
                     ${detailsHTML}
                 `;
-                containerElement.appendChild(card);
-            });
+            containerElement.appendChild(card);
+          });
         });
       }
 
       // ==========================================
       // INICIO PRINCIPAL DE LA APP
       // ==========================================
-      
+
       if (isCloudEnabled) {
         onSnapshot(docRefEvent, (snap) => {
           if (snap.exists()) appState = snap.data();
@@ -1866,12 +2333,16 @@
       } else {
         // MODO LOCAL
         const data = localStorage.getItem("lowcodecon_state");
-        if (data) { try { appState = JSON.parse(data); } catch { } }
+        if (data) {
+          try {
+            appState = JSON.parse(data);
+          } catch {}
+        }
         renderPublicUI();
       }
-
     </script>
   </body>
 </html>
+
 
 
