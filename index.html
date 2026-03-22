@@ -903,7 +903,7 @@
                 d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
               ></path>
             </svg>
-            <h3 class="text-xl font-bold text-slate-900">Panel Gestor</h3>
+            <h3 class="text-xl font-bold text-slate-900">Panel de administración</h3>
             <button
               id="btnCloseAdmin"
               class="ml-auto p-2 text-slate-400 hover:text-rose-500 transition-colors"
@@ -977,13 +977,13 @@
               id="btnReset"
               class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-semibold py-2 px-5 rounded-xl transition-colors"
             >
-              Reiniciar Sorteo
+              Reiniciar sorteo
             </button>
             <button
               id="btnClearAll"
               class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-2 px-5 rounded-xl transition-colors md:ml-auto"
             >
-              Borrar Todos
+              Borrar todos
             </button>
           </div>
 
@@ -993,14 +993,14 @@
               <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-7.533-2.493M15 19.128v-.003c0-1.113-.285-2.16-.786-3.07M15 19.128v.106A12.318 12.318 0 018.624 21c-2.331 0-4.512-.645-6.374-1.766l-.001-.109a6.375 6.375 0 0111.964-3.07M12 6.375a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zm8.25 2.25a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
               </svg>
-              Gestión de Jurado (Accesos)
+              Gestión de miembros del jurado
             </h4>
             <form id="addJuryForm" class="flex flex-col gap-3 mb-4">
               <div class="flex flex-col md:flex-row gap-3">
-                <input type="text" id="newJuryName" placeholder="Nombre completo..." class="flex-[2] px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:outline-none" required autocomplete="off" />
+                <input type="text" id="newJuryName" placeholder="Usuario..." class="flex-[2] px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:outline-none" required autocomplete="off" />
                 <input type="text" id="newJuryPwd" placeholder="Contraseña..." class="flex-1 px-4 py-2.5 rounded-xl border border-slate-300 focus:ring-2 focus:ring-primary focus:outline-none" required autocomplete="off" />
                 <button type="submit" class="bg-primary hover:bg-[#12008a] text-white font-semibold py-2.5 px-5 rounded-xl transition-colors whitespace-nowrap">
-                  + Añadir Jurado
+                  + Añadir jurado
                 </button>
               </div>
             </form>
@@ -1026,14 +1026,14 @@
                     d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
                   ></path>
                 </svg>
-                Resultados del Jurado (En vivo)
+                Resultados del jurado (En vivo)
               </h4>
               <div class="flex items-center gap-2">
                 <button id="btnResetVotes" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap">
-                  Reiniciar Votos
+                  Reiniciar votos
                 </button>
                 <button id="btnToggleVoting" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap">
-                  Cerrar Votaciones
+                  Cerrar votaciones
                 </button>
               </div>
             </div>
@@ -1078,7 +1078,7 @@
                 />
                 <path d="M18 2H6v7c0 3.31 2.69 6 6 6s6-2.69 6-6V2Z" />
               </svg>
-              Selección de Ganador
+              Selección del ganador
             </h4>
             <div class="flex flex-col md:flex-row gap-3 items-stretch">
               <select
@@ -1091,7 +1091,7 @@
                 id="btnSetWinner"
                 class="bg-gradient-to-r from-yellow-400 to-amber-500 hover:from-yellow-500 hover:to-amber-600 text-white font-bold py-2.5 px-6 rounded-xl transition-all shadow-md"
               >
-                Anunciar Ganador
+                Anunciar ganador
               </button>
               <button
                 id="btnRemoveWinner"
@@ -1122,7 +1122,7 @@
             <h3
               class="text-xl md:text-2xl font-display font-bold text-center mb-6 text-accent"
             >
-              Orden definitivo
+              Orden de presentaciones
             </h3>
             <div
               id="finalList"
@@ -1427,7 +1427,7 @@
         <section id="votingScreen" class="fade-in">
           <div class="mb-8">
             <h2 class="text-2xl font-display font-bold text-slate-900">
-              Equipos Participantes
+              Votación del jurado
             </h2>
             <p class="text-slate-500 text-sm mt-1">
               Selecciona un equipo para evaluar su propuesta.
@@ -1449,7 +1449,7 @@
               id="btnFinish"
               class="hidden bg-slate-900 hover:bg-black text-white font-bold py-4 px-8 rounded-2xl transition-all shadow-lg w-full sm:w-auto"
             >
-              Finalizar Votaciones
+              Finalizar votaciones
             </button>
             <button
               id="btnReturnToMain"
@@ -1490,7 +1490,7 @@
               id="btnViewJuryResults"
               class="flex-1 bg-primary hover:bg-[#12008a] text-white font-semibold py-3 px-6 rounded-xl transition-all shadow-md"
             >
-              Ver Resultados
+              Ver resultados
             </button>
           </div>
         </section>
@@ -1514,7 +1514,7 @@
                   d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
                 ></path>
               </svg>
-              Resultados Globales
+              Resultados globales
             </h2>
             <p class="text-slate-500 text-sm mt-1">
               Clasificación con la suma de todos los miembros del jurado.
@@ -1576,7 +1576,7 @@
         class="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl fade-in-up"
       >
         <h3 class="text-xl font-bold text-slate-900 mb-2">
-          Acceso Gestor General
+          Acceso Administrador
         </h3>
         <input
           type="password"
@@ -1715,7 +1715,7 @@
       let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
       let juryState = { juryName: "", votes: {} };
 
-      const ADMIN_PASSWORD = "admin";
+      const ADMIN_PASSWORD = "nira1234";
 
       let isAdminMode = false;
       let isJuryMode = false;
@@ -1872,7 +1872,7 @@
 
         // UI Botón Cerrar Votaciones
         if (appState.isVotingClosed) {
-            btnToggleVoting.textContent = "Abrir Votaciones";
+            btnToggleVoting.textContent = "Abrir votaciones";
             btnToggleVoting.className = "bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap";
         } else {
             btnToggleVoting.textContent = "Cerrar Votaciones";
@@ -2451,8 +2451,8 @@
           const hasVoted = !!juryState.votes[teamName];
           const currentVote = juryState.votes[teamName] || {
             idea: 5,
-            dev: 5,
             pres: 5,
+            dev: 5,
             total: 15,
           };
 
@@ -2480,18 +2480,19 @@
             <div class="px-5 pb-6 hidden voting-body border-t border-slate-50 bg-slate-50/50">
               <div class="space-y-6 pt-5">
                 <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">💡 Innovación e Idea</label><span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span></div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">💡 Innovación e idea</label><span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span></div>
                   <input type="range" min="1" max="10" value="${currentVote.idea}" class="slider-idea" ${isClosed ? 'disabled' : ''}>
                 </div>
-                <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">⚙️ Desarrollo Técnico</label><span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span></div>
-                  <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev" ${isClosed ? 'disabled' : ''}>
-                </div>
-                <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">🎤 Presentación</label><span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span></div>
+                    <div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">🎤 Presentación y defensa del proyecto</label><span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span></div>
                   <input type="range" min="1" max="10" value="${currentVote.pres}" class="slider-pres" ${isClosed ? 'disabled' : ''}>
                 </div>
               </div>
+                <div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">⚙️ Desarrollo y funcionalidad del prototipo</label><span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span></div>
+                  <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev" ${isClosed ? 'disabled' : ''}>
+                </div>
+            
 
               ${isClosed ? '' : '<button class="w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar Puntuación</button>'}
             </div>
@@ -2514,7 +2515,7 @@
             }
           });
 
-          ["idea", "dev", "pres"].forEach((crit) => {
+          ["idea", "pres", "dev"].forEach((crit) => {
             card
               .querySelector(`.slider-${crit}`)
               .addEventListener(
@@ -2530,12 +2531,13 @@
             btnSaveVote.addEventListener("click", async () => {
               juryState.votes[teamName] = {
                 idea: parseInt(card.querySelector(".slider-idea").value),
-                dev: parseInt(card.querySelector(".slider-dev").value),
                 pres: parseInt(card.querySelector(".slider-pres").value),
+                dev: parseInt(card.querySelector(".slider-dev").value),
+              
                 total:
                   parseInt(card.querySelector(".slider-idea").value) +
-                  parseInt(card.querySelector(".slider-dev").value) +
-                  parseInt(card.querySelector(".slider-pres").value),
+                  parseInt(card.querySelector(".slider-pres").value)+
+                  parseInt(card.querySelector(".slider-dev").value) ,
               };
               renderJuryTeams(); // Re-renderiza para actualizar el header con la nota
               updateJuryProgress();
