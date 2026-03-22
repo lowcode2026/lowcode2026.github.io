@@ -141,6 +141,16 @@
         outline: none;
       }
 
+      input[type="range"]:disabled {
+        opacity: 0.5;
+      }
+      
+      input[type="range"]:disabled::-webkit-slider-thumb {
+        cursor: not-allowed;
+        background: #94a3b8;
+        box-shadow: none;
+      }
+
       pb-safe {
         padding-bottom: env(safe-area-inset-bottom);
       }
@@ -1001,22 +1011,27 @@
 
           <!-- RESULTADOS DEL JURADO EN VIVO (Módulo integrado) -->
           <div class="mt-8 pt-6 border-t border-slate-200">
-            <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
-              <svg
-                class="w-6 h-6 text-primary"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                stroke-width="2"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
-                ></path>
-              </svg>
-              Resultados del Jurado (En vivo)
-            </h4>
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-3">
+              <h4 class="font-bold text-slate-800 flex items-center gap-2">
+                <svg
+                  class="w-6 h-6 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  stroke-width="2"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3 13h2.243a2 2 0 0 1 1.956 1.564l.7 3.5a2 2 0 0 0 3.902-.001l1.4-7.002a2 2 0 0 1 3.902.001l.7 3.501a2 2 0 0 0 1.956 1.564H21"
+                  ></path>
+                </svg>
+                Resultados del Jurado (En vivo)
+              </h4>
+              <button id="btnToggleVoting" class="bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap">
+                Cerrar Votaciones
+              </button>
+            </div>
             <div
               id="publicAdminResults"
               class="flex flex-col gap-3 max-h-[400px] overflow-y-auto bg-slate-50 p-4 rounded-2xl border border-slate-100"
@@ -1374,6 +1389,10 @@
             <p class="text-slate-500 text-sm mt-1">
               Selecciona un equipo para evaluar su propuesta.
             </p>
+            <div id="votingClosedBanner" class="hidden mt-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              Las votaciones han sido cerradas. Ya no se pueden modificar las notas.
+            </div>
           </div>
           <div
             id="juryEmptyState"
@@ -1457,6 +1476,10 @@
             <p class="text-slate-500 text-sm mt-1">
               Clasificación con la suma de todos los miembros del jurado.
             </p>
+            <div id="votingClosedBannerResults" class="hidden mt-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              Las votaciones han sido cerradas. Estos son los resultados definitivos.
+            </div>
           </div>
 
           <div id="juryGlobalResults" class="flex flex-col gap-3">
@@ -1623,6 +1646,7 @@
         getFirestore,
         doc,
         setDoc,
+        getDoc,
         onSnapshot,
         collection,
         getDocs,
@@ -1645,7 +1669,7 @@
       let unsubscribeJurados = null; // Para limpiar el snapshot del admin
 
       // --- ESTADOS GLOBALES ---
-      let appState = { teams: [], isGenerated: false, winner: null };
+      let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
       let juryState = { juryName: "", votes: {} };
 
       const ADMIN_PASSWORD = "admin";
@@ -1686,7 +1710,8 @@
       const btnSetWinner = document.getElementById("btnSetWinner");
       const btnRemoveWinner = document.getElementById("btnRemoveWinner");
       const publicAdminResults = document.getElementById("publicAdminResults");
-      
+      const btnToggleVoting = document.getElementById("btnToggleVoting");
+
       // NUEVAS REFERENCIAS DOM: ADMIN JURADO
       const addJuryForm = document.getElementById("addJuryForm");
       const newJuryName = document.getElementById("newJuryName");
@@ -1719,6 +1744,8 @@
       const juryGlobalResults = document.getElementById("juryGlobalResults");
       const toast = document.getElementById("toast");
       const toastMsg = document.getElementById("toastMsg");
+      const votingClosedBanner = document.getElementById("votingClosedBanner");
+      const votingClosedBannerResults = document.getElementById("votingClosedBannerResults");
 
       // Inicializar Firebase con tu proyecto real
       app = initializeApp(firebaseConfig);
@@ -1738,8 +1765,9 @@
           onSnapshot(docRefEvent, (snap) => {
             if (snap.exists()) {
               appState = snap.data();
+              if (typeof appState.isVotingClosed === 'undefined') appState.isVotingClosed = false;
             } else {
-              appState = { teams: [], isGenerated: false, winner: null };
+              appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
             }
             renderPublicUI();
           });
@@ -1749,16 +1777,27 @@
       // ==========================================
       // FUNCIONES: APLICACIÓN PÚBLICA Y ADMIN
       // ==========================================
-
       function renderPublicUI() {
         draftList.innerHTML = "";
         finalList.innerHTML = "";
         winnerSelect.innerHTML =
           '<option value="">-- Seleccionar equipo ganador --</option>';
 
-        if (!appState)
-          appState = { teams: [], isGenerated: false, winner: null };
-        if (!appState.teams) appState.teams = [];
+        if (!appState) {
+          appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+        }
+        if (!appState.teams) {
+            appState.teams = [];
+        }
+
+        // UI Botón Cerrar Votaciones
+        if (appState.isVotingClosed) {
+            btnToggleVoting.textContent = "Abrir Votaciones";
+            btnToggleVoting.className = "bg-emerald-100 hover:bg-emerald-200 text-emerald-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap";
+        } else {
+            btnToggleVoting.textContent = "Cerrar Votaciones";
+            btnToggleVoting.className = "bg-rose-100 hover:bg-rose-200 text-rose-700 font-semibold py-1.5 px-4 rounded-xl transition-colors text-sm whitespace-nowrap";
+        }
 
         appState.teams = appState.teams.map((team) => {
           if (typeof team === "string")
@@ -2020,7 +2059,12 @@
         saveAppState();
       });
       btnClearAll.addEventListener("click", () => {
-        appState = { teams: [], isGenerated: false, winner: null };
+        appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+        saveAppState();
+      });
+
+      btnToggleVoting.addEventListener("click", () => {
+        appState.isVotingClosed = !appState.isVotingClosed;
         saveAppState();
       });
 
@@ -2096,6 +2140,18 @@
                 isJuryMode = true;
                 juryState.juryName = name;
                 juryNameDisplay.textContent = name;
+                juryState.votes = {}; // Vaciamos por defecto al entrar
+
+                // Cargar los votos previos de este jurado desde Firebase (si los tiene)
+                try {
+                    const juryDocRef = doc(db, 'votaciones_jurado', `2026_${name.replace(/\s+/g, "_")}`);
+                    const juryDocSnap = await getDoc(juryDocRef);
+                    if (juryDocSnap.exists()) {
+                        juryState.votes = juryDocSnap.data().votos || {};
+                    }
+                } catch (e) {
+                    console.error("Error al cargar los votos previos del jurado:", e);
+                }
 
                 juryAuthModal.classList.add("hidden");
                 publicApp.classList.add("hidden"); // Ocultar web normal
@@ -2103,7 +2159,21 @@
 
                 juryNameInput.value = "";
                 juryPwdInput.value = "";
-                renderJuryTeams();
+
+                if (appState.isVotingClosed) {
+                    votingScreen.classList.add("hidden");
+                    thanksScreen.classList.add("hidden");
+                    progressBarContainer.classList.add("hidden");
+                    juryAdminScreen.classList.remove("hidden");
+                    if (votingClosedBannerResults) votingClosedBannerResults.classList.remove("hidden");
+                    startLiveResultsListening(juryGlobalResults);
+                } else {
+                    votingScreen.classList.remove("hidden");
+                    thanksScreen.classList.add("hidden");
+                    juryAdminScreen.classList.add("hidden");
+                    progressBarContainer.classList.remove("hidden");
+                    renderJuryTeams();
+                }
             } else {
                 juryAuthError.textContent = "Credenciales incorrectas o jurado no registrado.";
             }
@@ -2123,6 +2193,7 @@
       function exitJuryMode() {
         isJuryMode = false;
         juryState.juryName = "";
+        juryState.votes = {}; // Limpiamos la memoria al salir
         juryApp.classList.add("hidden");
         publicApp.classList.remove("hidden");
 
@@ -2171,6 +2242,18 @@
 
         juryEmptyState.classList.add("hidden");
 
+        const isClosed = appState.isVotingClosed === true;
+
+        if (isClosed) {
+            votingClosedBanner.classList.remove("hidden");
+            if (votingClosedBannerResults) votingClosedBannerResults.classList.remove("hidden");
+            btnReturn.classList.add("hidden"); // Ocultar Modificar Votos
+        } else {
+            votingClosedBanner.classList.add("hidden");
+            if (votingClosedBannerResults) votingClosedBannerResults.classList.add("hidden");
+            btnReturn.classList.remove("hidden");
+        }
+
         appState.teams.forEach((team, index) => {
           const teamName = team.name;
           const hasVoted = !!juryState.votes[teamName];
@@ -2206,18 +2289,19 @@
               <div class="space-y-6 pt-5">
                 <div>
                   <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">💡 Innovación e Idea</label><span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span></div>
-                  <input type="range" min="1" max="10" value="${currentVote.idea}" class="slider-idea">
+                  <input type="range" min="1" max="10" value="${currentVote.idea}" class="slider-idea" ${isClosed ? 'disabled' : ''}>
                 </div>
                 <div>
                   <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">⚙️ Desarrollo Técnico</label><span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span></div>
-                  <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev">
+                  <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev" ${isClosed ? 'disabled' : ''}>
                 </div>
                 <div>
                   <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">🎤 Presentación</label><span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span></div>
-                  <input type="range" min="1" max="10" value="${currentVote.pres}" class="slider-pres">
+                  <input type="range" min="1" max="10" value="${currentVote.pres}" class="slider-pres" ${isClosed ? 'disabled' : ''}>
                 </div>
               </div>
-              <button class="w-full mt-8 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar Puntuación</button>
+
+              ${isClosed ? '' : '<button class="w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar Puntuación</button>'}
             </div>
           `;
 
@@ -2249,9 +2333,9 @@
               );
           });
 
-          card
-            .querySelector(".btn-save-vote")
-            .addEventListener("click", async () => {
+          const btnSaveVote = card.querySelector(".btn-save-vote");
+          if (btnSaveVote) {
+            btnSaveVote.addEventListener("click", async () => {
               juryState.votes[teamName] = {
                 idea: parseInt(card.querySelector(".slider-idea").value),
                 dev: parseInt(card.querySelector(".slider-dev").value),
@@ -2291,6 +2375,7 @@
                 }
               }
             });
+          }
           teamsContainer.appendChild(card);
         });
         updateJuryProgress();
