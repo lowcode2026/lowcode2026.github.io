@@ -1323,50 +1323,57 @@
         </div>
       </div>
     </div>
+   <!-- ========================================================================= -->
+    <!-- JAVASCRIPT: LÓGICA DE APLICACIÓN COMBINADA                                -->
+    <!-- ========================================================================= -->
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
       import {
-        getFirestore,
-        doc,
-        setDoc,
-        onSnapshot,
+        getFirestore, doc, setDoc, onSnapshot, collection
       } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-     const firebaseConfig = {
-  apiKey: "AIzaSyAMadWopZwx2rft4jMSHc1INjViDNrBW3w",
-  authDomain: "lowcodecon2026.firebaseapp.com",
-  projectId: "lowcodecon2026",
-  storageBucket: "lowcodecon2026.firebasestorage.app",
-  messagingSenderId: "1056508268087",
-  appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2"
-};
+      // 👇 PEGA TU API KEY DE FIREBASE AQUÍ 👇
+      const firebaseConfig = {
+        apiKey: "", // <-- ¡Pega tu API Key real entre las comillas!
+        authDomain: "lowcodecon2026.firebaseapp.com",
+        projectId: "lowcodecon2026",
+        storageBucket: "lowcodecon2026.firebasestorage.app",
+        messagingSenderId: "1056508268087",
+        appId: "1:1056508268087:web:29d042dec8ffad3a06f9b2",
+      };
 
-      const isCloudEnabled = !!firebaseConfig.apiKey;
+      const isCloudEnabled = !!firebaseConfig.apiKey && firebaseConfig.apiKey !== "TU_API_KEY_AQUI";
 
       let db = null;
-      let docRef = null;
+      let docRefEvent = null;
 
       if (isCloudEnabled) {
         const app = initializeApp(firebaseConfig);
         db = getFirestore(app);
-        docRef = doc(db, "eventos", "lowcodecon2026");
+        docRefEvent = doc(db, "eventos", "lowcodecon2026");
       }
 
-      let appState = { teams: [], isGenerated: false, winner: null };
+      // --- ESTADOS GLOBALES ---
+      let appState = { teams: [], isGenerated: false, winner: null }; 
+      let juryState = { juryName: "", votes: {} };
+      
+      const ADMIN_PASSWORD = "admin";
+      const JURY_PASSWORD = "jurado";
+      
       let isAdminMode = false;
-      const ADMIN_PASSWORD = "admin1234";
-      let clickCount = 0;
-      let clickTimer = null;
+      let isJuryMode = false;
       let editingIndex = -1;
 
+      // --- REFERENCIAS DOM: PÚBLICO / ADMIN ---
+      const publicApp = document.getElementById("publicApp");
       const secretTrigger = document.getElementById("secretTrigger");
       const authModal = document.getElementById("authModal");
       const adminPwdInput = document.getElementById("adminPwd");
       const authError = document.getElementById("authError");
       const btnCancelAuth = document.getElementById("btnCancelAuth");
       const btnLoginAuth = document.getElementById("btnLoginAuth");
-      const btnCloseAdmin = document.getElementById("btnCloseAdmin");
       const adminPanel = document.getElementById("adminPanel");
+      const btnCloseAdmin = document.getElementById("btnCloseAdmin");
       const addTeamForm = document.getElementById("addTeamForm");
       const teamInput = document.getElementById("teamInput");
       const membersInput = document.getElementById("membersInput");
@@ -1375,8 +1382,8 @@
       const btnGenerate = document.getElementById("btnGenerate");
       const btnReset = document.getElementById("btnReset");
       const btnClearAll = document.getElementById("btnClearAll");
-      const draftView = document.getElementById("draftView");
       const draftList = document.getElementById("draftList");
+      const draftView = document.getElementById("draftView");
       const emptyState = document.getElementById("emptyState");
       const generatedView = document.getElementById("generatedView");
       const finalList = document.getElementById("finalList");
@@ -1388,19 +1395,52 @@
       const winnerSelect = document.getElementById("winnerSelect");
       const btnSetWinner = document.getElementById("btnSetWinner");
       const btnRemoveWinner = document.getElementById("btnRemoveWinner");
+      const publicAdminResults = document.getElementById("publicAdminResults");
 
-      function renderUI() {
+      // --- REFERENCIAS DOM: JURADO ---
+      const juryApp = document.getElementById("juryApp");
+      const btnOpenJuryAuth = document.getElementById("btnOpenJuryAuth");
+      const juryAuthModal = document.getElementById("juryAuthModal");
+      const juryNameInput = document.getElementById("juryNameInput");
+      const juryPwdInput = document.getElementById("juryPwdInput");
+      const juryAuthError = document.getElementById("juryAuthError");
+      const btnCancelJuryAuth = document.getElementById("btnCancelJuryAuth");
+      const btnLoginJuryAuth = document.getElementById("btnLoginJuryAuth");
+      
+      const juryNameDisplay = document.getElementById("juryNameDisplay");
+      const btnExitJury = document.getElementById("btnExitJury");
+      const votingScreen = document.getElementById("votingScreen");
+      const thanksScreen = document.getElementById("thanksScreen");
+      const juryAdminScreen = document.getElementById("juryAdminScreen");
+      const juryEmptyState = document.getElementById("juryEmptyState");
+      const teamsContainer = document.getElementById("teamsContainer");
+      const progressBarContainer = document.getElementById("progressBarContainer");
+      const progressBar = document.getElementById("progressBar");
+      const btnFinish = document.getElementById("btnFinish");
+      const btnReturn = document.getElementById("btnReturn");
+      const btnViewJuryResults = document.getElementById("btnViewJuryResults");
+      const btnExitResults = document.getElementById("btnExitResults");
+      const juryGlobalResults = document.getElementById("juryGlobalResults");
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMsg");
+
+      // ==========================================
+      // FUNCIONES: APLICACIÓN PÚBLICA Y ADMIN
+      // ==========================================
+
+      function renderPublicUI() {
         draftList.innerHTML = "";
         finalList.innerHTML = "";
-        
         winnerSelect.innerHTML = '<option value="">-- Seleccionar equipo ganador --</option>';
 
-        // Normalizar datos antiguos (por si había equipos guardados solo como texto)
-        if (appState.teams.length > 0 && typeof appState.teams[0] === 'string') {
-          appState.teams = appState.teams.map(name => ({ name, members: "Sin integrantes" }));
-        }
+        if (!appState) appState = { teams: [], isGenerated: false, winner: null };
+        if (!appState.teams) appState.teams = [];
         
-        // Rellenar el selector de ganadores
+        appState.teams = appState.teams.map((team) => {
+          if (typeof team === "string") return { name: team, members: "Sin integrantes" };
+          return { name: team.name || "Equipo", members: team.members || "Sin integrantes" };
+        });
+        
         appState.teams.forEach((team, index) => {
           const option = document.createElement("option");
           option.value = index;
@@ -1408,7 +1448,7 @@
           winnerSelect.appendChild(option);
         });
 
-        // Mostrar el ganador si existe
+        // UI Ganador
         if (appState.winner) {
           winnerName.textContent = appState.winner.name;
           winnerMembers.textContent = appState.winner.members;
@@ -1419,6 +1459,7 @@
           winnerView.classList.add("hidden");
         }
 
+        // Listas Sorteo
         if (appState.teams.length === 0) {
           emptyState.classList.remove("hidden");
           btnGenerate.disabled = true;
@@ -1434,20 +1475,15 @@
 
           appState.teams.forEach((team, index) => {
             const div = document.createElement("div");
-            div.className =
-              "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-6";
+            div.className = "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-6";
             div.innerHTML = `
-          <div class="bg-accent text-white font-bold w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-lg">
-            ${index + 1}
-          </div>
-          <div class="flex-1 overflow-hidden">
-            <div class="text-lg font-medium text-white truncate">${team.name}</div>
-            <div class="text-sm text-white/70 truncate">${team.members}</div>
-          </div>
-        `;
+              <div class="bg-accent text-white font-bold w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-lg">${index + 1}</div>
+              <div class="flex-1 overflow-hidden">
+                <div class="text-lg font-medium text-white truncate">${team.name}</div>
+                <div class="text-sm text-white/70 truncate">${team.members}</div>
+              </div>`;
             finalList.appendChild(div);
           });
-
           btnGenerate.classList.add("hidden");
           btnReset.classList.remove("hidden");
         } else {
@@ -1457,110 +1493,62 @@
 
           appState.teams.forEach((team, index) => {
             const li = document.createElement("li");
-            li.className =
-              "glass-card bg-white p-3.5 rounded-xl flex justify-between items-center group shadow-sm gap-3";
+            li.className = "glass-card bg-white p-3.5 rounded-xl flex justify-between items-center group shadow-sm gap-3";
             li.innerHTML = `
-          <div class="flex-1 overflow-hidden">
-            <span class="font-medium text-primary flex items-center gap-3">
-              <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
-              <span class="truncate">${team.name}</span>
-            </span>
-            <div class="text-xs text-slate-500 mt-1 pl-5 truncate">${team.members}</div>
-          </div>
-          <div class="flex gap-1 flex-shrink-0">
-            <button class="edit-btn text-slate-300 hover:text-blue-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Editar">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path>
-              </svg>
-            </button>
-            <button class="delete-btn text-slate-300 hover:text-rose-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Eliminar">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-              </svg>
-            </button>
-          </div>
-        `;
+              <div class="flex-1 overflow-hidden">
+                <span class="font-medium text-primary flex items-center gap-3">
+                  <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div><span class="truncate">${team.name}</span>
+                </span>
+                <div class="text-xs text-slate-500 mt-1 pl-5 truncate">${team.members}</div>
+              </div>
+              <div class="flex gap-1 flex-shrink-0">
+                <button class="edit-btn text-slate-300 hover:text-blue-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Editar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                <button class="delete-btn text-slate-300 hover:text-rose-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Eliminar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+              </div>`;
             draftList.appendChild(li);
           });
 
           document.querySelectorAll(".delete-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
-              const index = Number(e.currentTarget.dataset.index);
-              appState.teams.splice(index, 1);
-              saveState();
+              appState.teams.splice(Number(e.currentTarget.dataset.index), 1);
+              saveAppState();
             });
           });
 
           document.querySelectorAll(".edit-btn").forEach((btn) => {
             btn.addEventListener("click", (e) => {
               const index = Number(e.currentTarget.dataset.index);
-              const team = appState.teams[index];
               editingIndex = index;
-              teamInput.value = team.name;
-              membersInput.value = team.members === "Sin integrantes" ? "" : team.members;
+              teamInput.value = appState.teams[index].name;
+              membersInput.value = appState.teams[index].members === "Sin integrantes" ? "" : appState.teams[index].members;
               btnSubmitTeam.textContent = "Guardar cambios";
               btnCancelEdit.classList.remove("hidden");
               teamInput.focus();
             });
           });
-
           btnGenerate.classList.remove("hidden");
           btnReset.classList.add("hidden");
         }
+
+        // Si el jurado está votando, actualizar sus tarjetas también en vivo
+        if (isJuryMode) renderJuryTeams();
       }
 
-      function loadInitialState() {
+      async function saveAppState() {
         if (isCloudEnabled) {
-          onSnapshot(
-            docRef,
-            (snap) => {
-              if (snap.exists()) {
-                appState = snap.data();
-              } else {
-                appState = { teams: [], isGenerated: false };
-              }
-              renderUI();
-            },
-            (error) => {
-              console.error("Error leyendo Firebase:", error);
-            },
-          );
-        } else {
-          const data = localStorage.getItem("lowcodecon_state");
-          if (data) {
-            try {
-              appState = JSON.parse(data);
-            } catch {
-              appState = { teams: [], isGenerated: false };
-            }
-          }
-          renderUI();
-        }
-      }
-
-      async function saveState() {
-        if (isCloudEnabled) {
-          try {
-            await setDoc(docRef, appState);
-          } catch (error) {
-            console.error("Error guardando en Firebase:", error);
-          }
+          try { await setDoc(docRefEvent, appState); } catch (e) {}
         } else {
           localStorage.setItem("lowcodecon_state", JSON.stringify(appState));
-          renderUI();
+          renderPublicUI();
         }
       }
 
+      // --- TRIPLE CLICK: LOGIN ADMIN ---
+      let clickCount = 0, clickTimer = null;
       secretTrigger.addEventListener("click", () => {
         if (isAdminMode) return;
-
-        clickCount++;
-        clearTimeout(clickTimer);
-
-        clickTimer = setTimeout(() => {
-          clickCount = 0;
-        }, 1500);
-
+        clickCount++; clearTimeout(clickTimer);
+        clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
         if (clickCount === 3) {
           authModal.classList.remove("hidden");
           adminPwdInput.focus();
@@ -1573,92 +1561,316 @@
           isAdminMode = true;
           authModal.classList.add("hidden");
           adminPanel.classList.remove("hidden");
-          authError.textContent = "";
-          adminPwdInput.value = "";
-          renderUI();
+          authError.textContent = ""; adminPwdInput.value = "";
+          renderPublicUI();
+          startLiveResultsListening(publicAdminResults); // Cargar votos de jurado en panel admin
         } else {
           authError.textContent = "Incorrecto";
         }
       });
+      btnCancelAuth.addEventListener("click", () => { authModal.classList.add("hidden"); authError.textContent = ""; adminPwdInput.value = ""; });
+      btnCloseAdmin.addEventListener("click", () => { isAdminMode = false; adminPanel.classList.add("hidden"); renderPublicUI(); });
 
-      btnCancelAuth.addEventListener("click", () => {
-        authModal.classList.add("hidden");
-        authError.textContent = "";
-        adminPwdInput.value = "";
-      });
-
-      btnCloseAdmin.addEventListener("click", () => {
-        isAdminMode = false;
-        adminPanel.classList.add("hidden");
-        renderUI();
-      });
-
+      // --- GESTIÓN DE EQUIPOS (ADMIN) ---
       addTeamForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const name = teamInput.value.trim();
         const members = membersInput.value.trim();
-
+        const adminErrorMsg = document.getElementById("adminErrorMsg");
         if (!name) return;
         
         if (editingIndex >= 0) {
-          // Si estamos editando y el nombre ya existe en otro equipo, ignorar
-          if (appState.teams.some((t, i) => t.name === name && i !== editingIndex)) return;
-          
+          if (appState.teams.some((t, i) => t.name.toLowerCase() === name.toLowerCase() && i !== editingIndex)) {
+            adminErrorMsg.textContent = "Ya existe otro equipo con ese nombre.";
+            adminErrorMsg.classList.remove("hidden"); setTimeout(() => adminErrorMsg.classList.add("hidden"), 3000); return;
+          }
           appState.teams[editingIndex] = { name, members: members || "Sin integrantes" };
-          editingIndex = -1;
-          btnSubmitTeam.textContent = "+ Añadir equipo";
-          btnCancelEdit.classList.add("hidden");
+          editingIndex = -1; btnSubmitTeam.textContent = "+ Añadir equipo"; btnCancelEdit.classList.add("hidden");
         } else {
-          // Si es nuevo y el nombre ya existe, ignorar
-          if (appState.teams.some(t => t.name === name)) return;
-          appState.teams.push({ name, members: members || "Sin integrantes" });
+          const exIdx = appState.teams.findIndex(t => t.name.toLowerCase() === name.toLowerCase());
+          if (exIdx >= 0) appState.teams[exIdx].members = members || "Sin integrantes";
+          else appState.teams.push({ name, members: members || "Sin integrantes" });
+        }
+        appState.isGenerated = false; teamInput.value = ""; membersInput.value = "";
+        saveAppState();
+      });
+
+      btnCancelEdit.addEventListener("click", () => { editingIndex = -1; teamInput.value = ""; membersInput.value = ""; btnSubmitTeam.textContent = "+ Añadir equipo"; btnCancelEdit.classList.add("hidden"); });
+      btnGenerate.addEventListener("click", () => { if (appState.teams.length < 2) return; appState.teams = [...appState.teams].sort(() => Math.random() - 0.5); appState.isGenerated = true; saveAppState(); });
+      btnSetWinner.addEventListener("click", () => { if (winnerSelect.value === "") return; appState.winner = appState.teams[winnerSelect.value]; saveAppState(); });
+      btnRemoveWinner.addEventListener("click", () => { appState.winner = null; saveAppState(); });
+      btnReset.addEventListener("click", () => { appState.isGenerated = false; saveAppState(); });
+      btnClearAll.addEventListener("click", () => { appState = { teams: [], isGenerated: false, winner: null }; saveAppState(); });
+
+
+      // ==========================================
+      // FUNCIONES: APLICACIÓN DEL JURADO
+      // ==========================================
+
+      btnOpenJuryAuth.addEventListener("click", () => {
+        juryAuthModal.classList.remove("hidden");
+        juryNameInput.focus();
+      });
+
+      btnCancelJuryAuth.addEventListener("click", () => {
+        juryAuthModal.classList.add("hidden");
+        juryAuthError.textContent = ""; juryNameInput.value = ""; juryPwdInput.value = "";
+      });
+
+      btnLoginJuryAuth.addEventListener("click", () => {
+        const name = juryNameInput.value.trim();
+        const pwd = juryPwdInput.value;
+        if (!name) { juryAuthError.textContent = "Introduce tu nombre."; return; }
+        if (pwd !== JURY_PASSWORD) { juryAuthError.textContent = "Contraseña incorrecta."; return; }
+
+        // Entrar a la app del jurado
+        isJuryMode = true;
+        juryState.juryName = name;
+        juryNameDisplay.textContent = name;
+        
+        juryAuthModal.classList.add("hidden");
+        publicApp.classList.add("hidden");   // Ocultar web normal
+        juryApp.classList.remove("hidden");  // Mostrar app jurado
+        
+        juryAuthError.textContent = ""; juryNameInput.value = ""; juryPwdInput.value = "";
+        renderJuryTeams();
+      });
+
+      btnExitJury.addEventListener("click", exitJuryMode);
+      btnExitResults.addEventListener("click", exitJuryMode);
+
+      function exitJuryMode() {
+        isJuryMode = false;
+        juryState.juryName = "";
+        juryApp.classList.add("hidden");
+        publicApp.classList.remove("hidden");
+        
+        // Reset a la primera pantalla del jurado
+        votingScreen.classList.remove("hidden");
+        thanksScreen.classList.add("hidden");
+        juryAdminScreen.classList.add("hidden");
+        progressBarContainer.classList.remove("hidden");
+      }
+
+      function updateJuryProgress() {
+        if (!appState.isGenerated || appState.teams.length === 0) {
+            btnFinish.classList.add("hidden");
+            progressBar.style.width = "0%";
+            return;
+        }
+        const votedCount = Object.keys(juryState.votes).length;
+        const percentage = (votedCount / appState.teams.length) * 100;
+        progressBar.style.width = `${percentage}%`;
+        
+        if (votedCount === appState.teams.length && appState.teams.length > 0) {
+            btnFinish.classList.remove("hidden");
+        } else {
+            btnFinish.classList.add("hidden");
+        }
+      }
+
+      function renderJuryTeams() {
+        teamsContainer.innerHTML = "";
+        
+        if (appState.teams.length === 0) { 
+          juryEmptyState.innerHTML = "<p>Aún no hay equipos registrados para evaluar.</p>";
+          juryEmptyState.classList.remove("hidden"); 
+          return; 
         }
 
-        appState.isGenerated = false;
-        teamInput.value = "";
-        membersInput.value = "";
-        saveState();
+        // BLOQUEO: El jurado no puede votar si el admin no ha hecho el sorteo.
+        if (!appState.isGenerated) {
+          juryEmptyState.innerHTML = "<div class='flex flex-col items-center gap-3 py-6'><svg class='w-8 h-8 text-slate-300 animate-pulse' fill='none' stroke='currentColor' viewBox='0 0 24 24'><path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z'></path></svg><p>Esperando a que se realice el sorteo oficial de presentación...</p></div>";
+          juryEmptyState.classList.remove("hidden");
+          updateJuryProgress(); // Actualizamos barra y ocultamos botón
+          return;
+        }
+
+        juryEmptyState.classList.add("hidden");
+
+        appState.teams.forEach((team, index) => {
+          const teamName = team.name;
+          const hasVoted = !!juryState.votes[teamName];
+          const currentVote = juryState.votes[teamName] || { idea: 5, dev: 5, pres: 5, total: 15 };
+
+          const card = document.createElement("div");
+          card.className = `bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${hasVoted ? 'border-accent shadow-[0_0_15px_rgba(3,174,115,0.15)]' : 'border-slate-200 shadow-sm'}`;
+          
+          card.innerHTML = `
+            <div class="p-5 flex justify-between items-center cursor-pointer team-header select-none">
+              <div class="flex-1 pr-4">
+                <div class="flex items-center gap-2 mb-1">
+                  <!-- NÚMERO DE ORDEN PARA EL JURADO -->
+                  <div class="w-6 h-6 bg-slate-800 text-white rounded flex items-center justify-center text-xs font-bold flex-shrink-0">
+                    ${index + 1}
+                  </div>
+                  <h3 class="font-bold text-lg text-slate-900 leading-tight">${teamName}</h3>
+                  ${hasVoted ? '<svg class="w-5 h-5 text-accent flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : ''}
+                </div>
+                <p class="text-xs text-slate-500 pl-8 line-clamp-1">${team.members}</p>
+              </div>
+              <div class="flex items-center gap-3">
+                ${hasVoted ? `<span class="bg-accent/10 text-accent font-bold px-3 py-1 rounded-lg text-sm">${currentVote.total} pts</span>` : ''}
+                <svg class="w-5 h-5 text-slate-400 transform transition-transform chevron" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+            </div>
+            <div class="px-5 pb-6 hidden voting-body border-t border-slate-50 bg-slate-50/50">
+              <div class="space-y-6 pt-5">
+                <div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">💡 Innovación e Idea</label><span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span></div>
+                  <input type="range" min="1" max="10" value="${currentVote.idea}" class="slider-idea">
+                </div>
+                <div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">⚙️ Desarrollo Técnico</label><span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span></div>
+                  <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev">
+                </div>
+                <div>
+                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">🎤 Presentación</label><span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span></div>
+                  <input type="range" min="1" max="10" value="${currentVote.pres}" class="slider-pres">
+                </div>
+              </div>
+              <button class="w-full mt-8 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar Puntuación</button>
+            </div>
+          `;
+
+          const header = card.querySelector('.team-header'), body = card.querySelector('.voting-body'), chevron = card.querySelector('.chevron');
+          header.addEventListener('click', () => {
+            const isHidden = body.classList.contains('hidden');
+            document.querySelectorAll('.voting-body').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.chevron').forEach(el => el.style.transform = 'rotate(0deg)');
+            if (isHidden) { body.classList.remove('hidden'); chevron.style.transform = 'rotate(180deg)'; }
+          });
+
+          ['idea', 'dev', 'pres'].forEach(crit => {
+            card.querySelector(`.slider-${crit}`).addEventListener('input', (e) => card.querySelector(`.val-${crit}`).textContent = e.target.value);
+          });
+
+          card.querySelector('.btn-save-vote').addEventListener('click', async () => {
+            juryState.votes[teamName] = {
+              idea: parseInt(card.querySelector('.slider-idea').value),
+              dev: parseInt(card.querySelector('.slider-dev').value),
+              pres: parseInt(card.querySelector('.slider-pres').value),
+              total: parseInt(card.querySelector('.slider-idea').value) + parseInt(card.querySelector('.slider-dev').value) + parseInt(card.querySelector('.slider-pres').value)
+            };
+            renderJuryTeams(); // Re-renderiza para actualizar el header con la nota
+            updateJuryProgress();
+            
+            toastMsg.textContent = `Voto a ${teamName} guardado`;
+            toast.classList.remove("translate-y-20", "opacity-0");
+            setTimeout(() => toast.classList.add("translate-y-20", "opacity-0"), 3000);
+            
+            if (isCloudEnabled) {
+              try {
+                await setDoc(doc(db, "votaciones_jurado", `2026_${juryState.juryName.replace(/\s+/g, '_')}`), { nombre: juryState.juryName, ultima_act: new Date().toISOString(), votos: juryState.votes }, { merge: true });
+              } catch (error) {}
+            }
+          });
+          teamsContainer.appendChild(card);
+        });
+        updateJuryProgress();
+      }
+
+      // BOTÓN DE FINALIZAR (Arreglado)
+      btnFinish.addEventListener("click", () => {
+        votingScreen.classList.add("hidden");
+        thanksScreen.classList.remove("hidden");
+        progressBarContainer.classList.add("hidden");
       });
 
-      btnCancelEdit.addEventListener("click", () => {
-        editingIndex = -1;
-        teamInput.value = "";
-        membersInput.value = "";
-        btnSubmitTeam.textContent = "+ Añadir equipo";
-        btnCancelEdit.classList.add("hidden");
+      btnReturn.addEventListener("click", () => {
+        thanksScreen.classList.add("hidden");
+        votingScreen.classList.remove("hidden");
+        progressBarContainer.classList.remove("hidden");
       });
 
-      btnGenerate.addEventListener("click", () => {
-        if (appState.teams.length < 2) return;
-
-        appState.teams = [...appState.teams].sort(() => Math.random() - 0.5);
-        appState.isGenerated = true;
-        saveState();
+      btnViewJuryResults.addEventListener("click", () => {
+        thanksScreen.classList.add("hidden");
+        juryAdminScreen.classList.remove("hidden");
+        startLiveResultsListening(juryGlobalResults); // Cargar votos en el panel de resultados del jurado
       });
 
-      btnSetWinner.addEventListener("click", () => {
-        const idx = winnerSelect.value;
-        if (idx === "") return;
-        appState.winner = appState.teams[idx];
-        saveState();
-      });
 
-      btnRemoveWinner.addEventListener("click", () => {
-        appState.winner = null;
-        saveState();
-      });
+      // ==========================================
+      // FUNCIONES COMPARTIDAS (AGREGACIÓN VOTOS)
+      // ==========================================
+      
+      // Carga todos los votos de la nube y pinta el desglose en el contenedor elegido
+      function startLiveResultsListening(containerElement) {
+        if (!isCloudEnabled) {
+             containerElement.innerHTML = '<p class="text-center text-slate-500 py-6">El sumatorio del jurado solo funciona con conexión a Firebase (API Key).</p>';
+             return;
+        }
 
-      btnReset.addEventListener("click", () => {
-        appState.isGenerated = false;
-        saveState();
-      });
+        onSnapshot(collection(db, "votaciones_jurado"), (snapVotes) => {
+            let aggregated = {};
+            
+            appState.teams.forEach(team => aggregated[team.name] = { total: 0, juries: 0, details: [] });
 
-      btnClearAll.addEventListener("click", () => {
-        appState = { teams: [], isGenerated: false, winner: null };
-        saveState();
-      });
+            snapVotes.forEach(doc => {
+                const data = doc.data();
+                for (let teamName in data.votos) {
+                    if (!aggregated[teamName]) aggregated[teamName] = { total: 0, juries: 0, details: [] };
+                    aggregated[teamName].total += data.votos[teamName].total;
+                    aggregated[teamName].juries += 1;
+                    aggregated[teamName].details.push({ name: data.nombre, vote: data.votos[teamName] });
+                }
+            });
 
-      loadInitialState();
+            containerElement.innerHTML = "";
+            const sortedTeams = Object.keys(aggregated).map(name => ({ name, ...aggregated[name] })).sort((a, b) => b.total - a.total);
+
+            if (sortedTeams.length === 0) {
+                containerElement.innerHTML = '<p class="text-center text-slate-400 py-6">Aún no hay votos registrados.</p>'; return;
+            }
+
+            sortedTeams.forEach((team, index) => {
+                const card = document.createElement("div");
+                card.className = "bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2";
+                
+                let medal = `<div class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center">${index + 1}</div>`;
+                if (index === 0) medal = `🥇`; if (index === 1) medal = `🥈`; if (index === 2) medal = `🥉`;
+
+                let detailsHTML = team.details.length > 0 
+                  ? `<div class="mt-2 pt-2 border-t border-slate-50 flex flex-wrap gap-2">
+                      ${team.details.map(d => `<span class="bg-slate-50 border border-slate-100 text-xs px-2 py-1 rounded" title="I:${d.vote.idea} D:${d.vote.dev} P:${d.vote.pres}">${d.name}: <b class="text-primary">${d.vote.total}</b></span>`).join('')}
+                     </div>`
+                  : `<div class="mt-2 pt-2 border-t border-slate-50 text-xs text-slate-400 italic">Sin votos aún.</div>`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="text-lg">${medal}</div>
+                            <h3 class="font-bold text-slate-800">${team.name}</h3>
+                        </div>
+                        <div class="text-right">
+                            <span class="text-xl font-black text-primary">${team.total}</span>
+                            <span class="text-[9px] uppercase text-slate-400 font-bold block -mt-1">pts</span>
+                        </div>
+                    </div>
+                    ${detailsHTML}
+                `;
+                containerElement.appendChild(card);
+            });
+        });
+      }
+
+      // ==========================================
+      // INICIO PRINCIPAL DE LA APP
+      // ==========================================
+      
+      if (isCloudEnabled) {
+        onSnapshot(docRefEvent, (snap) => {
+          if (snap.exists()) appState = snap.data();
+          else appState = { teams: [], isGenerated: false, winner: null };
+          renderPublicUI();
+        });
+      } else {
+        // MODO LOCAL
+        const data = localStorage.getItem("lowcodecon_state");
+        if (data) { try { appState = JSON.parse(data); } catch { } }
+        renderPublicUI();
+      }
+
     </script>
   </body>
 </html>
