@@ -1135,14 +1135,14 @@
       <!-- EQUIPO GANADOR -->
       <section
         id="ganador"
-        class="py-16 px-6 bg-slate-50 border-t border-slate-100"
+        class="py-16 px-6 bg-white border-t border-slate-100"
       >
         <div class="max-w-4xl mx-auto">
           <div class="text-center mb-10 fade-in-up">
             <h2
               class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
             >
-              Equipo ganador
+              Equipo ganador y Clasificación
             </h2>
             <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
           </div>
@@ -1181,7 +1181,7 @@
           </div>
 
           <!-- VISTA DEL GANADOR -->
-          <div id="winnerView" class="hidden mb-12 fade-in-up">
+          <div id="winnerView" class="hidden fade-in-up">
             <div class="relative max-w-2xl mx-auto">
               <div
                 class="absolute inset-0 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 blur-2xl opacity-60 rounded-full animate-pulse"
@@ -1249,6 +1249,36 @@
               </div>
             </div>
           </div>
+
+          <!-- CLASIFICACIÓN DEFINITIVA (PÚBLICA) - SOLO VISIBLE AL CERRAR VOTACIONES -->
+          <div id="publicRankingContainer" class="hidden mt-16 pt-16 border-t border-slate-100 fade-in-up">
+            <div class="text-center mb-10">
+              <h3 class="text-2xl md:text-3xl font-display font-bold text-slate-900 mb-3">
+                Clasificación Definitiva
+              </h3>
+              <p class="text-slate-500 text-sm">
+                Top 6 de la competición tras la deliberación del jurado.
+              </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 items-start">
+              <div id="publicRankingList" class="flex flex-col gap-3">
+                <div class="text-center py-6 text-slate-400">Esperando votos...</div>
+              </div>
+              
+              <div id="publicAiAnalysisWrapper" class="hidden">
+                <div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-6 md:p-8 shadow-lg relative overflow-hidden">
+                  <div class="absolute -right-4 -top-4 text-6xl opacity-20">✨</div>
+                  <h3 class="font-bold text-indigo-900 text-lg mb-3 flex items-center gap-2 relative z-10">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Análisis de la IA
+                  </h3>
+                  <div id="publicAiAnalysisText" class="text-indigo-800 text-sm leading-relaxed italic relative z-10"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
@@ -1403,7 +1433,7 @@
               Selecciona un equipo para evaluar su propuesta.
             </p>
             <div id="votingClosedBanner" class="hidden mt-4 bg-rose-50 border border-rose-200 text-rose-700 px-4 py-3 rounded-xl text-sm font-medium flex items-center gap-2">
-              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+              <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2-2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
               Las votaciones han sido cerradas. Ya no se pueden modificar las notas.
             </div>
           </div>
@@ -1682,7 +1712,7 @@
       let unsubscribeJurados = null; // Para limpiar el snapshot del admin
 
       // --- ESTADOS GLOBALES ---
-      let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+      let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
       let juryState = { juryName: "", votes: {} };
 
       const ADMIN_PASSWORD = "admin";
@@ -1726,10 +1756,14 @@
       const btnToggleVoting = document.getElementById("btnToggleVoting");
       const btnResetVotes = document.getElementById("btnResetVotes");
 
-      // NUEVAS REFERENCIAS DOM: IA GEMINI
+      // NUEVAS REFERENCIAS DOM: IA GEMINI & RESULTADOS PUBLICOS
       const btnAnalyzeResults = document.getElementById("btnAnalyzeResults");
       const aiAnalysisContainer = document.getElementById("aiAnalysisContainer");
       const aiAnalysisText = document.getElementById("aiAnalysisText");
+      const publicRankingContainer = document.getElementById("publicRankingContainer");
+      const publicRankingList = document.getElementById("publicRankingList");
+      const publicAiAnalysisWrapper = document.getElementById("publicAiAnalysisWrapper");
+      const publicAiAnalysisText = document.getElementById("publicAiAnalysisText");
       const geminiApiKey = ""; // Key inyectada en el entorno
 
       // NUEVAS REFERENCIAS DOM: ADMIN JURADO
@@ -1786,11 +1820,15 @@
             if (snap.exists()) {
               appState = snap.data();
               if (typeof appState.isVotingClosed === 'undefined') appState.isVotingClosed = false;
+              if (typeof appState.aiAnalysis === 'undefined') appState.aiAnalysis = "";
             } else {
-              appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+              appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
             }
             renderPublicUI();
           });
+          
+          // Iniciar la escucha del ranking público (sin detalles y limitado al Top 6) nada más cargar
+          startLiveResultsListening(publicRankingList, false, 6);
         }
       });
 
@@ -1804,10 +1842,32 @@
           '<option value="">-- Seleccionar equipo ganador --</option>';
 
         if (!appState) {
-          appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+          appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
         }
         if (!appState.teams) {
             appState.teams = [];
+        }
+
+        // Visibilidad Sección de Clasificación Pública
+        if (appState.isVotingClosed) {
+            publicRankingContainer.classList.remove("hidden");
+        } else {
+            publicRankingContainer.classList.add("hidden");
+        }
+
+        // Visibilidad Análisis IA Pública y Admin
+        if (appState.aiAnalysis) {
+            publicAiAnalysisWrapper.classList.remove("hidden");
+            publicAiAnalysisText.innerHTML = appState.aiAnalysis;
+            if (aiAnalysisContainer) {
+                aiAnalysisContainer.classList.remove("hidden");
+                aiAnalysisText.innerHTML = appState.aiAnalysis;
+            }
+            btnAnalyzeResults.textContent = "Actualizar Análisis IA ✨";
+        } else {
+            publicAiAnalysisWrapper.classList.add("hidden");
+            if (aiAnalysisContainer) aiAnalysisContainer.classList.add("hidden");
+            btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
         }
 
         // UI Botón Cerrar Votaciones
@@ -1954,7 +2014,7 @@
           authError.textContent = "";
           adminPwdInput.value = "";
           renderPublicUI();
-          startLiveResultsListening(publicAdminResults); // Cargar votos de jurado en panel admin
+          startLiveResultsListening(publicAdminResults, true); // Cargar votos con detalles en panel admin
           
           // Cargar listado de jurados para administración
           if (db && user) {
@@ -2076,10 +2136,11 @@
       });
       btnReset.addEventListener("click", () => {
         appState.isGenerated = false;
+        appState.aiAnalysis = "";
         saveAppState();
       });
       btnClearAll.addEventListener("click", () => {
-        appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
+        appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
         saveAppState();
       });
 
@@ -2119,6 +2180,9 @@
               });
               await Promise.all(deletePromises);
               
+              appState.aiAnalysis = "";
+              saveAppState();
+
               toastMsg.textContent = "Todos los votos han sido reiniciados";
               toast.classList.remove("translate-y-20", "opacity-0");
               setTimeout(() => toast.classList.add("translate-y-20", "opacity-0"), 3000);
@@ -2161,30 +2225,36 @@
       btnAnalyzeResults.addEventListener("click", async () => {
           btnAnalyzeResults.disabled = true;
           btnAnalyzeResults.textContent = "Analizando resultados... ⏳";
-          aiAnalysisContainer.classList.remove("hidden");
-          aiAnalysisText.innerHTML = "<span class='animate-pulse'>La IA está revisando las notas de los jueces...</span>";
+          
+          if(aiAnalysisContainer) aiAnalysisContainer.classList.remove("hidden");
+          if(aiAnalysisText) aiAnalysisText.innerHTML = "<span class='animate-pulse'>La IA está revisando las notas de los jueces...</span>";
 
           let prompt = "Los resultados actuales de la competición de desarrollo LowCodeCon 2026 son los siguientes:\n";
-          const cards = document.querySelectorAll("#publicAdminResults .bg-white.p-4");
           
-          if (cards.length === 0) {
-              aiAnalysisText.innerHTML = "No hay resultados suficientes para realizar un análisis.";
+          const cards = document.querySelectorAll("#publicRankingList > div");
+          
+          if (cards.length === 0 || cards[0].innerText.includes('Esperando votos')) {
+              if(aiAnalysisText) aiAnalysisText.innerHTML = "No hay resultados suficientes para realizar un análisis.";
               btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
               btnAnalyzeResults.disabled = false;
               return;
           }
           
           cards.forEach(card => {
-              const teamName = card.querySelector("h3").innerText;
-              const points = card.querySelector(".text-xl.font-black").innerText;
-              prompt += `- Equipo ${teamName}: ${points} puntos en total.\n`;
+              const teamName = card.querySelector("h3")?.innerText;
+              const points = card.querySelector(".text-xl")?.innerText;
+              if (teamName && points) {
+                  prompt += `- Equipo ${teamName}: ${points} puntos en total.\n`;
+              }
           });
           
           prompt += "\nGenera un breve comentario (máximo 3 frases) analizando cómo está la clasificación, mencionando al líder actual, y usando un tono entusiasta y profesional de presentador de eventos. No uses formato Markdown.";
           const instruction = "Eres el presentador estrella de la competición. Respondes exclusivamente en español.";
 
           const responseText = await callGeminiAPI(prompt, instruction);
-          aiAnalysisText.innerHTML = responseText;
+          
+          appState.aiAnalysis = responseText;
+          saveAppState();
           
           btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
           btnAnalyzeResults.disabled = false;
@@ -2288,7 +2358,7 @@
                     progressBarContainer.classList.add("hidden");
                     juryAdminScreen.classList.remove("hidden");
                     if (votingClosedBannerResults) votingClosedBannerResults.classList.remove("hidden");
-                    startLiveResultsListening(juryGlobalResults);
+                    startLiveResultsListening(juryGlobalResults, true);
                 } else {
                     votingScreen.classList.remove("hidden");
                     thanksScreen.classList.add("hidden");
@@ -2519,7 +2589,7 @@
       btnViewJuryResults.addEventListener("click", () => {
         thanksScreen.classList.add("hidden");
         juryAdminScreen.classList.remove("hidden");
-        startLiveResultsListening(juryGlobalResults); // Cargar votos en el panel de resultados del jurado
+        startLiveResultsListening(juryGlobalResults, true); // Cargar votos en el panel de resultados del jurado
       });
 
       // ==========================================
@@ -2527,7 +2597,7 @@
       // ==========================================
 
       // Carga todos los votos de la nube y pinta el desglose en el contenedor elegido
-      function startLiveResultsListening(containerElement) {
+      function startLiveResultsListening(containerElement, showDetails = true, limit = null) {
         if (!db || !user) {
           containerElement.innerHTML =
             '<p class="text-center text-slate-500 py-6">Conectando a base de datos...</p>';
@@ -2535,7 +2605,7 @@
         }
 
         const votesCol = collection(db, 'votaciones_jurado');
-        onSnapshot(votesCol, (snapVotes) => {
+        return onSnapshot(votesCol, (snapVotes) => {
           let aggregated = {};
 
           appState.teams.forEach(
@@ -2564,26 +2634,30 @@
 
           if (sortedTeams.length === 0) {
             containerElement.innerHTML =
-              '<p class="text-center text-slate-400 py-6">Aún no hay votos registrados.</p>';
+              '<p class="text-center text-slate-400 py-6">Esperando votos...</p>';
             return;
           }
 
-          sortedTeams.forEach((team, index) => {
+          const teamsToRender = limit ? sortedTeams.slice(0, limit) : sortedTeams;
+
+          teamsToRender.forEach((team, index) => {
             const card = document.createElement("div");
             card.className =
-              "bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2";
+              "bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex flex-col gap-2 fade-in";
 
             let medal = `<div class="w-6 h-6 rounded-full bg-slate-100 text-slate-500 text-xs font-bold flex items-center justify-center">${index + 1}</div>`;
             if (index === 0) medal = `🥇`;
             if (index === 1) medal = `🥈`;
             if (index === 2) medal = `🥉`;
 
-            let detailsHTML =
-              team.details.length > 0
-                ? `<div class="mt-2 pt-2 border-t border-slate-50 flex flex-wrap gap-2">
-                      ${team.details.map((d) => `<span class="bg-slate-50 border border-slate-100 text-xs px-2 py-1 rounded" title="I:${d.vote.idea} D:${d.vote.dev} P:${d.vote.pres}">${d.name}: <b class="text-primary">${d.vote.total}</b></span>`).join("")}
-                     </div>`
-                : `<div class="mt-2 pt-2 border-t border-slate-50 text-xs text-slate-400 italic">Sin votos aún.</div>`;
+            let detailsHTML = "";
+            if (showDetails) {
+                detailsHTML = team.details.length > 0
+                    ? `<div class="mt-2 pt-2 border-t border-slate-50 flex flex-wrap gap-2">
+                          ${team.details.map((d) => `<span class="bg-slate-50 border border-slate-100 text-xs px-2 py-1 rounded" title="I:${d.vote.idea} D:${d.vote.dev} P:${d.vote.pres}">${d.name}: <b class="text-primary">${d.vote.total}</b></span>`).join("")}
+                         </div>`
+                    : `<div class="mt-2 pt-2 border-t border-slate-50 text-xs text-slate-400 italic">Sin votos aún.</div>`;
+            }
 
             card.innerHTML = `
                     <div class="flex items-center justify-between">
