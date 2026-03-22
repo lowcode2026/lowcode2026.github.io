@@ -2459,6 +2459,9 @@
           const card = document.createElement("div");
           card.className = `bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${hasVoted ? "border-accent shadow-[0_0_15px_rgba(3,174,115,0.15)]" : "border-slate-200 shadow-sm"}`;
 
+          const card = document.createElement("div");
+          card.className = `bg-white rounded-2xl border transition-all duration-300 overflow-hidden ${hasVoted ? "border-accent shadow-[0_0_15px_rgba(3,174,115,0.15)]" : "border-slate-200 shadow-sm"}`;
+
           card.innerHTML = `
             <div class="p-5 flex justify-between items-center cursor-pointer team-header select-none">
               <div class="flex-1 pr-4">
@@ -2480,21 +2483,38 @@
             <div class="px-5 pb-6 hidden voting-body border-t border-slate-50 bg-slate-50/50">
               <div class="space-y-6 pt-5">
                 <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">💡 Innovación e idea</label><span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span></div>
+                  <div class="flex justify-between mb-2">
+                    <label class="text-sm font-semibold text-slate-700 flex items-center">
+                      <svg class="w-4 h-4 mr-1.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path></svg>
+                      Innovación e Idea
+                    </label>
+                    <span class="text-sm font-bold text-primary val-idea">${currentVote.idea}</span>
+                  </div>
                   <input type="range" min="1" max="10" value="${currentVote.idea}" class="slider-idea" ${isClosed ? 'disabled' : ''}>
                 </div>
-                    <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">🎤 Presentación y defensa del proyecto</label><span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span></div>
+                <div>
+                  <div class="flex justify-between mb-2">
+                    <label class="text-sm font-semibold text-slate-700 flex items-center">
+                      <svg class="w-4 h-4 mr-1.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 13v-1m4 1v-3m4 3V8M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                      Presentación
+                    </label>
+                    <span class="text-sm font-bold text-primary val-pres">${currentVote.pres}</span>
+                  </div>
                   <input type="range" min="1" max="10" value="${currentVote.pres}" class="slider-pres" ${isClosed ? 'disabled' : ''}>
                 </div>
-              </div>
                 <div>
-                  <div class="flex justify-between mb-2"><label class="text-sm font-semibold text-slate-700">⚙️ Desarrollo y funcionalidad del prototipo</label><span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span></div>
+                  <div class="flex justify-between mb-2">
+                    <label class="text-sm font-semibold text-slate-700 flex items-center">
+                      <svg class="w-4 h-4 mr-1.5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                      Desarrollo Técnico
+                    </label>
+                    <span class="text-sm font-bold text-primary val-dev">${currentVote.dev}</span>
+                  </div>
                   <input type="range" min="1" max="10" value="${currentVote.dev}" class="slider-dev" ${isClosed ? 'disabled' : ''}>
                 </div>
-            
+              </div>
 
-              ${isClosed ? '' : '<button class="w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar puntuación</button>'}
+              ${isClosed ? '' : '<button class="w-full mt-4 bg-slate-800 hover:bg-slate-900 text-white font-medium py-3 rounded-xl transition-colors btn-save-vote">Guardar Puntuación</button>'}
             </div>
           `;
 
