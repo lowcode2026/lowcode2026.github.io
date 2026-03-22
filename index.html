@@ -1920,15 +1920,28 @@
 
           appState.teams.forEach((team, index) => {
             const div = document.createElement("div");
-            div.className =
-              "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 flex items-center gap-6";
+            div.className = "team-rank-card bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl overflow-hidden flex flex-col";
             div.innerHTML = `
-              <div class="bg-accent text-white font-bold w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-lg">${index + 1}</div>
-              <div class="flex-1 overflow-hidden">
-                <div class="text-lg font-medium text-white truncate">${team.name}</div>
-                <div class="text-sm text-white/70 truncate">${team.members}</div>
-                <div class="text-xs text-accent mt-0.5 italic truncate">"${team.description}"</div>
+              <div class="p-4 flex items-center justify-between cursor-pointer final-header hover:bg-white/5 transition-colors">
+                <div class="flex items-center gap-4 flex-1 overflow-hidden">
+                  <div class="bg-accent text-white font-bold w-10 h-10 rounded-full flex items-center justify-center text-lg flex-shrink-0 shadow-lg">${index + 1}</div>
+                  <div class="text-lg font-medium text-white truncate">${team.name}</div>
+                </div>
+                <svg class="w-6 h-6 text-white/60 transform transition-transform chevron-final flex-shrink-0 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+              </div>
+              <div class="px-5 pb-5 hidden final-body border-t border-white/10 bg-black/10 pt-4">
+                <div class="text-sm text-white/90 mb-3"><strong class="text-white text-xs uppercase tracking-wider opacity-80 block mb-0.5">Integrantes:</strong> ${team.members}</div>
+                <div class="text-sm text-accent italic"><strong class="text-white text-xs uppercase tracking-wider not-italic opacity-80 block mb-0.5">App:</strong> "${team.description}"</div>
               </div>`;
+              
+            const header = div.querySelector('.final-header');
+            const body = div.querySelector('.final-body');
+            const chevron = div.querySelector('.chevron-final');
+            header.addEventListener('click', () => {
+              body.classList.toggle('hidden');
+              chevron.style.transform = body.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+
             finalList.appendChild(div);
           });
           btnGenerate.classList.add("hidden");
@@ -1941,20 +1954,36 @@
 
           appState.teams.forEach((team, index) => {
             const li = document.createElement("li");
-            li.className =
-              "glass-card bg-white p-3.5 rounded-xl flex justify-between items-center group shadow-sm gap-3";
+            li.className = "glass-card bg-white rounded-xl shadow-sm flex flex-col group overflow-hidden border border-slate-100";
             li.innerHTML = `
-              <div class="flex-1 overflow-hidden">
-                <span class="font-medium text-primary flex items-center gap-3">
-                  <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div><span class="truncate">${team.name}</span>
-                </span>
-                <div class="text-xs text-slate-500 mt-1 pl-5 truncate">${team.members}</div>
-                <div class="text-[10px] text-slate-400 pl-5 italic truncate">"${team.description}"</div>
+              <div class="p-3.5 flex justify-between items-center cursor-pointer draft-header transition-colors hover:bg-slate-50">
+                <div class="flex-1 overflow-hidden flex items-center gap-3">
+                  <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div>
+                  <span class="font-medium text-primary truncate">${team.name}</span>
+                </div>
+                <div class="flex items-center gap-2 flex-shrink-0">
+                  <div class="flex gap-1 action-btns ${isAdminMode ? "" : "hidden"}">
+                    <button class="edit-btn text-slate-300 hover:text-blue-500 p-2" data-index="${index}" title="Editar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
+                    <button class="delete-btn text-slate-300 hover:text-rose-500 p-2" data-index="${index}" title="Eliminar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+                  </div>
+                  <svg class="w-5 h-5 text-slate-400 transform transition-transform chevron-draft" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </div>
               </div>
-              <div class="flex gap-1 flex-shrink-0">
-                <button class="edit-btn text-slate-300 hover:text-blue-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Editar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
-                <button class="delete-btn text-slate-300 hover:text-rose-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Eliminar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg></button>
+              <div class="px-4 pb-4 hidden draft-body border-t border-slate-50 bg-slate-50/50 pt-3">
+                <div class="text-sm text-slate-600 mb-2.5"><strong class="text-slate-800 text-xs uppercase tracking-wider block mb-0.5">Integrantes:</strong> ${team.members}</div>
+                <div class="text-sm text-slate-500 italic"><strong class="text-slate-800 text-xs uppercase tracking-wider not-italic block mb-0.5">App:</strong> "${team.description}"</div>
               </div>`;
+            
+            const header = li.querySelector('.draft-header');
+            const body = li.querySelector('.draft-body');
+            const chevron = li.querySelector('.chevron-draft');
+            header.addEventListener('click', (e) => {
+              // Evita que se despliegue si hacemos clic en los botones de editar/borrar
+              if (e.target.closest('.action-btns')) return;
+              body.classList.toggle('hidden');
+              chevron.style.transform = body.classList.contains('hidden') ? 'rotate(0deg)' : 'rotate(180deg)';
+            });
+
             draftList.appendChild(li);
           });
 
@@ -2415,8 +2444,8 @@
                   <h3 class="font-bold text-lg text-slate-900 leading-tight">${teamName}</h3>
                   ${hasVoted ? '<svg class="w-5 h-5 text-accent flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : ""}
                 </div>
-                <p class="text-xs text-slate-500 pl-8 line-clamp-1">${team.members}</p>
-                <p class="text-[10px] text-slate-400 pl-8 italic line-clamp-1">"${team.description || 'Sin descripción'}"</p>
+                <p class="text-xs text-slate-500 pl-8">${team.members}</p>
+                <p class="text-[10px] text-slate-400 pl-8 italic mt-0.5">"${team.description || 'Sin descripción'}"</p>
               </div>
               <div class="flex items-center gap-3">
                 ${hasVoted ? `<span class="bg-accent/10 text-accent font-bold px-3 py-1 rounded-lg text-sm">${currentVote.total} pts</span>` : ""}
