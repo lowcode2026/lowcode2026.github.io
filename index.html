@@ -180,9 +180,9 @@
             class="flex items-center hover:opacity-80 transition-opacity"
           >
             <div
-              class="text-primary font-display font-bold text-xl md:text-2xl text-slate-900 flex items-center gap-1"
+              class="font-display font-bold text-xl md:text-2xl text-slate-900 flex items-center gap-1"
             >
-              lowcodecon
+              &lt;LCC/&gt;
             </div>
           </a>
           <div class="flex items-center gap-4 md:gap-6">
@@ -946,7 +946,7 @@
                 type="text"
                 id="teamInput"
                 placeholder="Nombre del equipo..."
-                class="flex-1 px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                class="flex-[2] px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 required
                 autocomplete="off"
               />
@@ -954,11 +954,18 @@
                 type="text"
                 id="membersInput"
                 placeholder="Integrantes (ej. Ana, Juan)..."
-                class="flex-[2] px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+                class="flex-[3] px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
                 autocomplete="off"
               />
             </div>
-            <div class="flex gap-2 self-end w-full md:w-auto">
+            <input
+              type="text"
+              id="descInput"
+              placeholder="Breve descripción de la app (una frase)..."
+              class="w-full px-5 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all"
+              autocomplete="off"
+            />
+            <div class="flex gap-2 self-end w-full md:w-auto mt-1">
               <button
                 type="button"
                 id="btnCancelEdit"
@@ -1061,14 +1068,6 @@
                 Esperando conexión para calcular resultados...
               </div>
             </div>
-            <div class="mt-4 flex justify-center">
-              <button id="btnAnalyzeResults" class="bg-indigo-100 hover:bg-indigo-200 text-indigo-700 font-bold py-2.5 px-6 rounded-xl transition-all shadow-sm flex items-center justify-center gap-2 text-sm w-full md:w-auto">
-                Generar Análisis de Resultados con IA ✨
-              </button>
-            </div>
-            <div id="aiAnalysisContainer" class="hidden mt-3 p-4 bg-indigo-50 border border-indigo-100 rounded-xl text-indigo-900 text-sm italic relative">
-              <div id="aiAnalysisText"></div>
-            </div>
           </div>
 
           <!-- SECCIÓN DE PREMIACIÓN -->
@@ -1158,7 +1157,7 @@
             <h2
               class="text-3xl md:text-4xl font-display font-bold text-slate-900 mb-3"
             >
-              Equipo ganador
+              Equipo Ganador
             </h2>
             <div class="h-1 w-20 bg-accent mx-auto rounded-full mb-3"></div>
           </div>
@@ -1251,10 +1250,16 @@
                   Equipo
                 </h4>
                 <p
-                  class="text-lg md:text-xl text-slate-600 font-medium mb-6 relative z-10"
+                  class="text-lg md:text-xl text-slate-600 font-medium mb-2 relative z-10"
                   id="winnerMembers"
                 >
                   Integrantes
+                </p>
+                <p
+                  class="text-sm md:text-base text-slate-500 italic mb-6 relative z-10"
+                  id="winnerDesc"
+                >
+                  Descripción
                 </p>
 
                 <div
@@ -1280,17 +1285,6 @@
             <div class="flex flex-col items-center gap-8 max-w-2xl mx-auto w-full">
               <div id="publicRankingList" class="flex flex-col gap-3 w-full">
                 <div class="text-center py-6 text-slate-400">Esperando votos...</div>
-              </div>
-              
-              <div id="publicAiAnalysisWrapper" class="hidden w-full">
-                <div class="bg-indigo-50 border border-indigo-100 rounded-3xl p-6 md:p-8 shadow-lg relative overflow-hidden">
-                  <div class="absolute -right-4 -top-4 text-6xl opacity-20">✨</div>
-                  <h3 class="font-bold text-indigo-900 text-lg mb-3 flex items-center gap-2 relative z-10">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Análisis de la IA
-                  </h3>
-                  <div id="publicAiAnalysisText" class="text-indigo-800 text-sm leading-relaxed italic relative z-10"></div>
-                </div>
               </div>
             </div>
           </div>
@@ -1400,7 +1394,7 @@
           <div
             class="font-display font-bold text-lg text-slate-900 flex items-center gap-1"
           >
-            lowcodecon;
+            &lt;LCC/&gt;
             <span
               class="font-normal text-slate-400 text-sm ml-1 hidden sm:inline"
               >| Jurado</span
@@ -1728,10 +1722,10 @@
       let unsubscribeJurados = null; // Para limpiar el snapshot del admin
 
       // --- ESTADOS GLOBALES ---
-      let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
+      let appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
       let juryState = { juryName: "", votes: {} };
 
-      const ADMIN_PASSWORD = "admin1234";
+      const ADMIN_PASSWORD = "admin";
 
       let isAdminMode = false;
       let isJuryMode = false;
@@ -1750,6 +1744,7 @@
       const addTeamForm = document.getElementById("addTeamForm");
       const teamInput = document.getElementById("teamInput");
       const membersInput = document.getElementById("membersInput");
+      const descInput = document.getElementById("descInput");
       const btnSubmitTeam = document.getElementById("btnSubmitTeam");
       const btnCancelEdit = document.getElementById("btnCancelEdit");
       const btnGenerate = document.getElementById("btnGenerate");
@@ -1765,6 +1760,7 @@
       const winnerView = document.getElementById("winnerView");
       const winnerName = document.getElementById("winnerName");
       const winnerMembers = document.getElementById("winnerMembers");
+      const winnerDesc = document.getElementById("winnerDesc");
       const winnerSelect = document.getElementById("winnerSelect");
       const btnSetWinner = document.getElementById("btnSetWinner");
       const btnRemoveWinner = document.getElementById("btnRemoveWinner");
@@ -1772,15 +1768,9 @@
       const btnToggleVoting = document.getElementById("btnToggleVoting");
       const btnResetVotes = document.getElementById("btnResetVotes");
 
-      // NUEVAS REFERENCIAS DOM: IA GEMINI & RESULTADOS PUBLICOS
-      const btnAnalyzeResults = document.getElementById("btnAnalyzeResults");
-      const aiAnalysisContainer = document.getElementById("aiAnalysisContainer");
-      const aiAnalysisText = document.getElementById("aiAnalysisText");
+      // REFERENCIAS DOM: RESULTADOS PUBLICOS
       const publicRankingContainer = document.getElementById("publicRankingContainer");
       const publicRankingList = document.getElementById("publicRankingList");
-      const publicAiAnalysisWrapper = document.getElementById("publicAiAnalysisWrapper");
-      const publicAiAnalysisText = document.getElementById("publicAiAnalysisText");
-      const geminiApiKey = ""; // Key inyectada en el entorno
 
       // NUEVAS REFERENCIAS DOM: ADMIN JURADO
       const addJuryForm = document.getElementById("addJuryForm");
@@ -1837,9 +1827,8 @@
             if (snap.exists()) {
               appState = snap.data();
               if (typeof appState.isVotingClosed === 'undefined') appState.isVotingClosed = false;
-              if (typeof appState.aiAnalysis === 'undefined') appState.aiAnalysis = "";
             } else {
-              appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
+              appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
             }
             renderPublicUI();
           }, (error) => {
@@ -1862,25 +1851,17 @@
           '<option value="">-- Seleccionar equipo ganador --</option>';
 
         if (!appState) {
-          appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
+          appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
         }
         if (!appState.teams) {
             appState.teams = [];
         }
 
-        // Visibilidad Análisis IA Pública y Admin
-        if (appState.aiAnalysis) {
-            publicAiAnalysisWrapper.classList.remove("hidden");
-            publicAiAnalysisText.innerHTML = appState.aiAnalysis;
-            if (aiAnalysisContainer) {
-                aiAnalysisContainer.classList.remove("hidden");
-                aiAnalysisText.innerHTML = appState.aiAnalysis;
-            }
-            btnAnalyzeResults.textContent = "Actualizar Análisis IA ✨";
+        // Visibilidad Sección de Clasificación Pública
+        if (appState.isVotingClosed) {
+            publicRankingContainer.classList.remove("hidden");
         } else {
-            publicAiAnalysisWrapper.classList.add("hidden");
-            if (aiAnalysisContainer) aiAnalysisContainer.classList.add("hidden");
-            btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
+            publicRankingContainer.classList.add("hidden");
         }
 
         // UI Botón Cerrar Votaciones
@@ -1894,10 +1875,11 @@
 
         appState.teams = appState.teams.map((team) => {
           if (typeof team === "string")
-            return { name: team, members: "Sin integrantes" };
+            return { name: team, members: "Sin integrantes", description: "Sin descripción" };
           return {
             name: team.name || "Equipo",
             members: team.members || "Sin integrantes",
+            description: team.description || "Sin descripción"
           };
         });
 
@@ -1912,6 +1894,7 @@
         if (appState.winner) {
           winnerName.textContent = appState.winner.name;
           winnerMembers.textContent = appState.winner.members;
+          winnerDesc.textContent = `"${appState.winner.description || 'Sin descripción'}"`;
           noWinnerState.classList.add("hidden");
           winnerView.classList.remove("hidden");
           publicRankingContainer.classList.remove("hidden");
@@ -1944,6 +1927,7 @@
               <div class="flex-1 overflow-hidden">
                 <div class="text-lg font-medium text-white truncate">${team.name}</div>
                 <div class="text-sm text-white/70 truncate">${team.members}</div>
+                <div class="text-xs text-accent mt-0.5 italic truncate">"${team.description}"</div>
               </div>`;
             finalList.appendChild(div);
           });
@@ -1965,6 +1949,7 @@
                   <div class="w-2 h-2 bg-primary rounded-full flex-shrink-0"></div><span class="truncate">${team.name}</span>
                 </span>
                 <div class="text-xs text-slate-500 mt-1 pl-5 truncate">${team.members}</div>
+                <div class="text-[10px] text-slate-400 pl-5 italic truncate">"${team.description}"</div>
               </div>
               <div class="flex gap-1 flex-shrink-0">
                 <button class="edit-btn text-slate-300 hover:text-blue-500 p-2 ${isAdminMode ? "" : "hidden"}" data-index="${index}" title="Editar"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"></path></svg></button>
@@ -1989,6 +1974,10 @@
                 appState.teams[index].members === "Sin integrantes"
                   ? ""
                   : appState.teams[index].members;
+              descInput.value = 
+                appState.teams[index].description === "Sin descripción"
+                  ? ""
+                  : (appState.teams[index].description || "");
               btnSubmitTeam.textContent = "Guardar cambios";
               btnCancelEdit.classList.remove("hidden");
               teamInput.focus();
@@ -2086,6 +2075,7 @@
         e.preventDefault();
         const name = teamInput.value.trim();
         const members = membersInput.value.trim();
+        const description = descInput.value.trim();
         const adminErrorMsg = document.getElementById("adminErrorMsg");
         if (!name) return;
 
@@ -2105,6 +2095,7 @@
           appState.teams[editingIndex] = {
             name,
             members: members || "Sin integrantes",
+            description: description || "Sin descripción"
           };
           editingIndex = -1;
           btnSubmitTeam.textContent = "+ Añadir equipo";
@@ -2113,17 +2104,21 @@
           const exIdx = appState.teams.findIndex(
             (t) => t.name.toLowerCase() === name.toLowerCase(),
           );
-          if (exIdx >= 0)
+          if (exIdx >= 0) {
             appState.teams[exIdx].members = members || "Sin integrantes";
-          else
+            appState.teams[exIdx].description = description || "Sin descripción";
+          } else {
             appState.teams.push({
               name,
               members: members || "Sin integrantes",
+              description: description || "Sin descripción"
             });
+          }
         }
         appState.isGenerated = false;
         teamInput.value = "";
         membersInput.value = "";
+        descInput.value = "";
         saveAppState();
       });
 
@@ -2131,6 +2126,7 @@
         editingIndex = -1;
         teamInput.value = "";
         membersInput.value = "";
+        descInput.value = "";
         btnSubmitTeam.textContent = "+ Añadir equipo";
         btnCancelEdit.classList.add("hidden");
       });
@@ -2151,11 +2147,10 @@
       });
       btnReset.addEventListener("click", () => {
         appState.isGenerated = false;
-        appState.aiAnalysis = "";
         saveAppState();
       });
       btnClearAll.addEventListener("click", () => {
-        appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false, aiAnalysis: "" };
+        appState = { teams: [], isGenerated: false, winner: null, isVotingClosed: false };
         saveAppState();
       });
 
@@ -2195,7 +2190,6 @@
               });
               await Promise.all(deletePromises);
               
-              appState.aiAnalysis = "";
               saveAppState();
 
               toastMsg.textContent = "Todos los votos han sido reiniciados";
@@ -2209,70 +2203,6 @@
               btnResetVotes.classList.replace("bg-rose-600", "bg-rose-100");
               btnResetVotes.classList.replace("text-white", "text-rose-700");
           }
-      });
-
-      // --- ANÁLISIS DE RESULTADOS CON IA GEMINI ---
-      async function callGeminiAPI(prompt, systemInstruction = "") {
-          const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${geminiApiKey}`;
-          const payload = { contents: [{ parts: [{ text: prompt }] }] };
-          if (systemInstruction) payload.systemInstruction = { parts: [{ text: systemInstruction }] };
-          
-          const options = {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(payload)
-          };
-
-          const delays = [1000, 2000, 4000, 8000, 16000];
-          for (let i = 0; i < 5; i++) {
-              try {
-                  const response = await fetch(url, options);
-                  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-                  const result = await response.json();
-                  return result.candidates?.[0]?.content?.parts?.[0]?.text || "";
-              } catch (error) {
-                  if (i === 4) return "Error al generar el análisis. Inténtalo de nuevo más tarde.";
-                  await new Promise(res => setTimeout(res, delays[i]));
-              }
-          }
-      }
-
-      btnAnalyzeResults.addEventListener("click", async () => {
-          btnAnalyzeResults.disabled = true;
-          btnAnalyzeResults.textContent = "Analizando resultados... ⏳";
-          
-          if(aiAnalysisContainer) aiAnalysisContainer.classList.remove("hidden");
-          if(aiAnalysisText) aiAnalysisText.innerHTML = "<span class='animate-pulse'>La IA está revisando las notas de los jueces...</span>";
-
-          let prompt = "Los resultados actuales de la competición de desarrollo LowCodeCon 2026 son los siguientes:\n";
-          
-          const cards = document.querySelectorAll("#publicRankingList > div");
-          
-          if (cards.length === 0 || cards[0].innerText.includes('Esperando votos')) {
-              if(aiAnalysisText) aiAnalysisText.innerHTML = "No hay resultados suficientes para realizar un análisis.";
-              btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
-              btnAnalyzeResults.disabled = false;
-              return;
-          }
-          
-          cards.forEach(card => {
-              const teamName = card.querySelector("h3")?.innerText;
-              const points = card.querySelector(".text-xl")?.innerText;
-              if (teamName && points) {
-                  prompt += `- Equipo ${teamName}: ${points} puntos en total.\n`;
-              }
-          });
-          
-          prompt += "\nGenera un breve comentario (máximo 3 frases) analizando cómo está la clasificación, mencionando al líder actual, y usando un tono entusiasta y profesional de presentador de eventos. No uses formato Markdown.";
-          const instruction = "Eres el presentador estrella de la competición. Respondes exclusivamente en español.";
-
-          const responseText = await callGeminiAPI(prompt, instruction);
-          
-          appState.aiAnalysis = responseText;
-          saveAppState();
-          
-          btnAnalyzeResults.textContent = "Generar Análisis de Resultados con IA ✨";
-          btnAnalyzeResults.disabled = false;
       });
 
       // --- GESTIÓN DE JURADOS INDIVIDUALES (ADMIN) ---
@@ -2486,6 +2416,7 @@
                   ${hasVoted ? '<svg class="w-5 h-5 text-accent flex-shrink-0 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>' : ""}
                 </div>
                 <p class="text-xs text-slate-500 pl-8 line-clamp-1">${team.members}</p>
+                <p class="text-[10px] text-slate-400 pl-8 italic line-clamp-1">"${team.description || 'Sin descripción'}"</p>
               </div>
               <div class="flex items-center gap-3">
                 ${hasVoted ? `<span class="bg-accent/10 text-accent font-bold px-3 py-1 rounded-lg text-sm">${currentVote.total} pts</span>` : ""}
